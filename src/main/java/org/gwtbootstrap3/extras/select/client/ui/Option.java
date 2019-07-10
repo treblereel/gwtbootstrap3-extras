@@ -20,6 +20,16 @@ package org.gwtbootstrap3.extras.select.client.ui;
  * #L%
  */
 
+import org.gwtbootstrap3.client.ui.base.AbstractTextWidget;
+import org.gwtbootstrap3.client.ui.base.mixin.AttributeMixin;
+import org.gwtbootstrap3.client.ui.base.mixin.EnabledMixin;
+import org.gwtbootstrap3.client.ui.constants.IconType;
+import org.gwtproject.dom.client.Document;
+import org.gwtproject.dom.client.OptionElement;
+import org.gwtproject.user.client.TakesValue;
+import org.gwtproject.user.client.ui.HasEnabled;
+import org.gwtproject.user.client.ui.HasName;
+
 import static org.gwtbootstrap3.extras.select.client.ui.SelectOptions.CONTENT;
 import static org.gwtbootstrap3.extras.select.client.ui.SelectOptions.DIVIDER;
 import static org.gwtbootstrap3.extras.select.client.ui.SelectOptions.HIDDEN;
@@ -27,23 +37,14 @@ import static org.gwtbootstrap3.extras.select.client.ui.SelectOptions.ICON;
 import static org.gwtbootstrap3.extras.select.client.ui.SelectOptions.SUBTEXT;
 import static org.gwtbootstrap3.extras.select.client.ui.SelectOptions.TOKENS;
 
-import org.gwtbootstrap3.client.ui.base.AbstractTextWidget;
-import org.gwtbootstrap3.client.ui.base.mixin.AttributeMixin;
-import org.gwtbootstrap3.client.ui.base.mixin.EnabledMixin;
-import org.gwtbootstrap3.client.ui.constants.IconType;
-
-import com.google.gwt.dom.client.Document;
-import com.google.gwt.dom.client.OptionElement;
-import com.google.gwt.user.client.TakesValue;
-import com.google.gwt.user.client.ui.HasEnabled;
-import com.google.gwt.user.client.ui.HasName;
-
 /**
  * Select option widget.
  *
  * @author Xiaodong Sun
  */
-public class Option extends AbstractTextWidget implements HasName, TakesValue<String>, HasEnabled {
+public class Option extends AbstractTextWidget implements HasName,
+                                                          TakesValue<String>,
+                                                          HasEnabled {
 
     private final AttributeMixin<Option> attrMixin = new AttributeMixin<>(this);
     private final EnabledMixin<Option> enabledMixin = new EnabledMixin<>(this);

@@ -4,6 +4,8 @@ import org.gwtbootstrap3.extras.tagsinput.client.callback.ItemTextCallback;
 import org.gwtbootstrap3.extras.tagsinput.client.callback.ItemValueCallback;
 import org.gwtbootstrap3.extras.tagsinput.client.callback.OnTagExistsCallback;
 import org.gwtbootstrap3.extras.tagsinput.client.callback.TagClassCallback;
+import org.gwtproject.core.client.JavaScriptObject;
+import org.gwtproject.core.client.JsArrayInteger;
 
 /*
  * #%L
@@ -24,9 +26,6 @@ import org.gwtbootstrap3.extras.tagsinput.client.callback.TagClassCallback;
  * limitations under the License.
  * #L%
  */
-
-import com.google.gwt.core.client.JavaScriptObject;
-import com.google.gwt.core.client.JsArrayInteger;
 
 /**
  * Tags Input options, used for customisation of TagsInput widget.

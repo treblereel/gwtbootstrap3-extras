@@ -20,7 +20,7 @@ package org.gwtbootstrap3.extras.slider.client.ui.base.event;
  * #L%
  */
 
-import com.google.gwt.event.shared.GwtEvent;
+import org.gwtproject.event.legacy.shared.GwtEvent;
 
 /**
  * The slide event is fired when the slider is dragged.

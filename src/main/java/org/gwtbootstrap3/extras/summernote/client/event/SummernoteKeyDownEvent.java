@@ -20,8 +20,8 @@ package org.gwtbootstrap3.extras.summernote.client.event;
  * #L%
  */
 
-import com.google.gwt.dom.client.NativeEvent;
-import com.google.gwt.event.shared.GwtEvent;
+import org.gwtproject.dom.client.NativeEvent;
+import org.gwtproject.event.legacy.shared.GwtEvent;
 
 /**
  * The {@link SummernoteKeyDownEvent} is fired when a key is pressed within

@@ -20,15 +20,14 @@ package org.gwtbootstrap3.extras.typeahead.client;
  * #L%
  */
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.resources.client.ClientBundle;
-import com.google.gwt.resources.client.TextResource;
+import org.gwtproject.resources.client.ClientBundle;
+import org.gwtproject.resources.client.TextResource;
 
 /**
  * @author Florian Kremser <florian.kremser@sage.com>
  */
 public interface TypeaheadClientBundle extends ClientBundle {
-  static final TypeaheadClientBundle INSTANCE = GWT.create(TypeaheadClientBundle.class);
+  TypeaheadClientBundle INSTANCE = new TypeaheadClientBundleImpl();
 
   @ClientBundle.Source("resource/js/typeahead.jquery-0.10.5.min.cache.js")
   TextResource typeahead();

@@ -20,6 +20,7 @@ package org.gwtbootstrap3.extras.summernote.client.ui.base;
  * #L%
  */
 
+import elemental2.core.JsArray;
 import org.gwtbootstrap3.client.ui.html.Div;
 import org.gwtbootstrap3.extras.summernote.client.event.HasAllSummernoteHandlers;
 import org.gwtbootstrap3.extras.summernote.client.event.SummernoteBlurEvent;
@@ -31,7 +32,6 @@ import org.gwtbootstrap3.extras.summernote.client.event.SummernoteEnterHandler;
 import org.gwtbootstrap3.extras.summernote.client.event.SummernoteFocusEvent;
 import org.gwtbootstrap3.extras.summernote.client.event.SummernoteFocusHandler;
 import org.gwtbootstrap3.extras.summernote.client.event.SummernoteImageUploadEvent;
-import org.gwtbootstrap3.extras.summernote.client.event.SummernoteImageUploadEvent.ImageFile;
 import org.gwtbootstrap3.extras.summernote.client.event.SummernoteImageUploadHandler;
 import org.gwtbootstrap3.extras.summernote.client.event.SummernoteInitEvent;
 import org.gwtbootstrap3.extras.summernote.client.event.SummernoteInitHandler;
@@ -41,15 +41,13 @@ import org.gwtbootstrap3.extras.summernote.client.event.SummernoteKeyUpEvent;
 import org.gwtbootstrap3.extras.summernote.client.event.SummernoteKeyUpHandler;
 import org.gwtbootstrap3.extras.summernote.client.event.SummernotePasteEvent;
 import org.gwtbootstrap3.extras.summernote.client.event.SummernotePasteHandler;
-
-import com.google.gwt.core.client.JavaScriptObject;
-import com.google.gwt.core.client.JsArray;
-import com.google.gwt.core.client.JsArrayString;
-import com.google.gwt.core.client.ScriptInjector;
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.user.client.ui.HasEnabled;
-import com.google.gwt.user.client.ui.UIObject;
+import org.gwtproject.core.client.JavaScriptObject;
+import org.gwtproject.core.client.JsArrayString;
+import org.gwtproject.core.client.ScriptInjector;
+import org.gwtproject.dom.client.Element;
+import org.gwtproject.event.shared.HandlerRegistration;
+import org.gwtproject.user.client.ui.HasEnabled;
+import org.gwtproject.user.client.ui.UIObject;
 
 /**
  * Wrapper for the Summernote WYSIWYG Editor
@@ -58,7 +56,8 @@ import com.google.gwt.user.client.ui.UIObject;
  *
  * @author Xiaodong Sun
  */
-public class SummernoteBase extends Div implements HasAllSummernoteHandlers, HasEnabled {
+public class SummernoteBase extends Div implements HasAllSummernoteHandlers,
+                                                   HasEnabled {
 
     /**
      * Language; defaults to {@link SummernoteLanguage#EN_US}
@@ -462,7 +461,7 @@ public class SummernoteBase extends Div implements HasAllSummernoteHandlers, Has
      *
      * @param images
      */
-    public void insertImages(JsArray<ImageFile> images) {
+    public void insertImages(JsArray<SummernoteImageUploadEvent.ImageFile> images) {
         insertImages(getElement(), images);
     }
 
@@ -546,7 +545,7 @@ public class SummernoteBase extends Div implements HasAllSummernoteHandlers, Has
         $wnd.jQuery(e).summernote(command);
     }-*/;
 
-    private native void insertImages(Element e, JsArray<ImageFile> images) /*-{
+    private native void insertImages(Element e, JsArray<SummernoteImageUploadEvent.ImageFile> images) /*-{
         $wnd.jQuery(e).summernote('insertImages', images);
     }-*/;
 }

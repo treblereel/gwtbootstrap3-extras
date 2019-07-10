@@ -20,14 +20,14 @@ package org.gwtbootstrap3.extras.select.client.ui.event;
  * #L%
  */
 
-import com.google.gwt.event.shared.GwtEvent;
+import org.gwtproject.event.legacy.shared.GwtEvent;
 
 /**
  * The show event is fired immediately when the show instance method is called.
  */
 public class ShowEvent extends GwtEvent<ShowHandler> {
 
-    private static Type<ShowHandler> TYPE;
+    private static GwtEvent.Type<ShowHandler> TYPE;
 
     /**
      * Fires a show event on all registered handlers in the handler manager. If

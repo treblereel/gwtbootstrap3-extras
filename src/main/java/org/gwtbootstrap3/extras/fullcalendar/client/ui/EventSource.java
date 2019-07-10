@@ -20,9 +20,9 @@ package org.gwtbootstrap3.extras.fullcalendar.client.ui;
  * #L%
  */
 
-import com.google.gwt.core.client.JavaScriptObject;
-import com.google.gwt.core.client.ScriptInjector;
 import org.gwtbootstrap3.extras.fullcalendar.client.FullCalendarClientBundle;
+import org.gwtproject.core.client.JavaScriptObject;
+import org.gwtproject.core.client.ScriptInjector;
 
 /**
  * Models the Event Source Object

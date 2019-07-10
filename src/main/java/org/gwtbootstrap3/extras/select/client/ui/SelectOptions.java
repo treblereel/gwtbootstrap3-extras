@@ -22,8 +22,7 @@ package org.gwtbootstrap3.extras.select.client.ui;
 
 import org.gwtbootstrap3.client.ui.constants.IconType;
 import org.gwtbootstrap3.client.ui.constants.Styles;
-
-import com.google.gwt.core.client.JavaScriptObject;
+import org.gwtproject.core.client.JavaScriptObject;
 
 /**
  * This class represents select options, that you can use to

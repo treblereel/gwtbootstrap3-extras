@@ -4,6 +4,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.gwtbootstrap3.extras.tagsinput.client.ui.base.MultiValueTagsInput;
+import org.gwtbootstrap3.extras.typeahead.client.base.StringDataset;
+import org.gwtproject.dom.client.Document;
+import org.gwtproject.dom.client.Element;
+import org.gwtproject.dom.client.OptionElement;
+
 /*
  * #%L
  * GwtBootstrap3
@@ -23,13 +29,6 @@ import java.util.List;
  * limitations under the License.
  * #L%
  */
-
-import org.gwtbootstrap3.extras.tagsinput.client.ui.base.MultiValueTagsInput;
-import org.gwtbootstrap3.extras.typeahead.client.base.StringDataset;
-
-import com.google.gwt.dom.client.Document;
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.OptionElement;
 
 /**
  * Wrapper for Bootstrap Tags Input component with multi value support.

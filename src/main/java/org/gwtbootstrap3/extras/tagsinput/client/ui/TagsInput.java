@@ -3,6 +3,9 @@ package org.gwtbootstrap3.extras.tagsinput.client.ui;
 import java.util.Arrays;
 
 import org.gwtbootstrap3.client.ui.base.mixin.AttributeMixin;
+import org.gwtbootstrap3.extras.tagsinput.client.ui.base.SingleValueTagsInput;
+import org.gwtbootstrap3.extras.typeahead.client.base.StringDataset;
+import org.gwtproject.dom.client.Element;
 
 /*
  * #%L
@@ -23,11 +26,6 @@ import org.gwtbootstrap3.client.ui.base.mixin.AttributeMixin;
  * limitations under the License.
  * #L%
  */
-
-import org.gwtbootstrap3.extras.tagsinput.client.ui.base.SingleValueTagsInput;
-import org.gwtbootstrap3.extras.typeahead.client.base.StringDataset;
-
-import com.google.gwt.dom.client.Element;
 
 /**
  * Wrapper for Bootstrap Tags Input component.

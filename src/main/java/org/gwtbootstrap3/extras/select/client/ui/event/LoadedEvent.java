@@ -20,7 +20,7 @@ package org.gwtbootstrap3.extras.select.client.ui.event;
  * #L%
  */
 
-import com.google.gwt.event.shared.GwtEvent;
+import org.gwtproject.event.legacy.shared.GwtEvent;
 
 /**
  * The loaded event is fired immediately when the Loaded instance method is called.
@@ -49,7 +49,7 @@ public class LoadedEvent extends GwtEvent<LoadedHandler> {
      */
     public static Type<LoadedHandler> getType() {
         if (TYPE == null) {
-            TYPE = new Type<LoadedHandler>();
+            TYPE = new Type<>();
         }
         return TYPE;
     }

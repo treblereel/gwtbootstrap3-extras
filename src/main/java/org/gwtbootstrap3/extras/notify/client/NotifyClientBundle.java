@@ -20,14 +20,13 @@ package org.gwtbootstrap3.extras.notify.client;
  * #L%
  */
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.resources.client.ClientBundle;
-import com.google.gwt.resources.client.TextResource;
+import org.gwtproject.resources.client.ClientBundle;
+import org.gwtproject.resources.client.TextResource;
 
 public interface NotifyClientBundle extends ClientBundle {
 
-    static final NotifyClientBundle INSTANCE = GWT.create(NotifyClientBundle.class);
+    NotifyClientBundle INSTANCE = new NotifyClientBundleImpl();
 
-    @Source("resource/js/bootstrap-notify-3.1.3.min.cache.js")
+    @ClientBundle.Source("resource/js/bootstrap-notify-3.1.3.min.cache.js")
     TextResource notifyJS();
 }

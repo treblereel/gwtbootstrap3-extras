@@ -33,21 +33,20 @@ import org.gwtbootstrap3.client.ui.constants.IconSize;
 import org.gwtbootstrap3.client.ui.constants.IconType;
 import org.gwtbootstrap3.extras.toggleswitch.client.ui.base.constants.ColorType;
 import org.gwtbootstrap3.extras.toggleswitch.client.ui.base.constants.SizeType;
-
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.InputElement;
-import com.google.gwt.editor.client.IsEditor;
-import com.google.gwt.editor.client.LeafValueEditor;
-import com.google.gwt.editor.client.adapters.TakesValueEditor;
-import com.google.gwt.event.logical.shared.HasValueChangeHandlers;
-import com.google.gwt.event.logical.shared.ValueChangeEvent;
-import com.google.gwt.event.logical.shared.ValueChangeHandler;
-import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.user.client.ui.HasEnabled;
-import com.google.gwt.user.client.ui.HasName;
-import com.google.gwt.user.client.ui.HasValue;
-import com.google.gwt.user.client.ui.HasVisibility;
-import com.google.gwt.user.client.ui.Widget;
+import org.gwtproject.dom.client.Element;
+import org.gwtproject.dom.client.InputElement;
+import org.gwtproject.editor.client.IsEditor;
+import org.gwtproject.editor.client.LeafValueEditor;
+import org.gwtproject.editor.client.adapters.TakesValueEditor;
+import org.gwtproject.event.logical.shared.HasValueChangeHandlers;
+import org.gwtproject.event.logical.shared.ValueChangeEvent;
+import org.gwtproject.event.logical.shared.ValueChangeHandler;
+import org.gwtproject.event.shared.HandlerRegistration;
+import org.gwtproject.user.client.ui.HasEnabled;
+import org.gwtproject.user.client.ui.HasName;
+import org.gwtproject.user.client.ui.HasValue;
+import org.gwtproject.user.client.ui.HasVisibility;
+import org.gwtproject.user.client.ui.Widget;
 
 /**
  * Original source from http://www.bootstrap-switch.org/
@@ -55,8 +54,13 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Grant Slender
  * @author Steven Jardine
  */
-public class ToggleSwitchBase extends Widget implements HasSize<SizeType>, HasValue<Boolean>, HasValueChangeHandlers<Boolean>,
-        HasEnabled, HasVisibility, HasId, HasName, HasReadOnly, HasResponsiveness, IsEditor<LeafValueEditor<Boolean>> {
+public class ToggleSwitchBase extends Widget implements HasSize<SizeType>,
+                                                        HasValue<Boolean>,
+                                                        HasValueChangeHandlers<Boolean>,
+                                                        HasEnabled,
+                                                        HasVisibility, HasId,
+                                                        HasName, HasReadOnly, HasResponsiveness,
+                                                        IsEditor<LeafValueEditor<Boolean>> {
 
     private final InputElement element;
     private SizeType size = SizeType.REGULAR;

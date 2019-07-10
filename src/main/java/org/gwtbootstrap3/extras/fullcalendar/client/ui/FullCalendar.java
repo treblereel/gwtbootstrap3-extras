@@ -20,18 +20,18 @@ package org.gwtbootstrap3.extras.fullcalendar.client.ui;
  * #L%
  */
 
-import com.google.gwt.core.client.JavaScriptObject;
-import com.google.gwt.core.client.JsArray;
-import com.google.gwt.core.client.JsDate;
-import com.google.gwt.core.client.ScriptInjector;
-import com.google.gwt.dom.client.Document;
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.event.dom.client.DomEvent;
-import com.google.gwt.event.dom.client.HasLoadHandlers;
-import com.google.gwt.event.dom.client.LoadEvent;
-import com.google.gwt.event.dom.client.LoadHandler;
-import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.user.client.ui.FlowPanel;
+import elemental2.core.JsDate;
+import org.gwtproject.core.client.JavaScriptObject;
+import org.gwtproject.core.client.JsArray;
+import org.gwtproject.core.client.ScriptInjector;
+import org.gwtproject.dom.client.Document;
+import org.gwtproject.dom.client.Element;
+import org.gwtproject.event.dom.client.DomEvent;
+import org.gwtproject.event.dom.client.HasLoadHandlers;
+import org.gwtproject.event.dom.client.LoadEvent;
+import org.gwtproject.event.dom.client.LoadHandler;
+import org.gwtproject.event.shared.HandlerRegistration;
+import org.gwtproject.user.client.ui.FlowPanel;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -251,7 +251,7 @@ public class FullCalendar extends FlowPanel implements HasLoadHandlers {
 
     public void goToDate(final Date d) {
         if (d != null) {
-            JsDate date = JsDate.create((double) d.getTime());
+            JsDate date = new JsDate((double) d.getTime());
             goToDate(getElement().getId(), date);
         }
     }

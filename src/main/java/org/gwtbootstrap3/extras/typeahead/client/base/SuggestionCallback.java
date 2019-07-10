@@ -20,12 +20,11 @@ package org.gwtbootstrap3.extras.typeahead.client.base;
  * #L%
  */
 
-
-import com.google.gwt.core.client.JavaScriptObject;
-import com.google.gwt.core.client.JsArray;
-import com.google.gwt.core.client.JsArrayString;
-
 import java.util.Collection;
+
+import elemental2.core.JsArray;
+import org.gwtproject.core.client.JavaScriptObject;
+import org.gwtproject.core.client.JsArrayString;
 
 /**
  * @author Florian Kremser <florian.kremser@sage.com>

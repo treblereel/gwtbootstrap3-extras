@@ -20,8 +20,8 @@ package org.gwtbootstrap3.extras.card.client.ui;
  * #L%
  */
 
-import com.google.gwt.user.client.ui.Widget;
 import org.gwtbootstrap3.client.ui.html.Div;
+import org.gwtproject.user.client.ui.Widget;
 
 /**
  * @author godi

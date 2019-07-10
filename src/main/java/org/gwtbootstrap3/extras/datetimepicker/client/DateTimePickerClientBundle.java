@@ -20,19 +20,18 @@ package org.gwtbootstrap3.extras.datetimepicker.client;
  * #L%
  */
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.resources.client.ClientBundle;
-import com.google.gwt.resources.client.TextResource;
+import org.gwtproject.resources.client.ClientBundle;
+import org.gwtproject.resources.client.TextResource;
 
 /**
  * @author Sven Jacobs
  */
 public interface DateTimePickerClientBundle extends ClientBundle {
 
-    static final DateTimePickerClientBundle INSTANCE = GWT.create(DateTimePickerClientBundle.class);
+    DateTimePickerClientBundle INSTANCE = new DateTimePickerClientBundleImpl();
 
-    static final String VERSION = "2.4.4";
-    static final String I18N_DIR = "resource/js/locales-" + VERSION + "/";
+    String VERSION = "2.4.4";
+    final String I18N_DIR = "resource/js/locales-" + VERSION + "/";
 
     @Source("resource/js/bootstrap-datetimepicker-" + VERSION + ".min.cache.js")
     TextResource dateTimePicker();

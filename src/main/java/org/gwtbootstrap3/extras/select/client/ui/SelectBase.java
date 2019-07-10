@@ -73,26 +73,26 @@ import org.gwtbootstrap3.extras.select.client.ui.event.ShowHandler;
 import org.gwtbootstrap3.extras.select.client.ui.event.ShownEvent;
 import org.gwtbootstrap3.extras.select.client.ui.event.ShownHandler;
 
-import com.google.gwt.core.client.JavaScriptObject;
-import com.google.gwt.core.client.JsArrayNumber;
-import com.google.gwt.core.client.JsonUtils;
-import com.google.gwt.core.client.ScriptInjector;
-import com.google.gwt.dom.client.Document;
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.NodeList;
-import com.google.gwt.dom.client.OptionElement;
-import com.google.gwt.dom.client.SelectElement;
-import com.google.gwt.editor.client.IsEditor;
-import com.google.gwt.editor.client.LeafValueEditor;
-import com.google.gwt.editor.client.adapters.TakesValueEditor;
-import com.google.gwt.event.logical.shared.ValueChangeEvent;
-import com.google.gwt.event.logical.shared.ValueChangeHandler;
-import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.user.client.ui.Focusable;
-import com.google.gwt.user.client.ui.HasEnabled;
-import com.google.gwt.user.client.ui.HasValue;
-import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.user.client.ui.impl.FocusImpl;
+import org.gwtproject.core.client.JavaScriptObject;
+import org.gwtproject.core.client.JsArrayNumber;
+import org.gwtproject.core.client.JsonUtils;
+import org.gwtproject.core.client.ScriptInjector;
+import org.gwtproject.dom.client.Document;
+import org.gwtproject.dom.client.Element;
+import org.gwtproject.dom.client.NodeList;
+import org.gwtproject.dom.client.OptionElement;
+import org.gwtproject.dom.client.SelectElement;
+import org.gwtproject.editor.client.IsEditor;
+import org.gwtproject.editor.client.LeafValueEditor;
+import org.gwtproject.editor.client.adapters.TakesValueEditor;
+import org.gwtproject.event.logical.shared.ValueChangeEvent;
+import org.gwtproject.event.logical.shared.ValueChangeHandler;
+import org.gwtproject.event.shared.HandlerRegistration;
+import org.gwtproject.user.client.ui.Focusable;
+import org.gwtproject.user.client.ui.HasEnabled;
+import org.gwtproject.user.client.ui.HasValue;
+import org.gwtproject.user.client.ui.Widget;
+import org.gwtproject.user.client.ui.impl.FocusImpl;
 
 /**
  * Bootstrap select widget base
@@ -102,8 +102,11 @@ import com.google.gwt.user.client.ui.impl.FocusImpl;
  * @see http://silviomoreto.github.io/bootstrap-select/
  * @author Xiaodong Sun
  */
-public abstract class SelectBase<T> extends ComplexWidget implements HasValue<T>, HasEnabled, Focusable,
-        HasType<ButtonType>, HasSize<ButtonSize>, IsEditor<LeafValueEditor<T>>, HasAllSelectHandlers<T> {
+public abstract class SelectBase<T> extends ComplexWidget implements HasValue<T>,
+                                                                     HasEnabled,
+                                                                     Focusable,
+                                                                     HasType<ButtonType>, HasSize<ButtonSize>,
+                                                                     IsEditor<LeafValueEditor<T>>, HasAllSelectHandlers<T> {
 
     private LeafValueEditor<T> editor;
     private ButtonType type;

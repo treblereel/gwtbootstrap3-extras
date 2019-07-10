@@ -20,8 +20,8 @@ package org.gwtbootstrap3.extras.summernote.client.event;
  * #L%
  */
 
-import com.google.gwt.dom.client.NativeEvent;
-import com.google.gwt.event.shared.GwtEvent;
+import org.gwtproject.dom.client.NativeEvent;
+import org.gwtproject.event.legacy.shared.GwtEvent;
 
 /**
  * The {@link SummernoteKeyUpEvent} is fired when a key is released within
@@ -40,7 +40,7 @@ public class SummernoteKeyUpEvent extends GwtEvent<SummernoteKeyUpHandler> {
      * manager. If no such handlers exist, this method will do nothing.
      *
      * @param source the source of the handlers
-     * @param keyUpEvent native key up event
+     * @param nativeEvent native key up event
      */
     public static void fire(final HasSummernoteKeyUpHandlers source, NativeEvent nativeEvent) {
         if (TYPE != null) {

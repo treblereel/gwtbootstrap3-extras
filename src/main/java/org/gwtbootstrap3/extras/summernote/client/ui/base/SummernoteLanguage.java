@@ -20,8 +20,8 @@ package org.gwtbootstrap3.extras.summernote.client.ui.base;
  * #L%
  */
 
-import com.google.gwt.resources.client.TextResource;
 import org.gwtbootstrap3.extras.summernote.client.SummernoteClientBundle;
+import org.gwtproject.resources.client.TextResource;
 
 /**
  * @author Michał Rybicki (based on DatePickerLanguage by Joshua Godi)

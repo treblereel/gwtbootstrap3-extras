@@ -20,10 +20,6 @@ package org.gwtbootstrap3.extras.select.client.ui;
  * #L%
  */
 
-import static org.gwtbootstrap3.extras.select.client.ui.SelectOptions.ICON;
-import static org.gwtbootstrap3.extras.select.client.ui.SelectOptions.MAX_OPTIONS;
-import static org.gwtbootstrap3.extras.select.client.ui.SelectOptions.SUBTEXT;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,11 +27,14 @@ import org.gwtbootstrap3.client.ui.base.ComplexWidget;
 import org.gwtbootstrap3.client.ui.base.mixin.AttributeMixin;
 import org.gwtbootstrap3.client.ui.base.mixin.EnabledMixin;
 import org.gwtbootstrap3.client.ui.constants.IconType;
+import org.gwtproject.dom.client.Document;
+import org.gwtproject.dom.client.OptionElement;
+import org.gwtproject.user.client.ui.HasEnabled;
+import org.gwtproject.user.client.ui.Widget;
 
-import com.google.gwt.dom.client.Document;
-import com.google.gwt.dom.client.OptionElement;
-import com.google.gwt.user.client.ui.HasEnabled;
-import com.google.gwt.user.client.ui.Widget;
+import static org.gwtbootstrap3.extras.select.client.ui.SelectOptions.ICON;
+import static org.gwtbootstrap3.extras.select.client.ui.SelectOptions.MAX_OPTIONS;
+import static org.gwtbootstrap3.extras.select.client.ui.SelectOptions.SUBTEXT;
 
 /**
  * Select option group widget.

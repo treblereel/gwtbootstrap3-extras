@@ -20,8 +20,8 @@ package org.gwtbootstrap3.extras.datetimepicker.client.ui.base.constants;
  * #L%
  */
 
-import com.google.gwt.resources.client.TextResource;
 import org.gwtbootstrap3.extras.datetimepicker.client.DateTimePickerClientBundle;
+import org.gwtproject.resources.client.TextResource;
 
 /**
  * @author Joshua Godi

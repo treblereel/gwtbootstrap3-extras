@@ -20,7 +20,7 @@ package org.gwtbootstrap3.extras.tagsinput.client.event;
  * #L%
  */
 
-import com.google.gwt.event.shared.EventHandler;
+import org.gwtproject.event.legacy.shared.EventHandler;
 
 /**
  * Handler interface for {@link ItemAddedEvent} events.

@@ -20,16 +20,15 @@ package org.gwtbootstrap3.extras.toggleswitch.client;
  * #L%
  */
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.resources.client.ClientBundle;
-import com.google.gwt.resources.client.TextResource;
+import org.gwtproject.resources.client.ClientBundle;
+import org.gwtproject.resources.client.TextResource;
 
 /**
  * @author Grant Slender
  */
 interface ToggleSwitchClientBundle extends ClientBundle {
 
-    static final ToggleSwitchClientBundle INSTANCE = GWT.create(ToggleSwitchClientBundle.class);
+    ToggleSwitchClientBundle INSTANCE = new ToggleSwitchClientBundleImpl();
 
     @Source("resource/js/bootstrap-switch-3.3.2.min.cache.js")
     TextResource toggleswitch();

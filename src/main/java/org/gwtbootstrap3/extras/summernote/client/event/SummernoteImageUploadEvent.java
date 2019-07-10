@@ -20,9 +20,9 @@ package org.gwtbootstrap3.extras.summernote.client.event;
  * #L%
  */
 
-import com.google.gwt.core.client.JavaScriptObject;
-import com.google.gwt.core.client.JsArray;
-import com.google.gwt.event.shared.GwtEvent;
+import elemental2.core.JsArray;
+import org.gwtproject.core.client.JavaScriptObject;
+import org.gwtproject.event.legacy.shared.GwtEvent;
 
 /**
  * The {@link SummernoteImageUploadEvent} is fired when inserting images into the
@@ -110,7 +110,7 @@ public class SummernoteImageUploadEvent extends GwtEvent<SummernoteImageUploadHa
 
     @Override
     public String toDebugString() {
-        return super.toDebugString() + " with " + images.length() + " images";
+        return super.toDebugString() + " with " + images.length + " images";
     }
 
     /**

@@ -20,8 +20,7 @@ package org.gwtbootstrap3.extras.typeahead.client.base;
  * #L%
  */
 
-
-import com.google.gwt.core.client.JavaScriptObject;
+import org.gwtproject.core.client.JavaScriptObject;
 
 /**
  * @author Florian Kremser <florian.kremser@sage.com>

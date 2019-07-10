@@ -20,7 +20,7 @@ package org.gwtbootstrap3.extras.datepicker.client.ui.base.events;
  * #L%
  */
 
-import com.google.gwt.event.shared.EventHandler;
+import com.sun.corba.se.pept.transport.EventHandler;
 
 /**
  * @author Matt Davis

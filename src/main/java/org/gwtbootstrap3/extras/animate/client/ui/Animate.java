@@ -20,11 +20,11 @@ package org.gwtbootstrap3.extras.animate.client.ui;
  * #L%
  */
 
-import com.google.gwt.core.client.Scheduler;
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.StyleInjector;
-import com.google.gwt.user.client.ui.UIObject;
 import org.gwtbootstrap3.extras.animate.client.ui.constants.Animation;
+import org.gwtproject.core.client.Scheduler;
+import org.gwtproject.dom.client.Element;
+import org.gwtproject.dom.client.StyleInjector;
+import org.gwtproject.user.client.ui.UIObject;
 
 import java.util.ArrayList;
 

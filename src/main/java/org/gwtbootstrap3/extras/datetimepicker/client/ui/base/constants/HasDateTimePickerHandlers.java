@@ -20,14 +20,14 @@ package org.gwtbootstrap3.extras.datetimepicker.client.ui.base.constants;
  * #L%
  */
 
-import com.google.gwt.user.client.Event;
-import com.google.web.bindery.event.shared.HandlerRegistration;
 import org.gwtbootstrap3.client.shared.event.HideHandler;
 import org.gwtbootstrap3.client.shared.event.ShowHandler;
 import org.gwtbootstrap3.extras.datetimepicker.client.ui.base.events.ChangeDateHandler;
 import org.gwtbootstrap3.extras.datetimepicker.client.ui.base.events.ChangeMonthHandler;
 import org.gwtbootstrap3.extras.datetimepicker.client.ui.base.events.ChangeYearHandler;
 import org.gwtbootstrap3.extras.datetimepicker.client.ui.base.events.OutOfRangeHandler;
+import org.gwtproject.event.shared.HandlerRegistration;
+import org.gwtproject.user.client.Event;
 
 /**
  * All handlers for the DateTimePicker

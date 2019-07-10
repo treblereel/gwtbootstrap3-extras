@@ -20,15 +20,15 @@ package org.gwtbootstrap3.extras.datetimepicker.client.ui.base.events;
  * #L%
  */
 
-import com.google.gwt.event.shared.GwtEvent;
-import com.google.gwt.user.client.Event;
+import org.gwtproject.event.legacy.shared.GwtEvent;
+import org.gwtproject.user.client.Event;
 
 /**
  * @author Joshua Godi
  */
 public class ChangeMonthEvent extends GwtEvent<ChangeMonthHandler> {
 
-    private static final Type<ChangeMonthHandler> TYPE = new Type<ChangeMonthHandler>();
+    private static final GwtEvent.Type<ChangeMonthHandler> TYPE = new Type<ChangeMonthHandler>();
 
     private final Event nativeEvent;
 

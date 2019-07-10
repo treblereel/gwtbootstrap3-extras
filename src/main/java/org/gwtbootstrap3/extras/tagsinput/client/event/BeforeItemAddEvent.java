@@ -20,7 +20,7 @@ package org.gwtbootstrap3.extras.tagsinput.client.event;
  * #L%
  */
 
-import com.google.gwt.event.shared.GwtEvent;
+import org.gwtproject.event.legacy.shared.GwtEvent;
 
 /**
  * Triggered just before an item gets added.

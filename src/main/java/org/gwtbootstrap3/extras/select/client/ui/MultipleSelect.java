@@ -33,10 +33,10 @@ import java.util.Map.Entry;
 
 import org.gwtbootstrap3.extras.select.client.ui.constants.SelectedTextFormat;
 
-import com.google.gwt.core.client.JavaScriptObject;
-import com.google.gwt.core.client.JsArrayString;
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.OptionElement;
+import org.gwtproject.core.client.JavaScriptObject;
+import org.gwtproject.core.client.JsArrayString;
+import org.gwtproject.dom.client.Element;
+import org.gwtproject.dom.client.OptionElement;
 
 /**
  * Multiple select box.

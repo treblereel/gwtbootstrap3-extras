@@ -1,6 +1,6 @@
 package org.gwtbootstrap3.extras.select.client.ui.event;
 
-import com.google.gwt.event.logical.shared.HasValueChangeHandlers;
+import org.gwtproject.event.logical.shared.HasValueChangeHandlers;
 
 /*
  * #%L
@@ -27,9 +27,10 @@ import com.google.gwt.event.logical.shared.HasValueChangeHandlers;
  *
  * @param <T> select value type
  */
-public interface HasAllSelectHandlers<T> extends HasLoadedHandlers, HasValueChangeHandlers<T>,
-        HasShowHandlers, HasShownHandlers, HasHideHandlers, HasHiddenHandlers,
-        HasRenderedHandlers, HasRefreshedHandlers {
+public interface HasAllSelectHandlers<T> extends HasLoadedHandlers,
+                                                 HasValueChangeHandlers<T>,
+                                                 HasShowHandlers, HasShownHandlers, HasHideHandlers, HasHiddenHandlers,
+                                                 HasRenderedHandlers, HasRefreshedHandlers {
 
     /**
      * The {@link LoadedEvent} name

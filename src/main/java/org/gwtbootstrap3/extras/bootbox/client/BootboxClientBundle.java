@@ -20,16 +20,15 @@ package org.gwtbootstrap3.extras.bootbox.client;
  * #L%
  */
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.resources.client.ClientBundle;
-import com.google.gwt.resources.client.TextResource;
+import org.gwtproject.resources.client.ClientBundle;
+import org.gwtproject.resources.client.TextResource;
 
 /**
  * @author Sven Jacobs
  */
 interface BootboxClientBundle extends ClientBundle {
 
-    static final BootboxClientBundle INSTANCE = GWT.create(BootboxClientBundle.class);
+    BootboxClientBundle INSTANCE = new BootboxClientBundleImpl();
 
     @Source("resource/js/bootbox-4.4.0.min.cache.js")
     TextResource bootbox();

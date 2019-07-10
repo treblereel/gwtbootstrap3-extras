@@ -21,9 +21,9 @@ package org.gwtbootstrap3.extras.gallery.client.events;
  */
 
 
-import com.google.gwt.event.shared.GwtEvent;
-import com.google.gwt.user.client.Event;
 import org.gwtbootstrap3.extras.gallery.client.ui.Gallery;
+import org.gwtproject.event.legacy.shared.GwtEvent;
+import org.gwtproject.user.client.Event;
 
 /**
  * Triggered when the gallery item slides.

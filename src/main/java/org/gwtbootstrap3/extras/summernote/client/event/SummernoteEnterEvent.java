@@ -20,7 +20,7 @@ package org.gwtbootstrap3.extras.summernote.client.event;
  * #L%
  */
 
-import com.google.gwt.event.shared.GwtEvent;
+import org.gwtproject.event.legacy.shared.GwtEvent;
 
 /**
  * The {@link SummernoteEnterEvent} is fired when the ENTER key is pressed.
@@ -29,7 +29,7 @@ import com.google.gwt.event.shared.GwtEvent;
  */
 public class SummernoteEnterEvent extends GwtEvent<SummernoteEnterHandler> {
 
-    private static Type<SummernoteEnterHandler> TYPE;
+    private static GwtEvent.Type<SummernoteEnterHandler> TYPE;
 
     /**
      * Fires a summernote enter event on all registered handlers in the handler

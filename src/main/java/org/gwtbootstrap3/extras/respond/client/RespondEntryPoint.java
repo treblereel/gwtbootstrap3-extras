@@ -20,9 +20,9 @@ package org.gwtbootstrap3.extras.respond.client;
  * #L%
  */
 
-import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.core.client.ScriptInjector;
-import com.google.gwt.user.client.Window;
+import org.gwtproject.core.client.EntryPoint;
+import org.gwtproject.core.client.ScriptInjector;
+import org.gwtproject.user.window.client.Window;
 
 /**
  * @author Joshua Godi

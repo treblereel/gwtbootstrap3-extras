@@ -21,8 +21,7 @@ package org.gwtbootstrap3.extras.bootbox.client.options;
  */
 
 import org.gwtbootstrap3.extras.bootbox.client.callback.SimpleCallback;
-
-import com.google.gwt.core.client.JavaScriptObject;
+import org.gwtproject.core.client.JavaScriptObject;
 
 /**
  * Alert options.
