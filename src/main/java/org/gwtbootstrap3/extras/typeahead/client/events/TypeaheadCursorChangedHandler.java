@@ -20,8 +20,7 @@ package org.gwtbootstrap3.extras.typeahead.client.events;
  * #L%
  */
 
-
-import com.google.gwt.event.shared.EventHandler;
+import org.gwtproject.event.legacy.shared.EventHandler;
 
 /**
  * @author Florian Kremser <florian.kremser@sage.com>

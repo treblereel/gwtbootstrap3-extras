@@ -1,7 +1,7 @@
 package org.gwtbootstrap3.extras.slider.client.ui.base.event;
 
-import com.google.gwt.event.logical.shared.HasValueChangeHandlers;
-import com.google.gwt.event.logical.shared.ValueChangeEvent;
+import org.gwtproject.event.logical.shared.HasValueChangeHandlers;
+import org.gwtproject.event.logical.shared.ValueChangeEvent;
 
 /*
  * #%L
@@ -29,8 +29,9 @@ import com.google.gwt.event.logical.shared.ValueChangeEvent;
  * @param <T> slider value type
  */
 public interface HasAllSlideHandlers<T> extends HasSlideHandlers<T>,
-        HasSlideStartHandlers<T>, HasSlideStopHandlers<T>, HasValueChangeHandlers<T>,
-        HasSlideEnabledHandlers, HasSlideDisabledHandlers {
+                                                HasSlideStartHandlers<T>, HasSlideStopHandlers<T>,
+                                                HasValueChangeHandlers<T>,
+                                                HasSlideEnabledHandlers, HasSlideDisabledHandlers {
 
     /**
      * The {@link SlideEvent} name

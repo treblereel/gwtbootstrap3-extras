@@ -20,13 +20,12 @@ package org.gwtbootstrap3.extras.fullcalendar.client.ui;
  * #L%
  */
 
-import com.google.gwt.core.client.JavaScriptObject;
-import com.google.gwt.core.client.JsArrayString;
-import com.google.gwt.core.client.JsDate;
-import com.google.gwt.i18n.client.DateTimeFormat;
-import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
-
 import java.util.Date;
+
+import elemental2.core.JsDate;
+import org.gwtproject.core.client.JavaScriptObject;
+import org.gwtproject.core.client.JsArrayString;
+import org.gwtproject.i18n.client.DateTimeFormat;
 
 /**
  * Represents and event on a FullCalendar
@@ -36,8 +35,8 @@ import java.util.Date;
  */
 public class Event implements IsJavaScriptObject {
 
-    private static final DateTimeFormat ISO_8601_FORMAT = DateTimeFormat.getFormat(PredefinedFormat.ISO_8601);
-    private static final DateTimeFormat RFC_2822_FORMAT = DateTimeFormat.getFormat(PredefinedFormat.RFC_2822);
+    private static final DateTimeFormat ISO_8601_FORMAT = DateTimeFormat.getFormat(DateTimeFormat.PredefinedFormat.ISO_8601);
+    private static final DateTimeFormat RFC_2822_FORMAT = DateTimeFormat.getFormat(DateTimeFormat.PredefinedFormat.RFC_2822);
     private JavaScriptObject event;
 
     public Event(final String id, final String title) {

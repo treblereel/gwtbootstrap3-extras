@@ -23,7 +23,7 @@ package org.gwtbootstrap3.extras.summernote.client.ui.base;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.gwt.core.client.JsArrayMixed;
+import org.gwtproject.core.client.JsArrayMixed;
 
 /**
  * Wrapper for the Summernote WYSIWYG Editor

@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.gwtbootstrap3</groupId>
         <artifactId>gwtbootstrap3-parent</artifactId>
-        <version>0.9.4</version>
+        <version>1.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>gwtbootstrap3-extras</artifactId>
@@ -32,24 +32,82 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>gwtbootstrap3</artifactId>
-            <version>0.9.4</version>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
-        <dependency>
+      <dependency>
+        <groupId>org.gwtproject.dom</groupId>
+        <artifactId>gwt-dom</artifactId>
+        <version>1.0-SNAPSHOT</version>
+      </dependency>
+      <dependency>
+        <groupId>org.gwtproject.uibinder</groupId>
+        <artifactId>gwt-uibinder-client</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+      </dependency>
+      <dependency>
+        <groupId>org.gwtproject.event</groupId>
+        <artifactId>gwt-event</artifactId>
+        <version>HEAD-SNAPSHOT</version>
+      </dependency>
+      <dependency>
+        <groupId>org.gwtproject.event</groupId>
+        <artifactId>gwt-event-dom</artifactId>
+        <version>1.0-SNAPSHOT</version>
+        <exclusions>
+          <exclusion>
+            <groupId>org.realityforge.com.google.jsinterop</groupId>
+            <artifactId>base</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>org.gwtproject.dom</groupId>
+            <artifactId>gwt-dom</artifactId>
+          </exclusion>
+          <exclusion>
             <groupId>com.google.gwt</groupId>
             <artifactId>gwt-user</artifactId>
-            <version>${gwt.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.google.gwt</groupId>
-            <artifactId>gwt-dev</artifactId>
-            <version>${gwt.version}</version>
-            <scope>provided</scope>
-        </dependency>
+          </exclusion>
+          <exclusion>
+            <groupId>com.google.elemental2</groupId>
+            <artifactId>elemental2-dom</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+      <dependency>
+        <groupId>org.gwtproject.widgets</groupId>
+        <artifactId>gwt-widgets</artifactId>
+        <version>1.0-SNAPSHOT</version>
+      </dependency>
+      <dependency>
+        <groupId>org.gwtproject.resources</groupId>
+        <artifactId>gwt-resources-processor</artifactId>
+        <version>1.0-SNAPSHOT</version>
+      </dependency>
     </dependencies>
 
     <build>
-        <plugins>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.6.0</version>
+          <executions>
+            <execution>
+              <id>default-compile</id>
+              <goals>
+                <goal>compile</goal>
+              </goals>
+              <configuration>
+                <showWarnings>true</showWarnings>
+              </configuration>
+            </execution>
+            <execution>
+              <id>default-testCompile</id>
+              <goals>
+                <goal>testCompile</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>gwt-maven-plugin</artifactId>

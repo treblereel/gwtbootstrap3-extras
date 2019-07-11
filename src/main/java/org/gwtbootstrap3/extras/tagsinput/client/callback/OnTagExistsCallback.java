@@ -20,7 +20,7 @@ package org.gwtbootstrap3.extras.tagsinput.client.callback;
  * #L%
  */
 
-import com.google.gwt.dom.client.Element;
+import org.gwtproject.dom.client.Element;
 
 /**
  * Callback method called when adding tag that already exists.

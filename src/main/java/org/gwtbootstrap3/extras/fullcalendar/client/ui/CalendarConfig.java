@@ -20,8 +20,8 @@ package org.gwtbootstrap3.extras.fullcalendar.client.ui;
  * #L%
  */
 
-import com.google.gwt.core.client.JavaScriptObject;
-import com.google.gwt.core.client.JsArray;
+import org.gwtproject.core.client.JavaScriptObject;
+import org.gwtproject.core.client.JsArray;
 
 /**
  * Container class for all the javascript parameters to pass to <code>FullCalendar</code>

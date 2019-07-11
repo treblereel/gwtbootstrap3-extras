@@ -20,9 +20,9 @@ package org.gwtbootstrap3.extras.slider.client.ui;
  * #L%
  */
 
-import com.google.gwt.core.client.JavaScriptObject;
-import com.google.gwt.core.client.JsArrayNumber;
-import com.google.gwt.core.client.JsonUtils;
+import org.gwtproject.core.client.JavaScriptObject;
+import org.gwtproject.core.client.JsArrayNumber;
+import org.gwtproject.core.client.JsonUtils;
 
 /**
  * Slider range with a min value and a max value.

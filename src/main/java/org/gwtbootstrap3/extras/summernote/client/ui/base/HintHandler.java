@@ -20,7 +20,7 @@ package org.gwtbootstrap3.extras.summernote.client.ui.base;
  * #L%
  */
 
-import com.google.gwt.dom.client.Node;
+import org.gwtproject.dom.client.Node;
 
 /**
  * Handler interface for Summernote Hint (auto-completion) feature.

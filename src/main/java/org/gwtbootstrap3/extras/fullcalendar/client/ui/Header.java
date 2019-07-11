@@ -20,7 +20,7 @@ package org.gwtbootstrap3.extras.fullcalendar.client.ui;
  * #L%
  */
 
-import com.google.gwt.core.client.JavaScriptObject;
+import org.gwtproject.core.client.JavaScriptObject;
 
 /**
  * http://arshaw.com/fullcalendar/docs/display/header/

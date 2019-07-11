@@ -20,10 +20,9 @@ package org.gwtbootstrap3.extras.typeahead.client.events;
  * #L%
  */
 
-
-import com.google.gwt.event.shared.GwtEvent;
-import com.google.gwt.user.client.Event;
 import org.gwtbootstrap3.extras.typeahead.client.ui.Typeahead;
+import org.gwtproject.event.legacy.shared.GwtEvent;
+import org.gwtproject.user.client.Event;
 
 /**
  * Triggered when the dropdown menu of the typeahead is closed.
@@ -37,7 +36,7 @@ public class TypeaheadClosedEvent<T> extends GwtEvent<TypeaheadClosedHandler<T>>
         source.fireEvent(event);
     }
 
-    private static final Type<TypeaheadClosedHandler<?>> TYPE = new Type<TypeaheadClosedHandler<?>>();
+    private static final Type<TypeaheadClosedHandler<?>> TYPE = new Type<>();
 
     private final Typeahead<T> typeahead;
     private final Event nativeEvent;

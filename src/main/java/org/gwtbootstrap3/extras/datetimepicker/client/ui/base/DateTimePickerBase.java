@@ -64,9 +64,9 @@ import org.gwtbootstrap3.extras.datetimepicker.client.ui.base.constants.HasMaxVi
 import org.gwtbootstrap3.extras.datetimepicker.client.ui.base.constants.HasMinView;
 import org.gwtbootstrap3.extras.datetimepicker.client.ui.base.constants.HasMinuteStep;
 import org.gwtbootstrap3.extras.datetimepicker.client.ui.base.constants.HasPosition;
+import org.gwtbootstrap3.extras.datetimepicker.client.ui.base.constants.HasShowClearButton;
 import org.gwtbootstrap3.extras.datetimepicker.client.ui.base.constants.HasShowMeridian;
 import org.gwtbootstrap3.extras.datetimepicker.client.ui.base.constants.HasShowTodayButton;
-import org.gwtbootstrap3.extras.datetimepicker.client.ui.base.constants.HasShowClearButton;
 import org.gwtbootstrap3.extras.datetimepicker.client.ui.base.constants.HasStartDate;
 import org.gwtbootstrap3.extras.datetimepicker.client.ui.base.constants.HasStartView;
 import org.gwtbootstrap3.extras.datetimepicker.client.ui.base.constants.HasViewSelect;
@@ -79,34 +79,36 @@ import org.gwtbootstrap3.extras.datetimepicker.client.ui.base.events.ChangeYearE
 import org.gwtbootstrap3.extras.datetimepicker.client.ui.base.events.ChangeYearHandler;
 import org.gwtbootstrap3.extras.datetimepicker.client.ui.base.events.OutOfRangeEvent;
 import org.gwtbootstrap3.extras.datetimepicker.client.ui.base.events.OutOfRangeHandler;
-
-import com.google.gwt.core.client.ScriptInjector;
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.editor.client.EditorError;
-import com.google.gwt.editor.client.HasEditorErrors;
-import com.google.gwt.editor.client.LeafValueEditor;
-import com.google.gwt.event.dom.client.BlurEvent;
-import com.google.gwt.event.dom.client.BlurHandler;
-import com.google.gwt.event.logical.shared.ValueChangeEvent;
-import com.google.gwt.event.logical.shared.ValueChangeHandler;
-import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.i18n.client.DateTimeFormat;
-import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.ui.HasEnabled;
-import com.google.gwt.user.client.ui.HasName;
-import com.google.gwt.user.client.ui.HasValue;
-import com.google.gwt.user.client.ui.HasVisibility;
-import com.google.gwt.user.client.ui.Widget;
+import org.gwtproject.core.client.ScriptInjector;
+import org.gwtproject.dom.client.Element;
+import org.gwtproject.editor.client.EditorError;
+import org.gwtproject.editor.client.HasEditorErrors;
+import org.gwtproject.editor.client.LeafValueEditor;
+import org.gwtproject.event.dom.client.BlurEvent;
+import org.gwtproject.event.logical.shared.ValueChangeEvent;
+import org.gwtproject.event.logical.shared.ValueChangeHandler;
+import org.gwtproject.event.shared.HandlerRegistration;
+import org.gwtproject.i18n.client.DateTimeFormat;
+import org.gwtproject.user.client.Event;
+import org.gwtproject.user.client.ui.HasEnabled;
+import org.gwtproject.user.client.ui.HasName;
+import org.gwtproject.user.client.ui.HasValue;
+import org.gwtproject.user.client.ui.HasVisibility;
+import org.gwtproject.user.client.ui.Widget;
 
 /**
  * @author Joshua Godi
  * @author Steven Jardine
  */
-public class DateTimePickerBase extends Widget implements HasEnabled, HasReadOnly, HasId, HasResponsiveness, HasVisibility,
-        HasPlaceholder, HasAutoClose, HasDaysOfWeekDisabled, HasEndDate, HasForceParse, HasFormat, HasHighlightToday,
-        HasKeyboardNavigation, HasMaxView, HasMinuteStep, HasMinView, HasShowMeridian, HasShowTodayButton, HasShowClearButton, HasStartDate,
-        HasStartView, HasViewSelect, HasWeekStart, HasDateTimePickerHandlers, HasLanguage, HasName, HasValue<Date>, HasPosition,
-        LeafValueEditor<Date>, HasEditorErrors<Date>, HasErrorHandler, HasValidators<Date>, HasBlankValidator<Date> {
+public class DateTimePickerBase extends Widget implements HasEnabled, HasReadOnly, HasId, HasResponsiveness,
+                                                          HasVisibility,
+                                                          HasPlaceholder, HasAutoClose, HasDaysOfWeekDisabled, HasEndDate, HasForceParse, HasFormat, HasHighlightToday,
+                                                          HasKeyboardNavigation, HasMaxView, HasMinuteStep, HasMinView, HasShowMeridian, HasShowTodayButton, HasShowClearButton, HasStartDate,
+                                                          HasStartView, HasViewSelect, HasWeekStart, HasDateTimePickerHandlers, HasLanguage,
+                                                          HasName,
+                                                          HasValue<Date>, HasPosition,
+                                                          LeafValueEditor<Date>,
+                                                          HasEditorErrors<Date>, HasErrorHandler, HasValidators<Date>, HasBlankValidator<Date> {
 
     static class DatePickerValidatorMixin extends BlankValidatorMixin<DateTimePickerBase, Date> {
 
@@ -121,13 +123,8 @@ public class DateTimePickerBase extends Widget implements HasEnabled, HasReadOnl
         }
 
         @Override
-        protected com.google.web.bindery.event.shared.HandlerRegistration setupBlurValidation() {
-            return getInputWidget().addDomHandler(new BlurHandler() {
-                @Override
-                public void onBlur(BlurEvent event) {
-                    getInputWidget().validate(!showing && getValidateOnBlur());
-                }
-            }, BlurEvent.getType());
+        protected HandlerRegistration setupBlurValidation() {
+            return getInputWidget().addDomHandler(event -> getInputWidget().validate(!showing && getValidateOnBlur()), BlurEvent.getType());
         }
 
     }
@@ -176,7 +173,7 @@ public class DateTimePickerBase extends Widget implements HasEnabled, HasReadOnl
 
     public DateTimePickerBase() {
         textBox = new TextBox();
-        setElement((Element) textBox.getElement());
+        setElement(textBox.getElement());
         setFormat(format);
     }
 
@@ -790,7 +787,7 @@ public class DateTimePickerBase extends Widget implements HasEnabled, HasReadOnl
 
     /** {@inheritDoc} */
     @Override
-    public com.google.web.bindery.event.shared.HandlerRegistration addValidationChangedHandler(ValidationChangedHandler handler) {
+    public HandlerRegistration addValidationChangedHandler(ValidationChangedHandler handler) {
         return validatorMixin.addValidationChangedHandler(handler);
     }
 

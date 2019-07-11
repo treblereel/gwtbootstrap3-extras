@@ -20,7 +20,7 @@ package org.gwtbootstrap3.extras.summernote.client.event;
  * #L%
  */
 
-import com.google.gwt.event.shared.GwtEvent;
+import org.gwtproject.event.legacy.shared.GwtEvent;
 
 /**
  * The {@link SummernoteChangeEvent} is fired when the summernote editor's content

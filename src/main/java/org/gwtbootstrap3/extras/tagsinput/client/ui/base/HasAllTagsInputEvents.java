@@ -1,9 +1,15 @@
 package org.gwtbootstrap3.extras.tagsinput.client.ui.base;
 
 import org.gwtbootstrap3.extras.tagsinput.client.event.BeforeItemAddEvent;
+import org.gwtbootstrap3.extras.tagsinput.client.event.BeforeItemRemoveEvent;
 import org.gwtbootstrap3.extras.tagsinput.client.event.HasBeforeItemAddHandlers;
 import org.gwtbootstrap3.extras.tagsinput.client.event.HasBeforeItemRemoveHandlers;
 import org.gwtbootstrap3.extras.tagsinput.client.event.HasItemAddedHandlers;
+import org.gwtbootstrap3.extras.tagsinput.client.event.HasItemAddedOnInitHandlers;
+import org.gwtbootstrap3.extras.tagsinput.client.event.HasItemRemovedHandlers;
+import org.gwtbootstrap3.extras.tagsinput.client.event.ItemAddedEvent;
+import org.gwtbootstrap3.extras.tagsinput.client.event.ItemAddedOnInitEvent;
+import org.gwtbootstrap3.extras.tagsinput.client.event.ItemRemovedEvent;
 
 /*
  * #%L
@@ -24,10 +30,6 @@ import org.gwtbootstrap3.extras.tagsinput.client.event.HasItemAddedHandlers;
  * limitations under the License.
  * #L%
  */
-
-import org.gwtbootstrap3.extras.tagsinput.client.event.HasItemAddedOnInitHandlers;
-import org.gwtbootstrap3.extras.tagsinput.client.event.HasItemRemovedHandlers;
-import org.gwtbootstrap3.extras.tagsinput.client.event.ItemAddedOnInitEvent;
 
 /**
  * Convenience interface used to implement all tagsinput handlers at once.

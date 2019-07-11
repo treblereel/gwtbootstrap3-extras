@@ -21,9 +21,8 @@ package org.gwtbootstrap3.extras.summernote.client.ui.base;
  */
 
 import org.gwtbootstrap3.client.ui.html.Text;
-
-import com.google.gwt.dom.client.Document;
-import com.google.gwt.dom.client.Node;
+import org.gwtproject.dom.client.Document;
+import org.gwtproject.dom.client.Node;
 
 /**
  * This hint handler provides a default implementation of

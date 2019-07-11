@@ -20,8 +20,8 @@ package org.gwtbootstrap3.extras.select.client.ui;
  * #L%
  */
 
-import com.google.gwt.resources.client.TextResource;
 import org.gwtbootstrap3.extras.select.client.SelectClientBundle;
+import org.gwtproject.resources.client.TextResource;
 
 public enum SelectLanguage {
 

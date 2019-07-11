@@ -20,7 +20,7 @@ package org.gwtbootstrap3.extras.select.client.ui.event;
  * #L%
  */
 
-import com.google.gwt.event.shared.GwtEvent;
+import org.gwtproject.event.legacy.shared.GwtEvent;
 
 /**
  * The hidden event is fired when the drop-down has finished being hidden

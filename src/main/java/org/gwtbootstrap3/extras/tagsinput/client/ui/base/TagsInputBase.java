@@ -25,6 +25,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import elemental2.core.JsArray;
 import org.gwtbootstrap3.client.ui.gwt.Widget;
 import org.gwtbootstrap3.extras.tagsinput.client.callback.ItemTextCallback;
 import org.gwtbootstrap3.extras.tagsinput.client.callback.ItemValueCallback;
@@ -44,18 +45,15 @@ import org.gwtbootstrap3.extras.typeahead.client.base.Dataset;
 import org.gwtbootstrap3.extras.typeahead.client.events.TypeaheadSelectedEvent;
 import org.gwtbootstrap3.extras.typeahead.client.events.TypeaheadSelectedHandler;
 import org.gwtbootstrap3.extras.typeahead.client.ui.Typeahead;
-
-import com.google.gwt.core.client.JavaScriptObject;
-import com.google.gwt.core.client.JsArray;
-import com.google.gwt.core.client.JsArrayInteger;
-import com.google.gwt.core.client.JsArrayString;
-import com.google.gwt.core.client.Scheduler;
-import com.google.gwt.core.client.Scheduler.ScheduledCommand;
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.event.dom.client.ChangeEvent;
-import com.google.gwt.event.dom.client.ChangeHandler;
-import com.google.gwt.event.dom.client.HasChangeHandlers;
-import com.google.gwt.event.shared.HandlerRegistration;
+import org.gwtproject.core.client.JavaScriptObject;
+import org.gwtproject.core.client.JsArrayInteger;
+import org.gwtproject.core.client.JsArrayString;
+import org.gwtproject.core.client.Scheduler;
+import org.gwtproject.dom.client.Element;
+import org.gwtproject.event.dom.client.ChangeEvent;
+import org.gwtproject.event.dom.client.ChangeHandler;
+import org.gwtproject.event.dom.client.HasChangeHandlers;
+import org.gwtproject.event.shared.HandlerRegistration;
 
 /**
  * Wrapper for Bootstrap Tags Input component.
@@ -67,7 +65,8 @@ import com.google.gwt.event.shared.HandlerRegistration;
  *
  * @author Marko Nikolić <marko.nikolic@iten.rs>
  */
-class TagsInputBase<T> extends Widget implements HasAllTagsInputEvents<T>, HasChangeHandlers {
+class TagsInputBase<T> extends Widget implements HasAllTagsInputEvents<T>,
+                                                 HasChangeHandlers {
     
     @SuppressWarnings("unchecked")
     private TagsInputOptions<T> options = TagsInputOptions.create();
@@ -75,7 +74,7 @@ class TagsInputBase<T> extends Widget implements HasAllTagsInputEvents<T>, HasCh
     private Collection<? extends Dataset<T>> datasets;
     
     private Typeahead<T> typeahead;
-    private ScheduledCommand attachTypeahead = new ScheduledCommand() {   
+    private Scheduler.ScheduledCommand attachTypeahead = new Scheduler.ScheduledCommand() {
         @Override
         public void execute() {
             typeahead = new Typeahead<T>(input(), datasets);
@@ -339,9 +338,9 @@ class TagsInputBase<T> extends Widget implements HasAllTagsInputEvents<T>, HasCh
         JsArray<JavaScriptObject> js_items = getItems(getElement());
         List<T> items = new ArrayList<T>();
         
-        for(int i=0; i<js_items.length(); i++) {
+        for(int i=0; i<js_items.length; i++) {
             @SuppressWarnings("unchecked")
-            T item = (T) js_items.get(i);
+            T item = (T) js_items.getAt(i);
             items.add(item);
         }
         

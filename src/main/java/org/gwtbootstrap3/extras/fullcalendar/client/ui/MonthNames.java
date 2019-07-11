@@ -20,9 +20,9 @@ package org.gwtbootstrap3.extras.fullcalendar.client.ui;
  * #L%
  */
 
-import com.google.gwt.core.client.JavaScriptObject;
-import com.google.gwt.core.client.JsArrayString;
-import com.google.gwt.i18n.client.LocaleInfo;
+import org.gwtproject.core.client.JavaScriptObject;
+import org.gwtproject.core.client.JsArrayString;
+import org.gwtproject.i18n.client.LocaleInfo;
 
 /**
  * @author Jeff Isenhart
@@ -47,7 +47,7 @@ public class MonthNames implements IsJavaScriptObject {
 
     public void localize() {
         localize(LocaleInfo.getCurrentLocale().getDateTimeFormatInfo().monthsFull(),
-                LocaleInfo.getCurrentLocale().getDateTimeFormatInfo().monthsShort());
+                 LocaleInfo.getCurrentLocale().getDateTimeFormatInfo().monthsShort());
     }
 
     /**

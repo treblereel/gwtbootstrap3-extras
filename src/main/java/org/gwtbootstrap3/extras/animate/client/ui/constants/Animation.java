@@ -20,8 +20,8 @@ package org.gwtbootstrap3.extras.animate.client.ui.constants;
  * #L%
  */
 
-import com.google.gwt.dom.client.Style;
 import org.gwtbootstrap3.client.ui.base.helper.EnumHelper;
+import org.gwtproject.dom.client.Style;
 
 /**
  * Enumeration of CSS animations from Animate.css project.

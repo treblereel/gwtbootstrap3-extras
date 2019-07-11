@@ -20,9 +20,9 @@ package org.gwtbootstrap3.extras.fullcalendar.client.ui;
  * #L%
  */
 
-import com.google.gwt.core.client.JavaScriptObject;
-import com.google.gwt.core.client.JsArrayString;
-import com.google.gwt.i18n.client.LocaleInfo;
+import org.gwtproject.core.client.JavaScriptObject;
+import org.gwtproject.core.client.JsArrayString;
+import org.gwtproject.i18n.client.LocaleInfo;
 
 /**
  * @author Jeff Isenhart
@@ -46,7 +46,7 @@ public class DayNames implements IsJavaScriptObject {
 
     public void localize() {
         localized(LocaleInfo.getCurrentLocale().getDateTimeFormatInfo().weekdaysFull(),
-                LocaleInfo.getCurrentLocale().getDateTimeFormatInfo().weekdaysShort());
+                  LocaleInfo.getCurrentLocale().getDateTimeFormatInfo().weekdaysShort());
     }
 
     /**

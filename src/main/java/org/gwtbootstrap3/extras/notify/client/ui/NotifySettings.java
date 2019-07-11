@@ -31,7 +31,7 @@ import org.gwtbootstrap3.extras.notify.client.event.NotifyClosedHandler;
 import org.gwtbootstrap3.extras.notify.client.event.NotifyShowHandler;
 import org.gwtbootstrap3.extras.notify.client.event.NotifyShownHandler;
 
-import com.google.gwt.core.client.JavaScriptObject;
+import org.gwtproject.core.client.JavaScriptObject;
 
 /**
  * This class represent basic Notify's settings, that you can use to customize display of each Notify.

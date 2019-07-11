@@ -20,18 +20,17 @@ package org.gwtbootstrap3.extras.summernote.client;
  * #L%
  */
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.resources.client.ClientBundle;
-import com.google.gwt.resources.client.TextResource;
+import org.gwtproject.resources.client.ClientBundle;
+import org.gwtproject.resources.client.TextResource;
 
 /**
  * @author godi
  */
 public interface SummernoteClientBundle extends ClientBundle {
 
-    public static final SummernoteClientBundle INSTANCE = GWT.create(SummernoteClientBundle.class);
-    static final String VERSION = "0.8.2";
-    static final String LOCALE_DIR = "resource/js/locales.cache." + VERSION + "/";
+    SummernoteClientBundle INSTANCE = new SummernoteClientBundleImpl();
+    String VERSION = "0.8.2";
+    String LOCALE_DIR = "resource/js/locales.cache." + VERSION + "/";
 
     @Source("resource/js/summernote-" + VERSION + ".min.cache.js")
     TextResource summernote();

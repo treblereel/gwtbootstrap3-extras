@@ -20,14 +20,6 @@ package org.gwtbootstrap3.extras.gallery.client.ui;
  * #L%
  */
 
-import com.google.gwt.dom.client.Document;
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.event.dom.client.LoadEvent;
-import com.google.gwt.event.dom.client.LoadHandler;
-import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.Widget;
 import org.gwtbootstrap3.client.ui.Anchor;
 import org.gwtbootstrap3.client.ui.Heading;
 import org.gwtbootstrap3.client.ui.base.ComplexWidget;
@@ -49,6 +41,14 @@ import org.gwtbootstrap3.extras.gallery.client.events.GallerySlideEndEvent;
 import org.gwtbootstrap3.extras.gallery.client.events.GallerySlideEndHandler;
 import org.gwtbootstrap3.extras.gallery.client.events.GallerySlideEvent;
 import org.gwtbootstrap3.extras.gallery.client.events.GallerySlideHandler;
+import org.gwtproject.dom.client.Document;
+import org.gwtproject.dom.client.Element;
+import org.gwtproject.event.dom.client.LoadEvent;
+import org.gwtproject.event.dom.client.LoadHandler;
+import org.gwtproject.event.shared.HandlerRegistration;
+import org.gwtproject.user.client.Event;
+import org.gwtproject.user.client.ui.RootPanel;
+import org.gwtproject.user.client.ui.Widget;
 
 /**
  * Bootstrap Gallery

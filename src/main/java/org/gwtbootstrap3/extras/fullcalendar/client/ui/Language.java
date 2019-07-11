@@ -20,8 +20,8 @@ package org.gwtbootstrap3.extras.fullcalendar.client.ui;
  * #L%
  */
 
-import com.google.gwt.resources.client.TextResource;
 import org.gwtbootstrap3.extras.fullcalendar.client.FullCalendarClientBundle;
+import org.gwtproject.resources.client.TextResource;
 
 /**
  * Convenient encapsulation of all language options for <code>FullCalendar</code>

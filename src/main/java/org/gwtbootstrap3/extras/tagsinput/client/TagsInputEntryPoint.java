@@ -20,8 +20,8 @@ package org.gwtbootstrap3.extras.tagsinput.client;
  * #L%
  */
 
-import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.core.client.ScriptInjector;
+import org.gwtproject.core.client.EntryPoint;
+import org.gwtproject.core.client.ScriptInjector;
 
 /**
  * @author Marko Nikolić <marko.nikolic@iten.rs>

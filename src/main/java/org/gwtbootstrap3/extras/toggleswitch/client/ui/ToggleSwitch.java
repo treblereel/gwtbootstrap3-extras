@@ -1,8 +1,7 @@
 package org.gwtbootstrap3.extras.toggleswitch.client.ui;
 
 import org.gwtbootstrap3.extras.toggleswitch.client.ui.base.ToggleSwitchBase;
-
-import com.google.gwt.dom.client.Document;
+import org.gwtproject.dom.client.Document;
 
 /*
  * #%L

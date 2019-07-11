@@ -46,23 +46,22 @@ import org.gwtbootstrap3.extras.slider.client.ui.base.event.SlideStartEvent;
 import org.gwtbootstrap3.extras.slider.client.ui.base.event.SlideStartHandler;
 import org.gwtbootstrap3.extras.slider.client.ui.base.event.SlideStopEvent;
 import org.gwtbootstrap3.extras.slider.client.ui.base.event.SlideStopHandler;
-
-import com.google.gwt.core.client.JavaScriptObject;
-import com.google.gwt.core.client.JsArrayNumber;
-import com.google.gwt.core.client.JsArrayString;
-import com.google.gwt.core.client.JsonUtils;
-import com.google.gwt.dom.client.Document;
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.editor.client.IsEditor;
-import com.google.gwt.editor.client.LeafValueEditor;
-import com.google.gwt.editor.client.adapters.TakesValueEditor;
-import com.google.gwt.event.logical.shared.ValueChangeEvent;
-import com.google.gwt.event.logical.shared.ValueChangeHandler;
-import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.ui.HasEnabled;
-import com.google.gwt.user.client.ui.HasValue;
-import com.google.gwt.user.client.ui.Widget;
+import org.gwtproject.core.client.JavaScriptObject;
+import org.gwtproject.core.client.JsArrayNumber;
+import org.gwtproject.core.client.JsArrayString;
+import org.gwtproject.core.client.JsonUtils;
+import org.gwtproject.dom.client.Document;
+import org.gwtproject.dom.client.Element;
+import org.gwtproject.editor.client.IsEditor;
+import org.gwtproject.editor.client.LeafValueEditor;
+import org.gwtproject.editor.client.adapters.TakesValueEditor;
+import org.gwtproject.event.logical.shared.ValueChangeEvent;
+import org.gwtproject.event.logical.shared.ValueChangeHandler;
+import org.gwtproject.event.shared.Event;
+import org.gwtproject.event.shared.HandlerRegistration;
+import org.gwtproject.user.client.ui.HasEnabled;
+import org.gwtproject.user.client.ui.HasValue;
+import org.gwtproject.user.client.ui.Widget;
 
 /**
  *
@@ -73,8 +72,10 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Xiaodong Sun
  */
 public abstract class SliderBase<T> extends Widget implements
-        HasValue<T>, IsEditor<LeafValueEditor<T>>, HasEnabled, HasId,
-        HasResponsiveness, HasAllSlideHandlers<T> {
+                                                   HasValue<T>,
+                                                   IsEditor<LeafValueEditor<T>>,
+                                                   HasEnabled, HasId,
+                                                   HasResponsiveness, HasAllSlideHandlers<T> {
 
     private FormatterCallback<T> formatterCallback;
     private LeafValueEditor<T> editor;
@@ -541,9 +542,9 @@ public abstract class SliderBase<T> extends Widget implements
 
     @SuppressWarnings("deprecation")
     @Override
-    public com.google.gwt.user.client.Element getStyleElement() {
+    public Element getStyleElement() {
         if (isAttached()) {
-            return (com.google.gwt.user.client.Element) getElement(getElement());
+            return getElement(getElement());
         }
         return super.getStyleElement();
     }

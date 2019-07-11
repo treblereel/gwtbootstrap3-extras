@@ -20,21 +20,21 @@ package org.gwtbootstrap3.extras.select.client;
  * #L%
  */
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.resources.client.ClientBundle;
-import com.google.gwt.resources.client.TextResource;
+import org.gwtproject.resources.client.ClientBundle;
+import org.gwtproject.resources.client.Resource;
+import org.gwtproject.resources.client.TextResource;
 
 /**
  * @author godi
  */
 public interface SelectClientBundle extends ClientBundle {
 
-    static final SelectClientBundle INSTANCE = GWT.create(SelectClientBundle.class);
+    SelectClientBundle INSTANCE = new SelectClientBundleImpl();
 
-    static final String VERSION = "1.12.4";
-    static final String I18N_DIR = "resource/js/i18n.cache." + VERSION + "/";
+    String VERSION = "1.12.4";
+    String I18N_DIR = "resource/js/i18n.cache." + VERSION + "/";
 
-    @Source("resource/js/bootstrap-select-" + VERSION + ".min.cache.js")
+    @ClientBundle.Source("resource/js/bootstrap-select-" + VERSION + ".min.cache.js")
     TextResource select();
 
     @Source(I18N_DIR + "defaults-ar_AR.min.js")

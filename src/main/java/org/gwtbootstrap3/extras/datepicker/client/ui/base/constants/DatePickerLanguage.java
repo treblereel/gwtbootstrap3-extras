@@ -21,8 +21,7 @@ package org.gwtbootstrap3.extras.datepicker.client.ui.base.constants;
  */
 
 import org.gwtbootstrap3.extras.datepicker.client.DatePickerClientBundle;
-
-import com.google.gwt.resources.client.TextResource;
+import org.gwtproject.resources.client.TextResource;
 
 /**
  * @author Joshua Godi

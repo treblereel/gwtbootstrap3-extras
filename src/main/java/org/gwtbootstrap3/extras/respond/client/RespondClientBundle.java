@@ -20,15 +20,14 @@ package org.gwtbootstrap3.extras.respond.client;
  * #L%
  */
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.resources.client.ClientBundle;
-import com.google.gwt.resources.client.TextResource;
+import org.gwtproject.resources.client.ClientBundle;
+import org.gwtproject.resources.client.TextResource;
 
 /**
  * @author Joshua Godi
  */
 public interface RespondClientBundle extends ClientBundle {
-    static final RespondClientBundle INSTANCE = GWT.create(RespondClientBundle.class);
+    RespondClientBundle INSTANCE = new RespondClientBundleImpl();
 
     @Source("resource/js/html5shiv-3.7.0.min.cache.js")
     TextResource html5Shiv();

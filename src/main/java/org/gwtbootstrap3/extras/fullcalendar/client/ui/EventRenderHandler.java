@@ -20,8 +20,8 @@ package org.gwtbootstrap3.extras.fullcalendar.client.ui;
  * #L%
  */
 
-import com.google.gwt.core.client.JavaScriptObject;
-import com.google.gwt.dom.client.Element;
+import org.gwtproject.core.client.JavaScriptObject;
+import org.gwtproject.dom.client.Element;
 
 /**
  * Callback to receive the eventRender event

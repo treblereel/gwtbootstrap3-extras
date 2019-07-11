@@ -20,7 +20,7 @@ package org.gwtbootstrap3.extras.slider.client.ui.base.event;
  * #L%
  */
 
-import com.google.gwt.event.shared.EventHandler;
+import org.gwtproject.event.legacy.shared.EventHandler;
 
 /**
  * Handler interface for {@link SlideStopEvent} events.

@@ -21,9 +21,8 @@ package org.gwtbootstrap3.extras.toggleswitch.client.ui;
  */
 
 import org.gwtbootstrap3.extras.toggleswitch.client.ui.base.ToggleSwitchBase;
-
-import com.google.gwt.dom.client.Document;
-import com.google.gwt.uibinder.client.UiConstructor;
+import org.gwtproject.dom.client.Document;
+import org.gwtproject.uibinder.client.UiConstructor;
 
 public class ToggleSwitchRadio extends ToggleSwitchBase {
 

@@ -26,14 +26,13 @@ import java.util.Collections;
 
 import org.gwtbootstrap3.extras.typeahead.client.base.CollectionDataset;
 import org.gwtbootstrap3.extras.typeahead.client.base.Dataset;
-
-import com.google.gwt.dom.client.Document;
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.InputElement;
-import com.google.gwt.event.logical.shared.HasValueChangeHandlers;
-import com.google.gwt.event.logical.shared.ValueChangeEvent;
-import com.google.gwt.event.logical.shared.ValueChangeHandler;
-import com.google.gwt.event.shared.HandlerRegistration;
+import org.gwtproject.dom.client.Document;
+import org.gwtproject.dom.client.Element;
+import org.gwtproject.dom.client.InputElement;
+import org.gwtproject.event.logical.shared.HasValueChangeHandlers;
+import org.gwtproject.event.logical.shared.ValueChangeEvent;
+import org.gwtproject.event.logical.shared.ValueChangeHandler;
+import org.gwtproject.event.shared.HandlerRegistration;
 
 /**
  * Wrapper for Bootstrap Tags Input component implemented with &lt;input&gt; box as underlying component.

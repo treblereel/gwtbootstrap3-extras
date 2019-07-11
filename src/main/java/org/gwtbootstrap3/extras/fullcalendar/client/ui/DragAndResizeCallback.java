@@ -20,8 +20,8 @@ package org.gwtbootstrap3.extras.fullcalendar.client.ui;
  * #L%
  */
 
-import com.google.gwt.core.client.JavaScriptObject;
-import com.google.gwt.dom.client.NativeEvent;
+import org.gwtproject.core.client.JavaScriptObject;
+import org.gwtproject.dom.client.NativeEvent;
 
 /**
  * Callback methods for drag and resize event

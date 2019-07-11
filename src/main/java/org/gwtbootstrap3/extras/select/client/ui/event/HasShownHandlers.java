@@ -20,8 +20,8 @@ package org.gwtbootstrap3.extras.select.client.ui.event;
  * #L%
  */
 
-import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.event.shared.HasHandlers;
+import org.gwtproject.event.shared.HandlerRegistration;
+import org.gwtproject.event.shared.HasHandlers;
 
 /**
  * A widget that implements this interface is a public source of

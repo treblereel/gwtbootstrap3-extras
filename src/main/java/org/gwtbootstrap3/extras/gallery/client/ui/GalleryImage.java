@@ -20,33 +20,31 @@ package org.gwtbootstrap3.extras.gallery.client.ui;
  * #L%
  */
 
-import com.google.gwt.core.client.Scheduler;
-import com.google.gwt.dom.client.AnchorElement;
-import com.google.gwt.dom.client.Document;
-import com.google.gwt.dom.client.Style;
-import com.google.gwt.dom.client.Style.Display;
-import com.google.gwt.dom.client.Style.Position;
-import com.google.gwt.dom.client.Style.Unit;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.HasClickHandlers;
-import com.google.gwt.event.dom.client.HasLoadHandlers;
-import com.google.gwt.event.dom.client.LoadEvent;
-import com.google.gwt.event.dom.client.LoadHandler;
-import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.uibinder.client.UiConstructor;
-import com.google.gwt.user.client.Command;
-import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.Widget;
 import org.gwtbootstrap3.client.ui.base.ComplexWidget;
 import org.gwtbootstrap3.client.ui.base.HasHref;
+import org.gwtproject.core.client.Scheduler;
+import org.gwtproject.dom.client.AnchorElement;
+import org.gwtproject.dom.client.Document;
+import org.gwtproject.dom.client.Style;
+import org.gwtproject.event.dom.client.ClickEvent;
+import org.gwtproject.event.dom.client.ClickHandler;
+import org.gwtproject.event.dom.client.HasClickHandlers;
+import org.gwtproject.event.dom.client.HasLoadHandlers;
+import org.gwtproject.event.dom.client.LoadEvent;
+import org.gwtproject.event.dom.client.LoadHandler;
+import org.gwtproject.event.shared.HandlerRegistration;
+import org.gwtproject.uibinder.client.UiConstructor;
+import org.gwtproject.user.client.Command;
+import org.gwtproject.user.client.ui.Image;
+import org.gwtproject.user.client.ui.Widget;
 
 /**
  * Gallery Image
  *
  * @author Ben Dol
  */
-public class GalleryImage extends ComplexWidget implements HasHref, HasLoadHandlers {
+public class GalleryImage extends ComplexWidget implements HasHref,
+                                                           HasLoadHandlers {
 
     private Image image;
 
@@ -54,7 +52,7 @@ public class GalleryImage extends ComplexWidget implements HasHref, HasLoadHandl
     public GalleryImage(String url) {
         setElement(Document.get().createAnchorElement());
         getElement().setAttribute("data-gallery", "data-gallery");
-        getElement().getStyle().setDisplay(Display.INLINE_TABLE);
+        getElement().getStyle().setDisplay(Style.Display.INLINE_TABLE);
 
         setHref(url);
 
@@ -85,9 +83,9 @@ public class GalleryImage extends ComplexWidget implements HasHref, HasLoadHandl
                 @Override
                 public void execute() {
                     Style style = child.getElement().getStyle();
-                    style.setPosition(Position.RELATIVE);
-                    style.setBottom((double) image.getHeight(), Unit.PX);
-                    style.setLeft(4, Unit.PX);
+                    style.setPosition(Style.Position.RELATIVE);
+                    style.setBottom((double) image.getHeight(), Style.Unit.PX);
+                    style.setLeft(4, Style.Unit.PX);
                 }
             });
 
@@ -124,7 +122,7 @@ public class GalleryImage extends ComplexWidget implements HasHref, HasLoadHandl
                 for (Widget child : GalleryImage.this) {
                     if (child instanceof HasClickHandlers && !(child instanceof Image)) {
                         Style style = child.getElement().getStyle();
-                        style.setBottom((double) image.getHeight(), Unit.PX);
+                        style.setBottom((double) image.getHeight(), Style.Unit.PX);
                     }
                 }
             }

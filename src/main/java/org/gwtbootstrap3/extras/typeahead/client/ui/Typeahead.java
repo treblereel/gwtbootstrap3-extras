@@ -19,6 +19,11 @@ import org.gwtbootstrap3.extras.typeahead.client.events.TypeaheadOpenedEvent;
 import org.gwtbootstrap3.extras.typeahead.client.events.TypeaheadOpenedHandler;
 import org.gwtbootstrap3.extras.typeahead.client.events.TypeaheadSelectedEvent;
 import org.gwtbootstrap3.extras.typeahead.client.events.TypeaheadSelectedHandler;
+import org.gwtproject.core.client.JavaScriptObject;
+import org.gwtproject.core.client.JsArray;
+import org.gwtproject.dom.client.Element;
+import org.gwtproject.event.shared.HandlerRegistration;
+import org.gwtproject.user.client.Event;
 
 /*
  * #%L
@@ -39,12 +44,6 @@ import org.gwtbootstrap3.extras.typeahead.client.events.TypeaheadSelectedHandler
  * limitations under the License.
  * #L%
  */
-
-import com.google.gwt.core.client.JavaScriptObject;
-import com.google.gwt.core.client.JsArray;
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.user.client.Event;
 
 /**
  * Twitter typeahead.js

@@ -20,20 +20,19 @@ package org.gwtbootstrap3.extras.fullcalendar.client;
  * #L%
  */
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.resources.client.ClientBundle;
-import com.google.gwt.resources.client.CssResource;
-import com.google.gwt.resources.client.TextResource;
+import org.gwtproject.resources.client.ClientBundle;
+import org.gwtproject.resources.client.CssResource;
+import org.gwtproject.resources.client.TextResource;
 
 public interface FullCalendarClientBundle extends ClientBundle {
 
-    public static final FullCalendarClientBundle INSTANCE = GWT.create(FullCalendarClientBundle.class);
+    FullCalendarClientBundle INSTANCE = new FullCalendarClientBundleImpl();
 
-    @Source("resource/css/fullcalendar-2.3.1.cache.css")
+    @Source("resource/css/fullcalendar-2.3.1.cache.gss")
     @CssResource.NotStrict
     CssResource fullCalendarCss();
 
-    @Source("resource/css/fullcalendar-2.3.1.cache.print.css")
+    @Source("resource/css/fullcalendar-2.3.1.cache.print.gss")
     @CssResource.NotStrict
     CssResource fullCalendarPrintCss();
 

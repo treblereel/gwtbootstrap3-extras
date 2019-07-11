@@ -20,16 +20,19 @@ package org.gwtbootstrap3.extras.gallery.client;
  * #L%
  */
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.resources.client.ClientBundle;
+import org.gwtproject.resources.client.ClientBundle;
+import org.gwtproject.resources.client.TextResource;
 
 /**
  * @author Ben Dol
  */
 public interface GalleryClientBundle extends ClientBundle {
 
-    static final GalleryClientBundle INSTANCE = GWT.create(GalleryClientBundle.class);
+    GalleryClientBundle INSTANCE = new GalleryClientBundleImpl();
 
-    static final String BLUEIMP_JS = "js/jquery.blueimp-gallery-2.18.2.min.cache.js";
-    static final String GALLERY_JS = "js/bootstrap-image-gallery-3.4.2.min.cache.js";
+    @ClientBundle.Source("resource/js/jquery.blueimp-gallery-2.18.2.min.cache.js")
+    TextResource BLUEIMP_JS();
+
+    @ClientBundle.Source("resource/js/bootstrap-image-gallery-3.4.2.min.cache.js")
+    TextResource GALLERY_JS();
 }

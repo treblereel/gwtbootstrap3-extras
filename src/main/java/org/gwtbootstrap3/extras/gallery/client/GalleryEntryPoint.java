@@ -20,9 +20,8 @@ package org.gwtbootstrap3.extras.gallery.client;
  * #L%
  */
 
-import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.core.client.ScriptInjector;
+import org.gwtproject.core.client.EntryPoint;
+import org.gwtproject.core.client.ScriptInjector;
 
 /**
  * @author Ben Dol
@@ -31,12 +30,11 @@ public class GalleryEntryPoint implements EntryPoint {
 
     @Override
     public void onModuleLoad() {
-        inject(GalleryClientBundle.BLUEIMP_JS);
-        inject(GalleryClientBundle.GALLERY_JS);
+        inject(GalleryClientBundle.INSTANCE.BLUEIMP_JS().getText());
+        inject(GalleryClientBundle.INSTANCE.GALLERY_JS().getText());
     }
 
     private void inject(String resource) {
-        ScriptInjector.fromUrl(GWT.getModuleBaseURL() + resource)
-            .setRemoveTag(true).setWindow(ScriptInjector.TOP_WINDOW).inject();
+        ScriptInjector.fromString(resource).setWindow(ScriptInjector.TOP_WINDOW).inject();
     }
 }

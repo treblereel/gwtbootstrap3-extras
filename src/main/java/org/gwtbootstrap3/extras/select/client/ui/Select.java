@@ -20,12 +20,12 @@ package org.gwtbootstrap3.extras.select.client.ui;
  * #L%
  */
 
-import static org.gwtbootstrap3.extras.select.client.ui.SelectOptions.SHOW_TICK;
-
 import java.util.Map.Entry;
 
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.OptionElement;
+import org.gwtproject.dom.client.Element;
+import org.gwtproject.dom.client.OptionElement;
+
+import static org.gwtbootstrap3.extras.select.client.ui.SelectOptions.SHOW_TICK;
 
 /**
  * Standard select box.

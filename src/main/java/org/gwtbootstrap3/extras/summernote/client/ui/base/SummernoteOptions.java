@@ -20,9 +20,9 @@ package org.gwtbootstrap3.extras.summernote.client.ui.base;
  * #L%
  */
 
-import com.google.gwt.core.client.JavaScriptObject;
-import com.google.gwt.core.client.JsArrayMixed;
-import com.google.gwt.core.client.JsArrayString;
+import org.gwtproject.core.client.JavaScriptObject;
+import org.gwtproject.core.client.JsArrayMixed;
+import org.gwtproject.core.client.JsArrayString;
 
 /**
  * This class represents Summernote options, that you can use to

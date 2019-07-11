@@ -21,11 +21,10 @@ package org.gwtbootstrap3.extras.slider.client.ui;
  */
 
 import org.gwtbootstrap3.extras.slider.client.ui.base.SliderBase;
-
-import com.google.gwt.core.client.JavaScriptObject;
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.uibinder.client.UiConstructor;
-import com.google.gwt.user.client.Event;
+import org.gwtproject.core.client.JavaScriptObject;
+import org.gwtproject.dom.client.Element;
+import org.gwtproject.event.shared.Event;
+import org.gwtproject.uibinder.client.UiConstructor;
 
 /**
  * This slider simply takes a numeric value.

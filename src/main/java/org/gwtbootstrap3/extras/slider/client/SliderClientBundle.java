@@ -20,16 +20,15 @@ package org.gwtbootstrap3.extras.slider.client;
  * #L%
  */
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.resources.client.ClientBundle;
-import com.google.gwt.resources.client.TextResource;
+import org.gwtproject.resources.client.ClientBundle;
+import org.gwtproject.resources.client.TextResource;
 
 /**
  * @author Xiaodong SUN
  */
 interface SliderClientBundle extends ClientBundle {
 
-    static final SliderClientBundle INSTANCE = GWT.create(SliderClientBundle.class);
+    SliderClientBundle INSTANCE = new SliderClientBundleImpl();
 
     @Source("resource/js/bootstrap-slider-9.2.0.min.cache.js")
     TextResource slider();

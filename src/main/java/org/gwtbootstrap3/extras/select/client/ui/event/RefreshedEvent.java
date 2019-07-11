@@ -20,7 +20,7 @@ package org.gwtbootstrap3.extras.select.client.ui.event;
  * #L%
  */
 
-import com.google.gwt.event.shared.GwtEvent;
+import org.gwtproject.event.legacy.shared.GwtEvent;
 
 /**
  * The refreshed event is fired after the refresh instance has been called.
