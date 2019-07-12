@@ -1,17 +1,15 @@
-package org.gwtbootstrap3.extras.bootbox.client.options;
-
 /*
  * #%L
  * GwtBootstrap3
  * %%
- * Copyright (C) 2016 GwtBootstrap3
+ * Copyright (C) 2013 - 2014 GwtBootstrap3
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -19,38 +17,15 @@ package org.gwtbootstrap3.extras.bootbox.client.options;
  * limitations under the License.
  * #L%
  */
+package org.gwtbootstrap3.extras.bootbox.client.options;
 
-import org.gwtbootstrap3.extras.bootbox.client.callback.PromptCallback;
-import org.gwtproject.core.client.JavaScriptObject;
+import jsinterop.annotations.JsType;
 
 /**
- * Prompt options.
- *
- * @author Xiaodong Sun
+ * @author Dmitrii Tikhomirov
+ * Created by treblereel 7/12/19
  */
-public class PromptOptions extends DialogOptions {
+@JsType(isNative = true, name = "Object")
+public class PromptOptions extends DialogOptions<PromptOptions> {
 
-    /**
-     * 
-     */
-    protected PromptOptions() {}
-    
-    /**
-     * Creates a new {@link PromptOptions}.
-     *
-     * @param message
-     * @return
-     */
-    public static final PromptOptions newOptions(final String message) {
-        PromptOptions options = JavaScriptObject.createObject().cast();
-        options.setMessage(message);
-        options.setCallback(PromptCallback.DEFAULT_PROMPT_CALLBACK);
-        return options;
-    }
-
-    public final native void setCallback(PromptCallback callback) /*-{
-        this.callback = function(result) {
-            callback.@org.gwtbootstrap3.extras.bootbox.client.callback.PromptCallback::callback(Ljava/lang/String;)(result);
-        };
-    }-*/;
 }

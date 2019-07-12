@@ -20,13 +20,24 @@ package org.gwtbootstrap3.extras.animate.client.ui;
  * #L%
  */
 
+import java.util.ArrayList;
+
+import elemental2.core.JsArray;
+import elemental2.core.JsObject;
+import elemental2.dom.Event;
+import jsinterop.annotations.JsFunction;
+import jsinterop.annotations.JsMethod;
+import jsinterop.annotations.JsType;
+import jsinterop.base.Js;
+import jsinterop.base.JsPropertyMap;
+import org.gwtbootstrap3.client.shared.js.JQuery;
 import org.gwtbootstrap3.extras.animate.client.ui.constants.Animation;
 import org.gwtproject.core.client.Scheduler;
 import org.gwtproject.dom.client.Element;
 import org.gwtproject.dom.client.StyleInjector;
 import org.gwtproject.user.client.ui.UIObject;
 
-import java.util.ArrayList;
+import static org.gwtbootstrap3.client.shared.js.JQuery.jQuery;
 
 /**
  * Utility class to dynamically animate objects using CSS animations.
@@ -316,14 +327,16 @@ public class Animate {
      * @param element Element to remove style from.
      * @param animation Animation CSS class to remove.
      */
-    private static final native void removeAnimationOnEnd(Element element, String animation) /*-{
+    private static final void removeAnimationOnEnd(Element element, String animation) {
 
-        var elem = $wnd.jQuery(element);
-        elem.one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', { elem: elem }, function(event) {
-            event.data.elem.removeClass(animation);
-        });
+        JQueryExt elem = (JQueryExt) jQuery(element);
+        JsArray arrayString = new JsArray<String>();
+        arrayString.push("webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend");
+        JsPropertyMap params = JsPropertyMap.of();
+        params.set("elem", elem);
 
-    }-*/;
+        elem.one(arrayString, Js.uncheckedCast(params), event -> ((HasRemoveClass)Js.asPropertyMap(Js.asPropertyMap(event).get("data")).get("elem")).removeClass(animation));
+    }
 
     /**
      * Removes custom animation class and stops animation.
@@ -343,9 +356,10 @@ public class Animate {
      * @param element Element to remove style from.
      * @param animation Animation CSS class to remove.
      */
-    private static final native void stopAnimation(Element element, String animation) /*-{
-        $wnd.jQuery(element).removeClass(animation);
-    }-*/;
+    private static final void stopAnimation(Element element, String animation) {
+        JQueryExt elem = (JQueryExt) jQuery(element);
+        ((HasRemoveClass) Js.uncheckedCast(elem)).removeClass(animation);
+    }
 
     /**
      * Helper method, which returns unique class name for combination of animation and it's settings.
@@ -379,6 +393,33 @@ public class Animate {
 
         return styleName;
 
+    }
+
+    @JsType(
+            isNative = true,
+            namespace = "<global>",
+            name = "jQuery"
+    )
+    static class JQueryExt extends JQuery {
+
+    @JsMethod
+    native void one(JsArray arrayString, JsObject params, Fn callback);
+
+    }
+
+    @FunctionalInterface
+    @JsFunction
+    interface Fn {
+        void onInvoke(Event event);
+    }
+
+    @JsType(
+            isNative = true,
+            name = "Object",
+            namespace = "<global>"
+    )
+    class HasRemoveClass implements JsPropertyMap {
+        native void removeClass(String animation);
     }
 
 }

@@ -1,17 +1,15 @@
-package org.gwtbootstrap3.extras.bootbox.client.options;
-
 /*
  * #%L
  * GwtBootstrap3
  * %%
- * Copyright (C) 2016 GwtBootstrap3
+ * Copyright (C) 2013 - 2014 GwtBootstrap3
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -19,38 +17,15 @@ package org.gwtbootstrap3.extras.bootbox.client.options;
  * limitations under the License.
  * #L%
  */
+package org.gwtbootstrap3.extras.bootbox.client.options;
 
-import org.gwtbootstrap3.extras.bootbox.client.callback.ConfirmCallback;
-import org.gwtproject.core.client.JavaScriptObject;
+import jsinterop.annotations.JsType;
 
 /**
- * Confirm options.
- *
- * @author Xiaodong Sun
+ * @author Dmitrii Tikhomirov
+ * Created by treblereel 7/12/19
  */
-public class ConfirmOptions extends DialogOptions {
+@JsType(isNative = true, name = "Object")
+public class ConfirmOptions extends DialogOptions<ConfirmOptions> {
 
-    /**
-     * 
-     */
-    protected ConfirmOptions() {}
-    
-    /**
-     * Creates a new {@link ConfirmOptions}.
-     *
-     * @param message
-     * @return
-     */
-    public static final ConfirmOptions newOptions(final String message) {
-        ConfirmOptions options = JavaScriptObject.createObject().cast();
-        options.setMessage(message);
-        options.setCallback(ConfirmCallback.DEFAULT_CONFIRM_CALLBACK);
-        return options;
-    }
-
-    public final native void setCallback(ConfirmCallback callback) /*-{
-        this.callback = function(result) {
-            callback.@org.gwtbootstrap3.extras.bootbox.client.callback.ConfirmCallback::callback(Z)(result);
-        };
-    }-*/;
 }
