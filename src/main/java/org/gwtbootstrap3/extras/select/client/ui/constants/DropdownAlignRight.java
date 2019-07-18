@@ -46,7 +46,7 @@ public enum DropdownAlignRight {
 
     private String value;
 
-    private DropdownAlignRight(String size) {
+    DropdownAlignRight(String size) {
         this.value = size;
     }
 

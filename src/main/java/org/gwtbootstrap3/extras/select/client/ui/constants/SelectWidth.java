@@ -48,7 +48,7 @@ public enum SelectWidth {
 
     private String value;
 
-    private SelectWidth(String size) {
+    SelectWidth(String size) {
         this.value = size;
     }
 

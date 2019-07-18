@@ -262,13 +262,16 @@ public class MultipleSelect extends SelectBase<List<String>> {
         }
     }
 
-    private native JsArrayString getValue(Element e) /*-{
-        var value = $wnd.jQuery(e).selectpicker('val');
-        return value || [];
-    }-*/;
+    private JsArrayString getValue(Element e) {
+        JsArrayString value  = (JsArrayString)SelectPicker.jQuery(e).selectpicker("val");
+        if(value != null) {
+            return value;
+        }
+        return (JsArrayString)JsArrayString.createArray();
+    }
 
-    private native void setValue(Element e, JsArrayString value) /*-{
-        $wnd.jQuery(e).selectpicker('val', value);
-    }-*/;
+    private void setValue(Element e, JsArrayString value) {
+        SelectPicker.jQuery(e).selectpicker("val", value);
+    }
 
 }

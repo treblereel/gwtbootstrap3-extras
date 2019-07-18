@@ -49,7 +49,7 @@ public class HideEvent extends GwtEvent<HideHandler> {
      */
     public static Type<HideHandler> getType() {
         if (TYPE == null) {
-            TYPE = new Type<HideHandler>();
+            TYPE = new Type<>();
         }
         return TYPE;
     }

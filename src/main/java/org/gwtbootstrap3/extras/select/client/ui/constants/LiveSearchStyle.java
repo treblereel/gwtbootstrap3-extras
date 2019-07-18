@@ -41,7 +41,7 @@ public enum LiveSearchStyle {
 
     private String value;
 
-    private LiveSearchStyle(String size) {
+    LiveSearchStyle(String size) {
         this.value = size;
     }
 
