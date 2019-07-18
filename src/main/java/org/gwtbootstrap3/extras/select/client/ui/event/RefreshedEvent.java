@@ -49,7 +49,7 @@ public class RefreshedEvent extends GwtEvent<RefreshedHandler> {
      */
     public static Type<RefreshedHandler> getType() {
         if (TYPE == null) {
-            TYPE = new Type<RefreshedHandler>();
+            TYPE = new Type<>();
         }
         return TYPE;
     }

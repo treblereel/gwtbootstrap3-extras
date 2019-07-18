@@ -49,7 +49,7 @@ public class RenderedEvent extends GwtEvent<RenderedHandler> {
      */
     public static Type<RenderedHandler> getType() {
         if (TYPE == null) {
-            TYPE = new Type<RenderedHandler>();
+            TYPE = new Type<>();
         }
         return TYPE;
     }

@@ -100,12 +100,13 @@ public class Select extends SelectBase<String> {
         return null;
     }
 
-    private native String getValue(Element e) /*-{
-        return $wnd.jQuery(e).selectpicker('val');
-    }-*/;
+    private String getValue(Element e) {
+        return  (String) SelectPicker.jQuery(e).selectpicker("val");
 
-    private native void setValue(Element e, String value) /*-{
-        $wnd.jQuery(e).selectpicker('val', value);
-    }-*/;
+    }
+
+    private void setValue(Element e, String value) {
+        SelectPicker.jQuery(e).selectpicker("val", value);
+    }
 
 }

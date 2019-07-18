@@ -9,9 +9,9 @@ package org.gwtbootstrap3.extras.select.client.ui;
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -20,6 +20,8 @@ package org.gwtbootstrap3.extras.select.client.ui;
  * #L%
  */
 
+import elemental2.core.JsArray;
+import jsinterop.base.Js;
 import org.gwtbootstrap3.client.ui.constants.IconType;
 import org.gwtbootstrap3.client.ui.constants.Styles;
 import org.gwtproject.core.client.JavaScriptObject;
@@ -27,7 +29,6 @@ import org.gwtproject.core.client.JavaScriptObject;
 /**
  * This class represents select options, that you can use to
  * customize the select picker.
- *
  * @author Xiaodong Sun
  */
 class SelectOptions extends JavaScriptObject {
@@ -74,11 +75,11 @@ class SelectOptions extends JavaScriptObject {
     /**
      * Default constructor
      */
-    protected SelectOptions() {}
+    protected SelectOptions() {
+    }
 
     /**
      * Creates a new instance of {@link SelectOptions}.
-     *
      * @return a new instance of {@link SelectOptions}.
      */
     static SelectOptions newOptions() {
@@ -87,37 +88,34 @@ class SelectOptions extends JavaScriptObject {
         return options;
     }
 
-    private final native void init(String iconBase, String tickIcon) /*-{
-        this.iconBase = iconBase;
-        this.tickIcon = tickIcon;
-    }-*/;
+    private final void init(String iconBase, String tickIcon) {
+        Js.asPropertyMap(this).set("iconBase", iconBase);
+        Js.asPropertyMap(this).set("tickIcon", tickIcon);
+    }
 
     /**
      * @see {@link SelectBase#setCountSelectedTextHandler(CountSelectedTextHandler)}
      */
-    final native void setCountSelectedTextHandler(CountSelectedTextHandler handler) /*-{
-        if (handler) {
-            this.countSelectedText = function(selectedCount, totalCount) {
-                handler.@org.gwtbootstrap3.extras.select.client.ui.CountSelectedTextHandler::getCountSelectedText(II)(selectedCount, totalCount);
-            }
-        } else if (this.countSelectedText) {
-            delete this.countSelectedText;
+    final void setCountSelectedTextHandler(CountSelectedTextHandler handler) {
+        if (handler != null) {
+            Js.asPropertyMap(this).set("countSelectedText", (SelectPicker.Fn2Args) (selectedCount, totalCount) -> handler.getCountSelectedText(selectedCount, totalCount));
+        } else if (Js.asPropertyMap(this).has("countSelectedText")) {
+            Js.asPropertyMap(this).delete("countSelectedText");
         }
-    }-*/;
+    }
 
     /**
      * @see {@link MultipleSelect#setMaxOptionsTextHandler(MaxOptionsTextHandler)}
      */
-    final native void setMaxOptionsTextHandler(MaxOptionsTextHandler handler) /*-{
-        if (handler) {
-            this.maxOptionsText = function(numAll, numGroup) {
-                return [
-                    handler.@org.gwtbootstrap3.extras.select.client.ui.MaxOptionsTextHandler::getMaxSelectOptionsText(I)(numAll),
-                    handler.@org.gwtbootstrap3.extras.select.client.ui.MaxOptionsTextHandler::getMaxGroupOptionsText(I)(numGroup)
-                ];
-            }
-        } else if (this.maxOptionsText) {
-            delete this.maxOptionsText;
+    final void setMaxOptionsTextHandler(MaxOptionsTextHandler handler) {
+        if (handler != null) {
+            Js.asPropertyMap(this).set("maxOptionsText", (SelectPicker.Fn2Args) (numAll, numGroup) -> {
+                JsArray result = new JsArray<>();
+                result.push(handler.getMaxSelectOptionsText(numAll), handler.getMaxGroupOptionsText(numGroup));
+                return result;
+            });
+        } else if (Js.asPropertyMap(this).has("maxOptionsText")) {
+            Js.asPropertyMap(this).delete("maxOptionsText");
         }
-    }-*/;
+    }
 }

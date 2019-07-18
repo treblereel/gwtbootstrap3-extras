@@ -9,9 +9,9 @@ package org.gwtbootstrap3.extras.select.client.ui;
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -19,24 +19,6 @@ package org.gwtbootstrap3.extras.select.client.ui;
  * limitations under the License.
  * #L%
  */
-import static org.gwtbootstrap3.extras.select.client.ui.SelectOptions.CONTAINER;
-import static org.gwtbootstrap3.extras.select.client.ui.SelectOptions.DROPDOWN_ALIGN_RIGHT;
-import static org.gwtbootstrap3.extras.select.client.ui.SelectOptions.DROPUP_AUTO;
-import static org.gwtbootstrap3.extras.select.client.ui.SelectOptions.HEADER;
-import static org.gwtbootstrap3.extras.select.client.ui.SelectOptions.HIDE_DISABLED;
-import static org.gwtbootstrap3.extras.select.client.ui.SelectOptions.LIVE_SEARCH;
-import static org.gwtbootstrap3.extras.select.client.ui.SelectOptions.LIVE_SEARCH_NORMALIZE;
-import static org.gwtbootstrap3.extras.select.client.ui.SelectOptions.LIVE_SEARCH_PLACEHOLDER;
-import static org.gwtbootstrap3.extras.select.client.ui.SelectOptions.LIVE_SEARCH_STYLE;
-import static org.gwtbootstrap3.extras.select.client.ui.SelectOptions.MOBILE;
-import static org.gwtbootstrap3.extras.select.client.ui.SelectOptions.SELECT_ON_TAB;
-import static org.gwtbootstrap3.extras.select.client.ui.SelectOptions.SHOW_CONTENT;
-import static org.gwtbootstrap3.extras.select.client.ui.SelectOptions.SHOW_ICON;
-import static org.gwtbootstrap3.extras.select.client.ui.SelectOptions.SHOW_SUBTEXT;
-import static org.gwtbootstrap3.extras.select.client.ui.SelectOptions.SIZE;
-import static org.gwtbootstrap3.extras.select.client.ui.SelectOptions.STYLE;
-import static org.gwtbootstrap3.extras.select.client.ui.SelectOptions.WIDTH;
-import static org.gwtbootstrap3.extras.select.client.ui.SelectOptions.WINDOW_PADDING;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import jsinterop.base.Js;
 import org.gwtbootstrap3.client.ui.base.ComplexWidget;
 import org.gwtbootstrap3.client.ui.base.HasSize;
 import org.gwtbootstrap3.client.ui.base.HasType;
@@ -72,7 +55,6 @@ import org.gwtbootstrap3.extras.select.client.ui.event.ShowEvent;
 import org.gwtbootstrap3.extras.select.client.ui.event.ShowHandler;
 import org.gwtbootstrap3.extras.select.client.ui.event.ShownEvent;
 import org.gwtbootstrap3.extras.select.client.ui.event.ShownHandler;
-
 import org.gwtproject.core.client.JavaScriptObject;
 import org.gwtproject.core.client.JsArrayNumber;
 import org.gwtproject.core.client.JsonUtils;
@@ -87,6 +69,7 @@ import org.gwtproject.editor.client.LeafValueEditor;
 import org.gwtproject.editor.client.adapters.TakesValueEditor;
 import org.gwtproject.event.logical.shared.ValueChangeEvent;
 import org.gwtproject.event.logical.shared.ValueChangeHandler;
+import org.gwtproject.event.shared.Event;
 import org.gwtproject.event.shared.HandlerRegistration;
 import org.gwtproject.user.client.ui.Focusable;
 import org.gwtproject.user.client.ui.HasEnabled;
@@ -94,44 +77,61 @@ import org.gwtproject.user.client.ui.HasValue;
 import org.gwtproject.user.client.ui.Widget;
 import org.gwtproject.user.client.ui.impl.FocusImpl;
 
+import static org.gwtbootstrap3.extras.select.client.ui.SelectOptions.CONTAINER;
+import static org.gwtbootstrap3.extras.select.client.ui.SelectOptions.DROPDOWN_ALIGN_RIGHT;
+import static org.gwtbootstrap3.extras.select.client.ui.SelectOptions.DROPUP_AUTO;
+import static org.gwtbootstrap3.extras.select.client.ui.SelectOptions.HEADER;
+import static org.gwtbootstrap3.extras.select.client.ui.SelectOptions.HIDE_DISABLED;
+import static org.gwtbootstrap3.extras.select.client.ui.SelectOptions.LIVE_SEARCH;
+import static org.gwtbootstrap3.extras.select.client.ui.SelectOptions.LIVE_SEARCH_NORMALIZE;
+import static org.gwtbootstrap3.extras.select.client.ui.SelectOptions.LIVE_SEARCH_PLACEHOLDER;
+import static org.gwtbootstrap3.extras.select.client.ui.SelectOptions.LIVE_SEARCH_STYLE;
+import static org.gwtbootstrap3.extras.select.client.ui.SelectOptions.MOBILE;
+import static org.gwtbootstrap3.extras.select.client.ui.SelectOptions.SELECT_ON_TAB;
+import static org.gwtbootstrap3.extras.select.client.ui.SelectOptions.SHOW_CONTENT;
+import static org.gwtbootstrap3.extras.select.client.ui.SelectOptions.SHOW_ICON;
+import static org.gwtbootstrap3.extras.select.client.ui.SelectOptions.SHOW_SUBTEXT;
+import static org.gwtbootstrap3.extras.select.client.ui.SelectOptions.SIZE;
+import static org.gwtbootstrap3.extras.select.client.ui.SelectOptions.STYLE;
+import static org.gwtbootstrap3.extras.select.client.ui.SelectOptions.WIDTH;
+import static org.gwtbootstrap3.extras.select.client.ui.SelectOptions.WINDOW_PADDING;
+import static org.gwtbootstrap3.extras.select.client.ui.SelectPicker.Fn;
+import static org.gwtbootstrap3.extras.select.client.ui.SelectPicker.jQuery;
+
 /**
  * Bootstrap select widget base
- *
  * @param <T> select value type
- *
- * @see http://silviomoreto.github.io/bootstrap-select/
  * @author Xiaodong Sun
+ * @see http://silviomoreto.github.io/bootstrap-select/
  */
 public abstract class SelectBase<T> extends ComplexWidget implements HasValue<T>,
                                                                      HasEnabled,
                                                                      Focusable,
-                                                                     HasType<ButtonType>, HasSize<ButtonSize>,
-                                                                     IsEditor<LeafValueEditor<T>>, HasAllSelectHandlers<T> {
-
-    private LeafValueEditor<T> editor;
-    private ButtonType type;
-    private ButtonSize size;
+                                                                     HasType<ButtonType>,
+                                                                     HasSize<ButtonSize>,
+                                                                     IsEditor<LeafValueEditor<T>>,
+                                                                     HasAllSelectHandlers<T> {
 
     /**
      * Default language: {@link SelectLanguage#EN}
      */
     private static final SelectLanguage DEFAULT_LANGUAGE = SelectLanguage.EN;
-
-    /**
-     * Language; defaults to {@value #DEFAULT_LANGUAGE}
-     */
-    private SelectLanguage language = DEFAULT_LANGUAGE;
-
     protected final SelectElement selectElement;
     protected final Map<OptionElement, Option> itemMap = new HashMap<>(0);
     protected final AttributeMixin<SelectBase<T>> attrMixin = new AttributeMixin<>(this);
     private final EnabledMixin<SelectBase<T>> enabledMixin = new EnabledMixin<>(this);
     private final FocusImpl focusImpl = FocusImpl.getFocusImplForWidget();
-
     /**
      * Initialize options
      */
     protected SelectOptions options = SelectOptions.newOptions();
+    private LeafValueEditor<T> editor;
+    private ButtonType type;
+    private ButtonSize size;
+    /**
+     * Language; defaults to {@value #DEFAULT_LANGUAGE}
+     */
+    private SelectLanguage language = DEFAULT_LANGUAGE;
 
     protected SelectBase() {
         this.selectElement = Document.get().createSelectElement();
@@ -142,7 +142,6 @@ public abstract class SelectBase<T> extends ComplexWidget implements HasValue<T>
 
     /**
      * Returns <code>true</code> if multiple selection is allowed.
-     *
      * @return <code>true</code> if multiple selection is allowed
      */
     public abstract boolean isMultiple();
@@ -153,7 +152,7 @@ public abstract class SelectBase<T> extends ComplexWidget implements HasValue<T>
         // Inject the language JS is necessary
         if (language.getJs() != null) {
             ScriptInjector.fromString(language.getJs().getText())
-                .setWindow(ScriptInjector.TOP_WINDOW).inject();
+                    .setWindow(ScriptInjector.TOP_WINDOW).inject();
         }
         initialize(getElement(), options);
         bindSelectEvents(getElement());
@@ -191,35 +190,27 @@ public abstract class SelectBase<T> extends ComplexWidget implements HasValue<T>
         // Option ==> update with this option
         if (widget instanceof Option) {
             Option option = (Option) widget;
-            if (toAdd)
+            if (toAdd) {
                 itemMap.put(option.getSelectElement(), option);
-            else
+            } else {
                 itemMap.remove(option.getSelectElement());
+            }
         } else if (widget instanceof OptGroup) {
             // OptGroup ==> update with all optGroup options
             OptGroup optGroup = (OptGroup) widget;
-            if (toAdd)
+            if (toAdd) {
                 itemMap.putAll(optGroup.getItemMap());
-            else
+            } else {
                 for (Entry<OptionElement, Option> entry : optGroup.getItemMap().entrySet()) {
                     OptionElement optElem = entry.getKey();
                     itemMap.remove(optElem);
                 }
+            }
         }
     }
 
     /**
-     * Set the select language.
-     *
-     * @param language
-     */
-    public void setLanguage(final SelectLanguage language) {
-        this.language = (language == null) ? DEFAULT_LANGUAGE : language;
-    }
-
-    /**
      * Returns the select language.
-     *
      * @return
      */
     public SelectLanguage getLanguage() {
@@ -227,22 +218,29 @@ public abstract class SelectBase<T> extends ComplexWidget implements HasValue<T>
     }
 
     /**
+     * Set the select language.
+     * @param language
+     */
+    public void setLanguage(final SelectLanguage language) {
+        this.language = (language == null) ? DEFAULT_LANGUAGE : language;
+    }
+
+    /**
      * Sets a container to which the select will be appended.
-     *
      * @param container specific element or selector, e.g., "body", ".my-container"
      */
     public void setContainer(final String container) {
-        if (container != null)
+        if (container != null) {
             attrMixin.setAttribute(CONTAINER, container);
-        else
+        } else {
             attrMixin.removeAttribute(CONTAINER);
+        }
     }
 
     /**
      * Sets the handler to get the text displayed when selectedTextFormat
      * is <code>count</code> or <code>count > #</code>, or <code>null</code>
      * to use the default text: <code>X of Y selected</code>.
-     *
      * @param handler
      */
     public void setCountSelectedTextHandler(final CountSelectedTextHandler handler) {
@@ -253,15 +251,15 @@ public abstract class SelectBase<T> extends ComplexWidget implements HasValue<T>
      * Sets the drop-down menu right alignment.<br>
      * <br>
      * Defaults to {@link DropdownAlignRight#FALSE}.
-     *
      * @param dropdownAlignRight
      * @see DropdownAlignRight
      */
     public void setDropdownAlignRight(final DropdownAlignRight dropdownAlignRight) {
-        if (dropdownAlignRight != null)
+        if (dropdownAlignRight != null) {
             attrMixin.setAttribute(DROPDOWN_ALIGN_RIGHT, dropdownAlignRight.getValue());
-        else
+        } else {
             attrMixin.removeAttribute(DROPDOWN_ALIGN_RIGHT);
+        }
     }
 
     /**
@@ -273,20 +271,19 @@ public abstract class SelectBase<T> extends ComplexWidget implements HasValue<T>
      * must be called manually.<br>
      * <br>
      * Defaults to <code>true</code>.
-     *
      * @param dropupAuto
      */
     public void setDropupAuto(final boolean dropupAuto) {
-        if (!dropupAuto)
+        if (!dropupAuto) {
             attrMixin.setAttribute(DROPUP_AUTO, Boolean.toString(false));
-        else
+        } else {
             attrMixin.removeAttribute(DROPUP_AUTO);
+        }
     }
 
     /**
      * If drop-up auto is set to <code>false</code>, force to make
      * the select a drop-up menu if set to <code>true</code>.
-     *
      * @param forceDropup
      * @see #setDropupAuto(boolean)
      */
@@ -303,28 +300,28 @@ public abstract class SelectBase<T> extends ComplexWidget implements HasValue<T>
      * a close button by default.<br>
      * <br>
      * No header by default.
-     *
      * @param header
      */
     public void setHeader(final String header) {
-        if (header != null)
+        if (header != null) {
             attrMixin.setAttribute(HEADER, header);
-        else
+        } else {
             attrMixin.removeAttribute(HEADER);
+        }
     }
 
     /**
      * Removes disabled options and optgroups from the menu<br>
      * <br>
      * Defaults to <code>false</code>.
-     *
      * @param hideDisabled
      */
     public void setHideDisabled(final boolean hideDisabled) {
-        if (hideDisabled)
+        if (hideDisabled) {
             attrMixin.setAttribute(HIDE_DISABLED, Boolean.toString(true));
-        else
+        } else {
             attrMixin.removeAttribute(HIDE_DISABLED);
+        }
     }
 
     /**
@@ -332,14 +329,14 @@ public abstract class SelectBase<T> extends ComplexWidget implements HasValue<T>
      * top of the select picker drop-down.<br>
      * <br>
      * Defaults to <code>false</code>.
-     *
      * @param liveSearch
      */
     public void setLiveSearch(final boolean liveSearch) {
-        if (liveSearch)
+        if (liveSearch) {
             attrMixin.setAttribute(LIVE_SEARCH, Boolean.toString(true));
-        else
+        } else {
             attrMixin.removeAttribute(LIVE_SEARCH);
+        }
     }
 
     /**
@@ -347,43 +344,43 @@ public abstract class SelectBase<T> extends ComplexWidget implements HasValue<T>
      * accent-insensitive searching.<br>
      * <br>
      * Defaults to <code>false</code>.
-     *
      * @param liveSearchNormalize
      */
     public void setLiveSearchNormalize(final boolean liveSearchNormalize) {
-        if (liveSearchNormalize)
+        if (liveSearchNormalize) {
             attrMixin.setAttribute(LIVE_SEARCH_NORMALIZE, Boolean.toString(true));
-        else
+        } else {
             attrMixin.removeAttribute(LIVE_SEARCH_NORMALIZE);
+        }
     }
 
     /**
      * Set live search style.<br>
      * <br>
      * Defaults to {@link LiveSearchStyle#CONTAINS}.
-     *
      * @param liveSearchStyle
      * @see LiveSearchStyle
      */
     public void setLiveSearchStyle(final LiveSearchStyle liveSearchStyle) {
-        if (liveSearchStyle != null)
+        if (liveSearchStyle != null) {
             attrMixin.setAttribute(LIVE_SEARCH_STYLE, liveSearchStyle.getValue());
-        else
+        } else {
             attrMixin.removeAttribute(LIVE_SEARCH_STYLE);
+        }
     }
 
     /**
      * Set a placeholder to the live search input.<br>
      * <br>
      * Defaults to <code>null</code>.
-     *
      * @param liveSearchPlaceholder
      */
     public void setLiveSearchPlaceholder(final String liveSearchPlaceholder) {
-        if (liveSearchPlaceholder != null)
+        if (liveSearchPlaceholder != null) {
             attrMixin.setAttribute(LIVE_SEARCH_PLACEHOLDER, liveSearchPlaceholder);
-        else
+        } else {
             attrMixin.removeAttribute(LIVE_SEARCH_PLACEHOLDER);
+        }
     }
 
     /**
@@ -391,14 +388,14 @@ public abstract class SelectBase<T> extends ComplexWidget implements HasValue<T>
      * menu for select menus.<br>
      * <br>
      * Defaults to <code>false</code>.
-     *
      * @param mobile
      */
     public void setMobile(final boolean mobile) {
-        if (mobile)
+        if (mobile) {
             attrMixin.setAttribute(MOBILE, Boolean.toString(true));
-        else
+        } else {
             attrMixin.removeAttribute(MOBILE);
+        }
     }
 
     /**
@@ -407,14 +404,14 @@ public abstract class SelectBase<T> extends ComplexWidget implements HasValue<T>
      * select picker drop-down.<br>
      * <br>
      * Defaults to <code>false</code>.
-     *
      * @param selectOnTab
      */
     public void setSelectOnTab(final boolean selectOnTab) {
-        if (selectOnTab)
+        if (selectOnTab) {
             attrMixin.setAttribute(SELECT_ON_TAB, Boolean.toString(true));
-        else
+        } else {
             attrMixin.removeAttribute(SELECT_ON_TAB);
+        }
     }
 
     /**
@@ -423,14 +420,14 @@ public abstract class SelectBase<T> extends ComplexWidget implements HasValue<T>
      * the option value will be displayed instead.<br>
      * <br>
      * Defaults to <code>true</code>.
-     *
      * @param showContent
      */
     public void setShowContent(final boolean showContent) {
-        if (!showContent)
+        if (!showContent) {
             attrMixin.setAttribute(SHOW_CONTENT, Boolean.toString(false));
-        else
+        } else {
             attrMixin.removeAttribute(SHOW_CONTENT);
+        }
     }
 
     /**
@@ -438,14 +435,14 @@ public abstract class SelectBase<T> extends ComplexWidget implements HasValue<T>
      * selected option(s) in the button.<br>
      * <br>
      * Defaults to <code>true</code>.
-     *
      * @param showIcon
      */
     public void setShowIcon(final boolean showIcon) {
-        if (!showIcon)
+        if (!showIcon) {
             attrMixin.setAttribute(SHOW_ICON, Boolean.toString(false));
-        else
+        } else {
             attrMixin.removeAttribute(SHOW_ICON);
+        }
     }
 
     /**
@@ -453,29 +450,29 @@ public abstract class SelectBase<T> extends ComplexWidget implements HasValue<T>
      * selected option in the button.<br>
      * <br>
      * Defaults to <code>false</code>.
-     *
      * @param showSubtext
      */
     public void setShowSubtext(final boolean showSubtext) {
-        if (showSubtext)
+        if (showSubtext) {
             attrMixin.setAttribute(SHOW_SUBTEXT, Boolean.toString(true));
-        else
+        } else {
             attrMixin.removeAttribute(SHOW_SUBTEXT);
+        }
     }
 
     /**
      * Specifies the number of visible menu items.<br>
      * <br>
      * Defaults to {@link MenuSize#AUTO}.
-     *
      * @param size
      * @see MenuSize
      */
     public void setMenuSize(final MenuSize size) {
-        if (size != null)
+        if (size != null) {
             attrMixin.setAttribute(SIZE, size.getValue());
-        else
+        } else {
             attrMixin.removeAttribute(SIZE);
+        }
     }
 
     /**
@@ -483,11 +480,19 @@ public abstract class SelectBase<T> extends ComplexWidget implements HasValue<T>
      * the drop-down is cut off.<br>
      * <br>
      * Defaults to {@link MenuSize#AUTO}.
-     *
      * @param size
      */
     public void setFixedMenuSize(final int size) {
         attrMixin.setAttribute(SIZE, Integer.toString(size));
+    }
+
+    /**
+     * Returns the {@link ButtonType} of the select; may be <code>null</code>.
+     * @return the {@link ButtonType} of the select
+     */
+    @Override
+    public ButtonType getType() {
+        return type;
     }
 
     /**
@@ -503,13 +508,12 @@ public abstract class SelectBase<T> extends ComplexWidget implements HasValue<T>
     }
 
     /**
-     * Returns the {@link ButtonType} of the select; may be <code>null</code>.
-     *
-     * @return the {@link ButtonType} of the select
+     * Returns the {@link ButtonSize} of the select; may be <code>null</code>.
+     * @return the {@link ButtonSize} of the select
      */
     @Override
-    public ButtonType getType() {
-        return type;
+    public ButtonSize getSize() {
+        return size;
     }
 
     /**
@@ -522,16 +526,6 @@ public abstract class SelectBase<T> extends ComplexWidget implements HasValue<T>
     public void setSize(final ButtonSize size) {
         this.size = size;
         updateStyle();
-    }
-
-    /**
-     * Returns the {@link ButtonSize} of the select; may be <code>null</code>.
-     *
-     * @return the {@link ButtonSize} of the select
-     */
-    @Override
-    public ButtonSize getSize() {
-        return size;
     }
 
     private void updateStyle() {
@@ -549,25 +543,7 @@ public abstract class SelectBase<T> extends ComplexWidget implements HasValue<T>
     }
 
     /**
-     * Set the customized style name to the select.<br>
-     * <br>
-     * Defaults to <code>null</code>.<br>
-     * <br>
-     * <b>IMPORTANT</b>: This method will override the style set by
-     * {@link #setType(ButtonType)} and/or {@link #setSize(ButtonSize)}.
-     *
-     * @param styleName
-     */
-    public void setStyle(final String styleName) {
-        if (styleName != null)
-            attrMixin.setAttribute(STYLE, styleName);
-        else
-            attrMixin.removeAttribute(STYLE);
-    }
-
-    /**
      * Returns the style name applied to the select.
-     *
      * @return
      */
     public String getStyle() {
@@ -575,11 +551,27 @@ public abstract class SelectBase<T> extends ComplexWidget implements HasValue<T>
     }
 
     /**
+     * Set the customized style name to the select.<br>
+     * <br>
+     * Defaults to <code>null</code>.<br>
+     * <br>
+     * <b>IMPORTANT</b>: This method will override the style set by
+     * {@link #setType(ButtonType)} and/or {@link #setSize(ButtonSize)}.
+     * @param styleName
+     */
+    public void setStyle(final String styleName) {
+        if (styleName != null) {
+            attrMixin.setAttribute(STYLE, styleName);
+        } else {
+            attrMixin.removeAttribute(STYLE);
+        }
+    }
+
+    /**
      * Set the default placeholder text when nothing is selected.
      * This works for both multiple and standard select boxes.<br>
      * <br>
      * Defaults to <code>null</code>.
-     *
      * @param title
      * @see #setTitle(String)
      */
@@ -591,7 +583,6 @@ public abstract class SelectBase<T> extends ComplexWidget implements HasValue<T>
      * Set the specified width to the select.<br>
      * <br>
      * Defaults to {@link SelectWidth#NONE}.
-     *
      * @param width
      * @see #setWidth(String)
      * @see SelectWidth
@@ -602,22 +593,21 @@ public abstract class SelectBase<T> extends ComplexWidget implements HasValue<T>
 
     /**
      * Set the select width witch is forced inline to the given value.
-     *
      * @param cssWidth a CSS width with units, e.g. 100px
      */
     @Override
     public void setWidth(final String cssWidth) {
-        if (cssWidth != null)
+        if (cssWidth != null) {
             attrMixin.setAttribute(WIDTH, cssWidth);
-        else
+        } else {
             attrMixin.removeAttribute(WIDTH);
+        }
     }
 
     /**
      * Sets the window padding to all sides. This is useful in cases where
      * the window has areas that the drop-down menu should not cover - for
      * instance a fixed header.
-     *
      * @param padding
      */
     public void setWindowPadding(final int padding) {
@@ -628,14 +618,13 @@ public abstract class SelectBase<T> extends ComplexWidget implements HasValue<T>
      * Sets the window padding to top, right, bottom, and right sides. This
      * is useful in cases where the window has areas that the drop-down menu
      * should not cover - for instance a fixed header.
-     *
      * @param top
      * @param right
      * @param bottom
      * @param left
      */
     public void setWindowPaddingTopRightBottomLeft(final int top, final int right,
-            final int bottom, final int left) {
+                                                   final int bottom, final int left) {
         JsArrayNumber array = JavaScriptObject.createArray(4).cast();
         array.push(top);
         array.push(right);
@@ -646,7 +635,6 @@ public abstract class SelectBase<T> extends ComplexWidget implements HasValue<T>
 
     /**
      * Set to <code>true</code> to add the Bootstrap menu arrow.
-     *
      * @param showMenuArrow
      */
     public void setShowMenuArrow(final boolean showMenuArrow) {
@@ -694,10 +682,14 @@ public abstract class SelectBase<T> extends ComplexWidget implements HasValue<T>
     /**
      * Selects the given value. If the value is <code>null</code>
      * or does not match any option, no option will be selected.
-     *
      * @param value
      */
     protected abstract void setSelectedValue(final T value);
+
+    @Override
+    public boolean isEnabled() {
+        return enabledMixin.isEnabled();
+    }
 
     @Override
     public void setEnabled(boolean enabled) {
@@ -706,13 +698,13 @@ public abstract class SelectBase<T> extends ComplexWidget implements HasValue<T>
     }
 
     @Override
-    public boolean isEnabled() {
-        return enabledMixin.isEnabled();
+    public int getTabIndex() {
+        return focusImpl.getTabIndex(getFocusElement());
     }
 
     @Override
-    public int getTabIndex() {
-        return focusImpl.getTabIndex(getFocusElement());
+    public void setTabIndex(int index) {
+        focusImpl.setTabIndex(getFocusElement(), index);
     }
 
     @Override
@@ -729,11 +721,6 @@ public abstract class SelectBase<T> extends ComplexWidget implements HasValue<T>
         }
     }
 
-    @Override
-    public void setTabIndex(int index) {
-        focusImpl.setTabIndex(getFocusElement(), index);
-    }
-
     private Element getFocusElement() {
         if (!isAttached()) {
             return selectElement;
@@ -743,7 +730,6 @@ public abstract class SelectBase<T> extends ComplexWidget implements HasValue<T>
 
     /**
      * Returns the number of items present in the select.
-     *
      * @return the number of items
      */
     public int getItemCount() {
@@ -752,7 +738,6 @@ public abstract class SelectBase<T> extends ComplexWidget implements HasValue<T>
 
     /**
      * Returns the item list.
-     *
      * @return the item list
      */
     public List<Option> getItems() {
@@ -761,8 +746,9 @@ public abstract class SelectBase<T> extends ComplexWidget implements HasValue<T>
         for (int i = 0; i < items.getLength(); i++) {
             OptionElement item = items.getItem(i);
             Option option = itemMap.get(item);
-            if (option != null)
+            if (option != null) {
                 selectedItems.add(option);
+            }
         }
         return selectedItems;
     }
@@ -772,7 +758,6 @@ public abstract class SelectBase<T> extends ComplexWidget implements HasValue<T>
      * <br>
      * <b>Note</b>: if the item at the given index is a divider, this method
      * always returns <code>false</code>.
-     *
      * @param index
      * @return
      */
@@ -785,7 +770,6 @@ public abstract class SelectBase<T> extends ComplexWidget implements HasValue<T>
 
     /**
      * Returns the {@link Option} at the given index.
-     *
      * @param index
      * @return
      */
@@ -847,32 +831,36 @@ public abstract class SelectBase<T> extends ComplexWidget implements HasValue<T>
      * change any underlying values that affect the layout of the element.
      */
     public void render() {
-        if (isAttached())
+        if (isAttached()) {
             command(getElement(), SelectCommand.RENDER);
+        }
     }
 
     /**
      * Toggles the select menu open/closed.
      */
     public void toggle() {
-        if (isAttached())
+        if (isAttached()) {
             command(getElement(), SelectCommand.TOGGLE);
+        }
     }
 
     /**
      * Enables the device's native menu for select menus.
      */
     public void mobile() {
-        if (isAttached())
+        if (isAttached()) {
             command(getElement(), SelectCommand.MOBILE);
+        }
     }
 
     /**
      * WHEN CHANGING ANY SETTINGS CALL REFRESH AFTER!!
      */
     public void refresh() {
-        if (isAttached())
+        if (isAttached()) {
             command(getElement(), SelectCommand.REFRESH);
+        }
     }
 
     /**
@@ -880,10 +868,11 @@ public abstract class SelectBase<T> extends ComplexWidget implements HasValue<T>
      * the select itself.
      */
     public void show() {
-        if (isAttached())
+        if (isAttached()) {
             command(getElement(), SelectCommand.SHOW);
-        else
+        } else {
             super.setVisible(true);
+        }
     }
 
     /**
@@ -891,18 +880,11 @@ public abstract class SelectBase<T> extends ComplexWidget implements HasValue<T>
      * the select itself.
      */
     public void hide() {
-        if (isAttached())
+        if (isAttached()) {
             command(getElement(), SelectCommand.HIDE);
-        else
+        } else {
             super.setVisible(false);
-    }
-
-    @Override
-    public void setVisible(boolean visible) {
-        if (visible)
-            show();
-        else
-            hide();
+        }
     }
 
     @Override
@@ -913,60 +895,51 @@ public abstract class SelectBase<T> extends ComplexWidget implements HasValue<T>
         return super.isVisible();
     }
 
-    private native void initialize(Element e, SelectOptions options) /*-{
-        $wnd.jQuery(e).selectpicker(options);
-    }-*/;
+    @Override
+    public void setVisible(boolean visible) {
+        if (visible) {
+            show();
+        } else {
+            hide();
+        }
+    }
+
+    private void initialize(Element e, SelectOptions options) {
+        jQuery(e).selectpicker(options);
+    }
 
     /**
      * Binds the select events.
-     *
      * @param e
      */
-    private native void bindSelectEvents(Element e) /*-{
-        var select = this;
-        $wnd.jQuery(e).on(@org.gwtbootstrap3.extras.select.client.ui.event.HasAllSelectHandlers::LOADED_EVENT, function(event) {
-            @org.gwtbootstrap3.extras.select.client.ui.event.LoadedEvent::fire(Lorg/gwtbootstrap3/extras/select/client/ui/event/HasLoadedHandlers;)(select);
-        });
-        $wnd.jQuery(e).on(@org.gwtbootstrap3.extras.select.client.ui.event.HasAllSelectHandlers::CHANGED_EVENT, function(event, clickedIndex, newValue, oldValue) {
-            select.@org.gwtbootstrap3.extras.select.client.ui.SelectBase::onValueChange()();
-        });
-        $wnd.jQuery(e).on(@org.gwtbootstrap3.extras.select.client.ui.event.HasAllSelectHandlers::SHOW_EVENT, function(event) {
-            @org.gwtbootstrap3.extras.select.client.ui.event.ShowEvent::fire(Lorg/gwtbootstrap3/extras/select/client/ui/event/HasShowHandlers;)(select);
-        });
-        $wnd.jQuery(e).on(@org.gwtbootstrap3.extras.select.client.ui.event.HasAllSelectHandlers::SHOWN_EVENT, function(event) {
-            @org.gwtbootstrap3.extras.select.client.ui.event.ShownEvent::fire(Lorg/gwtbootstrap3/extras/select/client/ui/event/HasShownHandlers;)(select);
-        });
-        $wnd.jQuery(e).on(@org.gwtbootstrap3.extras.select.client.ui.event.HasAllSelectHandlers::HIDE_EVENT, function(event) {
-            @org.gwtbootstrap3.extras.select.client.ui.event.HideEvent::fire(Lorg/gwtbootstrap3/extras/select/client/ui/event/HasHideHandlers;)(select);
-        });
-        $wnd.jQuery(e).on(@org.gwtbootstrap3.extras.select.client.ui.event.HasAllSelectHandlers::HIDDEN_EVENT, function(event) {
-            @org.gwtbootstrap3.extras.select.client.ui.event.HiddenEvent::fire(Lorg/gwtbootstrap3/extras/select/client/ui/event/HasHiddenHandlers;)(select);
-        });
-        $wnd.jQuery(e).on(@org.gwtbootstrap3.extras.select.client.ui.event.HasAllSelectHandlers::RENDERED_EVENT, function(event) {
-            @org.gwtbootstrap3.extras.select.client.ui.event.RenderedEvent::fire(Lorg/gwtbootstrap3/extras/select/client/ui/event/HasRenderedHandlers;)(select);
-        });
-        $wnd.jQuery(e).on(@org.gwtbootstrap3.extras.select.client.ui.event.HasAllSelectHandlers::REFRESHED_EVENT, function(event) {
-            @org.gwtbootstrap3.extras.select.client.ui.event.RefreshedEvent::fire(Lorg/gwtbootstrap3/extras/select/client/ui/event/HasRefreshedHandlers;)(select);
-        });
-    }-*/;
+    private void bindSelectEvents(Element e) {
+        jQuery(e).selectpicker(options);
+        jQuery(e).on(HasAllSelectHandlers.LOADED_EVENT, (SelectPicker.Fn)(event) -> LoadedEvent.fire(Js.uncheckedCast(this)));
+        jQuery(e).on(HasAllSelectHandlers.CHANGED_EVENT, (event, clickedIndex, newValue, oldValue) -> onValueChange());
+        jQuery(e).on(HasAllSelectHandlers.SHOW_EVENT, (SelectPicker.Fn)(event) -> ShowEvent.fire(Js.uncheckedCast(this)));
+        jQuery(e).on(HasAllSelectHandlers.SHOWN_EVENT, (SelectPicker.Fn)(event) -> ShownEvent.fire(Js.uncheckedCast(this)));
+        jQuery(e).on(HasAllSelectHandlers.HIDE_EVENT, (SelectPicker.Fn)(event) -> HideEvent.fire(Js.uncheckedCast(this)));
+        jQuery(e).on(HasAllSelectHandlers.HIDDEN_EVENT, (SelectPicker.Fn)(event) -> HiddenEvent.fire(Js.uncheckedCast(this)));
+        jQuery(e).on(HasAllSelectHandlers.RENDERED_EVENT, (SelectPicker.Fn)(event) -> RenderedEvent.fire(Js.uncheckedCast(this)));
+        jQuery(e).on(HasAllSelectHandlers.REFRESHED_EVENT, (SelectPicker.Fn)(event) -> RefreshedEvent.fire(Js.uncheckedCast(this)));
+    }
 
     /**
      * Unbinds the select events.
-     *
      * @param e
      */
-    private native void unbindSelectEvents(Element e) /*-{
-        $wnd.jQuery(e).off(@org.gwtbootstrap3.extras.select.client.ui.event.HasAllSelectHandlers::LOADED_EVENT);
-        $wnd.jQuery(e).off(@org.gwtbootstrap3.extras.select.client.ui.event.HasAllSelectHandlers::CHANGED_EVENT);
-        $wnd.jQuery(e).off(@org.gwtbootstrap3.extras.select.client.ui.event.HasAllSelectHandlers::SHOW_EVENT);
-        $wnd.jQuery(e).off(@org.gwtbootstrap3.extras.select.client.ui.event.HasAllSelectHandlers::SHOWN_EVENT);
-        $wnd.jQuery(e).off(@org.gwtbootstrap3.extras.select.client.ui.event.HasAllSelectHandlers::HIDE_EVENT);
-        $wnd.jQuery(e).off(@org.gwtbootstrap3.extras.select.client.ui.event.HasAllSelectHandlers::HIDDEN_EVENT);
-        $wnd.jQuery(e).off(@org.gwtbootstrap3.extras.select.client.ui.event.HasAllSelectHandlers::RENDERED_EVENT);
-        $wnd.jQuery(e).off(@org.gwtbootstrap3.extras.select.client.ui.event.HasAllSelectHandlers::REFRESHED_EVENT);
-    }-*/;
+    private void unbindSelectEvents(Element e) {
+        jQuery(e).off(HasAllSelectHandlers.LOADED_EVENT);
+        jQuery(e).off(HasAllSelectHandlers.CHANGED_EVENT);
+        jQuery(e).off(HasAllSelectHandlers.SHOW_EVENT);
+        jQuery(e).off(HasAllSelectHandlers.SHOWN_EVENT);
+        jQuery(e).off(HasAllSelectHandlers.HIDE_EVENT);
+        jQuery(e).off(HasAllSelectHandlers.HIDDEN_EVENT);
+        jQuery(e).off(HasAllSelectHandlers.RENDERED_EVENT);
+        jQuery(e).off(HasAllSelectHandlers.REFRESHED_EVENT);
+    }
 
-    protected native void command(Element e, String command) /*-{
-        $wnd.jQuery(e).selectpicker(command);
-    }-*/;
+    protected void command(Element e, String command) {
+        jQuery(e).selectpicker(command);
+    }
 }

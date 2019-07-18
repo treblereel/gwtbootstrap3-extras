@@ -49,7 +49,7 @@ public class ShowEvent extends GwtEvent<ShowHandler> {
      */
     public static Type<ShowHandler> getType() {
         if (TYPE == null) {
-            TYPE = new Type<ShowHandler>();
+            TYPE = new Type<>();
         }
         return TYPE;
     }
