@@ -41,7 +41,7 @@ public enum NotifyType implements Type,
 
     private final String cssClass;
 
-    private NotifyType(final String cssClass) {
+    NotifyType(final String cssClass) {
         this.cssClass = cssClass;
     }
 
