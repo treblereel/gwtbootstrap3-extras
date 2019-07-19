@@ -9,9 +9,9 @@ package org.gwtbootstrap3.extras.fullcalendar.client.ui;
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -20,7 +20,19 @@ package org.gwtbootstrap3.extras.fullcalendar.client.ui;
  * #L%
  */
 
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import elemental2.core.JsDate;
+import jsinterop.annotations.JsFunction;
+import jsinterop.annotations.JsOverlay;
+import jsinterop.annotations.JsPackage;
+import jsinterop.annotations.JsType;
+import jsinterop.base.Js;
+import jsinterop.base.JsPropertyMap;
+import org.gwtbootstrap3.client.shared.js.JQuery;
 import org.gwtproject.core.client.JavaScriptObject;
 import org.gwtproject.core.client.JsArray;
 import org.gwtproject.core.client.ScriptInjector;
@@ -33,24 +45,18 @@ import org.gwtproject.event.dom.client.LoadHandler;
 import org.gwtproject.event.shared.HandlerRegistration;
 import org.gwtproject.user.client.ui.FlowPanel;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 /**
  * Wrapper around FullCalendar
- *
  * @author Jeff Isenhart
  * @see http://arshaw.com/fullcalendar/
  */
 public class FullCalendar extends FlowPanel implements HasLoadHandlers {
 
+    private static Map<String, JavaScriptObject> languageScripts;
+    private final boolean editable;//@see http://arshaw.com/fullcalendar/docs/event_ui/editable/
     private ViewOption currentView;//http://arshaw.com/fullcalendar/docs/views/defaultView/
     private CalendarConfig config;//a bunch of options and events encapsulated in one place
-    private final boolean editable;//@see http://arshaw.com/fullcalendar/docs/event_ui/editable/
     private boolean loaded;
-    private static Map<String, JavaScriptObject> languageScripts;
 
     public FullCalendar(final String id, final ViewOption defaultView, final boolean editable) {
         this(id, defaultView, null, editable);
@@ -67,7 +73,7 @@ public class FullCalendar extends FlowPanel implements HasLoadHandlers {
         this.editable = editable;
         loaded = false;
         if (languageScripts == null) {
-            languageScripts = new HashMap<String, JavaScriptObject>();
+            languageScripts = new HashMap<>();
         }
     }
 
@@ -110,18 +116,18 @@ public class FullCalendar extends FlowPanel implements HasLoadHandlers {
             }
         }
         addCalendar(getElement().getId(),
-                currentView.name(),
-                editable,
-                selectable,
-                selectHelper,
-                unselectAuto,
-                selectOverlap,
-                language,
-                timezone,
-                weekNumberTitle,
-                unselectCancel,
-                selectContraint,
-                javascriptParams
+                    currentView.name(),
+                    editable,
+                    selectable,
+                    selectHelper,
+                    unselectAuto,
+                    selectOverlap,
+                    language,
+                    timezone,
+                    weekNumberTitle,
+                    unselectCancel,
+                    selectContraint,
+                    javascriptParams
         );
         //Let everyone know it is ok to add events and set properties on the instance
         DomEvent.fireNativeEvent(Document.get().createLoadEvent(), this);
@@ -164,50 +170,55 @@ public class FullCalendar extends FlowPanel implements HasLoadHandlers {
         languageScripts.put(language.getCode(), scriptElement);
     }
 
-    private native void addCalendar(String id,
-                                    String currentView,
-                                    boolean editable,
-                                    boolean selectable,
-                                    boolean selectHelper,
-                                    boolean unselectAuto,
-                                    boolean selectOverlap,
-                                    String lang,
-                                    String timezone,
-                                    String weekNumberTitle,
-                                    String unselectCancel,
-                                    String selectContraint,
-                                    JsArray<JavaScriptObject> options
-    ) /*-{
-        var fullCalendarParams = {
-            defaultView: currentView,
-            selectable: selectable,
-            selectHelper: selectHelper,
-            editable: editable,
-            unselectAuto: unselectAuto,
-            selectOverlap: selectOverlap
-        };
-        if (lang) {
-            fullCalendarParams.lang = lang;
+    private void addCalendar(String id,
+                             String currentView,
+                             boolean editable,
+                             boolean selectable,
+                             boolean selectHelper,
+                             boolean unselectAuto,
+                             boolean selectOverlap,
+                             String lang,
+                             String timezone,
+                             String weekNumberTitle,
+                             String unselectCancel,
+                             String selectContraint,
+                             JsArray<JavaScriptObject> options) {
+        JsPropertyMap fullCalendarParams = JsPropertyMap.of();
+        fullCalendarParams.set("defaultView", currentView);
+        fullCalendarParams.set("selectable", selectable);
+        fullCalendarParams.set("selectHelper", selectHelper);
+        fullCalendarParams.set("editable", editable);
+        fullCalendarParams.set("unselectAuto", unselectAuto);
+        fullCalendarParams.set("selectOverlap", selectOverlap);
+
+        if (lang != null) {
+            fullCalendarParams.set("lang", lang);
         }
-        if (timezone) {
-            fullCalendarParams.timezone = timezone;
+
+        if (timezone != null) {
+            fullCalendarParams.set("timezone", timezone);
         }
-        if (weekNumberTitle) {
-            fullCalendarParams.weekNumberTitle = weekNumberTitle;
+
+        if (weekNumberTitle != null) {
+            fullCalendarParams.set("weekNumberTitle", weekNumberTitle);
         }
-        if (unselectCancel) {
-            fullCalendarParams.unselectCancel = unselectCancel;
+
+        if (unselectCancel != null) {
+            fullCalendarParams.set("unselectCancel", unselectCancel);
         }
-        if (selectContraint) {
-            fullCalendarParams.selectContraint = selectContraint;
+
+        if (selectContraint != null) {
+            fullCalendarParams.set("selectContraint", selectContraint);
         }
-        if (options) {
-            for (var i = 0; i < options.length; i++) {
-                $wnd.jQuery.extend(fullCalendarParams, options[i]);
+
+        if (options != null) {
+            for (int i = 0; i < options.length(); i++) {
+                ((JQuery) Js.uncheckedCast(Js.global().get("jQuery"))).extend(fullCalendarParams, options.get(i));
             }
         }
-        $wnd.jQuery('#' + id).fullCalendar(fullCalendarParams);
-    }-*/;
+
+        JFullCalendar.jQuery("#" + id).fullCalendar(fullCalendarParams);
+    }
 
     public void addEvent(final Event event) {
         if (loaded && event != null) {
@@ -226,28 +237,21 @@ public class FullCalendar extends FlowPanel implements HasLoadHandlers {
         }
     }
 
-    private native void addEventSource(String id, JsArray<JavaScriptObject> events) /*-{
-        $wnd.jQuery('#' + id).fullCalendar('addEventSource', events);
-    }-*/;
+    private void addEventSource(String id, JsArray<JavaScriptObject> events) {
+        JFullCalendar.jQuery("#" + id).fullCalendar("addEventSource", events);
+    }
 
     public ViewOption getCurrentView() {
         return currentView;
     }
 
-    private native void addEvent(String id, JavaScriptObject event) /*-{
-        $wnd.jQuery('#' + id).fullCalendar('renderEvent', event, true);
-    }-*/;
-
-    public void setView(final ViewOption view) {
-        if (view != null) {
-            currentView = view;
-            setView(getElement().getId(), view.name());
-        }
+    private void addEvent(String id, JavaScriptObject event) {
+        JFullCalendar.jQuery("#" + id).fullCalendar("renderEvent", event, true);
     }
 
-    private native void setView(String id, String viewName) /*-{
-        $wnd.jQuery('#' + id).fullCalendar('changeView', viewName);
-    }-*/;
+    private void setView(String id, String viewName) {
+        JFullCalendar.jQuery("#" + id).fullCalendar("changeView", viewName);
+    }
 
     public void goToDate(final Date d) {
         if (d != null) {
@@ -256,9 +260,9 @@ public class FullCalendar extends FlowPanel implements HasLoadHandlers {
         }
     }
 
-    private native void goToDate(String id, JsDate date) /*-{
-        $wnd.jQuery('#' + id).fullCalendar('gotoDate',date);
-    }-*/;
+    private void goToDate(String id, JsDate date) {
+        JFullCalendar.jQuery("#" + id).fullCalendar("gotoDate", date);
+    }
 
     @Override
     public HandlerRegistration addLoadHandler(final LoadHandler handler) {
@@ -272,9 +276,9 @@ public class FullCalendar extends FlowPanel implements HasLoadHandlers {
         return null;
     }
 
-    public native JsArray<JavaScriptObject> getEvent(String id, String eventId) /*-{
-        return $wnd.jQuery('#' + id).fullCalendar('clientEvents', eventId);
-    }-*/;
+    public JsArray<JavaScriptObject> getEvent(String id, String eventId) {
+        return JFullCalendar.jQuery("#" + id).fullCalendar("clientEvents", eventId);
+    }
 
     public void removeEvent(final String eventId) {
         if (eventId != null) {
@@ -286,13 +290,13 @@ public class FullCalendar extends FlowPanel implements HasLoadHandlers {
         removeAllEvents(getElement().getId());
     }
 
-    private native void removeAllEvents(String id) /*-{
-        $wnd.jQuery('#' + id).fullCalendar('removeEvents');
-    }-*/;
+    private void removeAllEvents(String id) {
+        JFullCalendar.jQuery("#" + id).fullCalendar("removeEvents");
+    }
 
-    public native void removeEvent(String id, String eventId) /*-{
-        $wnd.jQuery('#' + id).fullCalendar('removeEvents', eventId);
-    }-*/;
+    public void removeEvent(String id, String eventId) {
+        JFullCalendar.jQuery("#" + id).fullCalendar("removeEvents", eventId);
+    }
 
     public void updateEvent(final Event evt) {
         if (evt != null && evt.getId() != null) {
@@ -300,9 +304,9 @@ public class FullCalendar extends FlowPanel implements HasLoadHandlers {
         }
     }
 
-    public native void updateEvent(String id, JavaScriptObject event) /*-{
-        $wnd.jQuery('#' + id).fullCalendar('updateEvent', event);
-    }-*/;
+    public void updateEvent(String id, JavaScriptObject event) {
+        JFullCalendar.jQuery("#" + id).fullCalendar("updateEvent", event);
+    }
 
     public void addEventSource(final EventSource eventSource) {
         if (eventSource != null) {
@@ -310,9 +314,9 @@ public class FullCalendar extends FlowPanel implements HasLoadHandlers {
         }
     }
 
-    private native void addEventSource(String id, JavaScriptObject eventSource) /*-{
-        $wnd.jQuery('#' + id).fullCalendar('addEventSource', eventSource);
-    }-*/;
+    private void addEventSource(String id, JavaScriptObject eventSource) {
+        JFullCalendar.jQuery("#" + id).fullCalendar("addEventSource", eventSource);
+    }
 
     public void removeEventSource(final EventSource eventSource) {
         if (eventSource != null) {
@@ -320,25 +324,25 @@ public class FullCalendar extends FlowPanel implements HasLoadHandlers {
         }
     }
 
-    private native void removeEventSource(String id, JavaScriptObject eventSource) /*-{
-        $wnd.jQuery('#' + id).fullCalendar('removeEventSource', eventSource);
-    }-*/;
+    private void removeEventSource(String id, JavaScriptObject eventSource) {
+        JFullCalendar.jQuery("#" + id).fullCalendar("removeEventSource", eventSource);
+    }
 
     public void previous() {
         previous(getElement().getId());
     }
 
-    private native void previous(String id) /*-{
-        $wnd.jQuery('#' + id).fullCalendar('prev');
-    }-*/;
+    private void previous(String id) {
+        JFullCalendar.jQuery("#" + id).fullCalendar("prev");
+    }
 
     public void next() {
         next(getElement().getId());
     }
 
-    private native void next(String id) /*-{
-        $wnd.jQuery('#' + id).fullCalendar('next');
-    }-*/;
+    private void next(String id) {
+        JFullCalendar.jQuery("#" + id).fullCalendar("next");
+    }
 
     public Date getDate() {
         final JsDate jsDate = getDate(getElement().getId());
@@ -346,41 +350,48 @@ public class FullCalendar extends FlowPanel implements HasLoadHandlers {
         return new Date(time);
     }
 
-    private native JsDate getDate(String id) /*-{
-        return $wnd.jQuery('#' + id).fullCalendar('getDate').toDate();
-    }-*/;
+    private JsDate getDate(String id) {
+        return ((HasToDate) JFullCalendar.jQuery("#" + id).fullCalendar("getDate")).toDate();
+    }
 
     public void today() {
         today(getElement().getId());
     }
 
-    private native void today(String id) /*-{
-        $wnd.jQuery('#' + id).fullCalendar('today');
-    }-*/;
+    private void today(String id) {
+        JFullCalendar.jQuery("#" + id).fullCalendar("today");
+    }
 
     public View getView() {
         return new View(getView(getElement().getId()));
     }
 
-    private native JavaScriptObject getView(String id) /*-{
-        $wnd.jQuery('#' + id).fullCalendar('getView');
-    }-*/;
+    public void setView(final ViewOption view) {
+        if (view != null) {
+            currentView = view;
+            setView(getElement().getId(), view.name());
+        }
+    }
+
+    private JavaScriptObject getView(String id) {
+        return JFullCalendar.jQuery("#" + id).fullCalendar("getView");
+    }
 
     public void destroy() {
         destroy(getElement().getId());
     }
 
-    private native void destroy(String id) /*-{
-        $wnd.jQuery('#' + id).fullCalendar('destroy');
-    }-*/;
+    private void destroy(String id) {
+        JFullCalendar.jQuery("#" + id).fullCalendar("destroy");
+    }
 
     public void render() {
         render(getElement().getId());
     }
 
-    private native void render(String id) /*-{
-        $wnd.jQuery('#' + id).fullCalendar('render');
-    }-*/;
+    private void render(String id) {
+        JFullCalendar.jQuery("#" + id).fullCalendar("render");
+    }
 
     public void setHeight(final int height) {
         if (height >= 0) {
@@ -388,9 +399,9 @@ public class FullCalendar extends FlowPanel implements HasLoadHandlers {
         }
     }
 
-    private native void setHeight(String id, int height) /*-{
-        $wnd.jQuery('#' + id).fullCalendar('option', 'height', height);
-    }-*/;
+    private void setHeight(String id, int height) {
+        JFullCalendar.jQuery("#" + id).fullCalendar("option", "height", height);
+    }
 
     public void setContentHeight(final int height) {
         if (height >= 0) {
@@ -398,9 +409,9 @@ public class FullCalendar extends FlowPanel implements HasLoadHandlers {
         }
     }
 
-    private native void setContentHeight(String id, int height) /*-{
-        $wnd.jQuery('#' + id).fullCalendar('option', 'contentHeight', height);
-    }-*/;
+    private void setContentHeight(String id, int height) {
+        JFullCalendar.jQuery("#" + id).fullCalendar("option", "contentHeight", height);
+    }
 
     public void setAspectRatio(final double ratio) {
         if (ratio > 0) {
@@ -408,19 +419,18 @@ public class FullCalendar extends FlowPanel implements HasLoadHandlers {
         }
     }
 
-    private native void setAspectRatio(String id, double ratio) /*-{
-        $wnd.jQuery('#' + id).fullCalendar('option', 'aspectRatio', ratio);
-    }-*/;
+    private void setAspectRatio(String id, double ratio) {
+        JFullCalendar.jQuery("#" + id).fullCalendar("option", "aspectRatio", ratio);
+    }
 
     /**
      * Useful for callback cancel/revert functions
-     *
      * @param revertFunction
      */
-    public native void executeFunction(JavaScriptObject revertFunction)/*-{
-        revertFunction();
-    }-*/;
-    
+    public void executeFunction(JavaScriptObject revertFunction) {
+        ((Fn) Js.uncheckedCast(revertFunction)).onInvoke();
+    }
+
     public void select(Date start, Date end) {
         select(getElement().getId(), Event.getDateAsISO8601(start), Event.getDateAsISO8601(end));
     }
@@ -428,16 +438,48 @@ public class FullCalendar extends FlowPanel implements HasLoadHandlers {
     public void select(String start, String end) {
         select(getElement().getId(), start, end);
     }
-    
-    private native void select(String id, String start, String end) /*-{
-        $wnd.jQuery('#' + id).fullCalendar('select', start, end);
-    }-*/;
-    
+
+    private void select(String id, String start, String end) {
+        JFullCalendar.jQuery("#" + id).fullCalendar("select", start, end);
+    }
+
     public void unselect() {
         unselect(getElement().getId());
     }
-    
-    private native void unselect(String id) /*-{
-        $wnd.jQuery('#' + id).fullCalendar('unselect');
-    }-*/;
+
+    private void unselect(String id) {
+        JFullCalendar.jQuery("#" + id).fullCalendar("unselect");
+    }
+
+    @FunctionalInterface
+    @JsFunction
+    private interface Fn {
+
+        void onInvoke();
+    }
+
+    private static class JFullCalendar extends JQuery {
+
+        @JsOverlay
+        public static JFullCalendar jQuery(Element e) {
+            return (JFullCalendar) JQuery.jQuery(e);
+        }
+
+        @JsOverlay
+        public static JFullCalendar jQuery(String e) {
+            return (JFullCalendar) JQuery.jQuery(e);
+        }
+
+        native <T> T fullCalendar(Object id);
+
+        native void fullCalendar(String id, Object start, Object end);
+
+        native <T> T fullCalendar(String removeEventSource, Object eventSource);
+    }
+
+    @JsType(namespace = JsPackage.GLOBAL, isNative = true, name = "Object")
+    private class HasToDate {
+
+        native JsDate toDate();
+    }
 }

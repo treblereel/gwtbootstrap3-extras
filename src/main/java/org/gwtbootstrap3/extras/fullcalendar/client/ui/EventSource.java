@@ -9,9 +9,9 @@ package org.gwtbootstrap3.extras.fullcalendar.client.ui;
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -20,23 +20,25 @@ package org.gwtbootstrap3.extras.fullcalendar.client.ui;
  * #L%
  */
 
+import jsinterop.annotations.JsFunction;
+import jsinterop.base.Js;
+import jsinterop.base.JsPropertyMap;
 import org.gwtbootstrap3.extras.fullcalendar.client.FullCalendarClientBundle;
 import org.gwtproject.core.client.JavaScriptObject;
 import org.gwtproject.core.client.ScriptInjector;
 
 /**
  * Models the Event Source Object
- *
  * @author Jeff Isenhart
  * @see http://arshaw.com/fullcalendar/docs/event_data/Event_Source_Object/
  */
 public class EventSource implements IsJavaScriptObject {
 
     private static boolean GCAL_ADDED = false;
-    private JavaScriptObject eventSource;
+    private JsPropertyMap eventSource;
 
     public EventSource(final JavaScriptObject jso) {
-        eventSource = jso;
+        eventSource = Js.uncheckedCast(jso);
     }
 
     public EventSource(final String url,
@@ -59,103 +61,96 @@ public class EventSource implements IsJavaScriptObject {
         newEvent(url, color, backgroundColor, textColor, borderColor, className, isEditable, isStartEditable, isDurationEditable, allDayDefault, ignoreTimeZone);
     }
 
-    private native void newEvent(String url,
-                                 String color,
-                                 String backgroundColor,
-                                 String textColor,
-                                 String borderColor,
-                                 String className,
-                                 boolean isEditable,
-                                 boolean isStartEditable,
-                                 boolean isDurationEditable,
-                                 boolean allDayDefault,
-                                 boolean ignoreTimeZone
-    ) /*-{
-        var theInstance = this;
-        theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.EventSource::eventSource = {
-            url: url,
-            color: color,
-            backgroundColor: backgroundColor,
-            textColor: textColor,
-            borderColor: borderColor,
-            className: className,
-            editable: isEditable,
-            startEditable: isStartEditable,
-            durationEditable: isDurationEditable,
-            allDayDefault: allDayDefault,
-            ignoreTimeZone: ignoreTimeZone
-        };
-    }-*/;
+    private void newEvent(String url,
+                          String color,
+                          String backgroundColor,
+                          String textColor,
+                          String borderColor,
+                          String className,
+                          boolean isEditable,
+                          boolean isStartEditable,
+                          boolean isDurationEditable,
+                          boolean allDayDefault,
+                          boolean ignoreTimeZone
+    ) {
+        eventSource = JsPropertyMap.of();
+        eventSource.set("url", url);
+        eventSource.set("color", color);
+        eventSource.set("backgroundColor", backgroundColor);
+        eventSource.set("textColor", textColor);
+        eventSource.set("borderColor", borderColor);
+        eventSource.set("className", className);
+        eventSource.set("editable", isEditable);
+        eventSource.set("startEditable", isStartEditable);
+        eventSource.set("durationEditable", isDurationEditable);
+        eventSource.set("allDayDefault", allDayDefault);
+        eventSource.set("ignoreTimeZone", ignoreTimeZone);
+    }
 
-    public native void setEventDataTransform(EventDataTransformCallback callback) /*-{
-        var theInstance = this;
-        theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.EventSource::eventSource.eventTransform = function (eventData) {
-            if (callback) {
-                callback.@org.gwtbootstrap3.extras.fullcalendar.client.ui.EventDataTransformCallback::eventData(Lcom/google/gwt/core/client/JavaScriptObject;)(eventData);
+    public void setEventDataTransform(EventDataTransformCallback callback) {
+        eventSource.set("eventTransform", (Fn) eventData -> {
+            if (callback != null) {
+                callback.eventData(eventData);
             }
-        }
-    }-*/;
+        });
+    }
 
-    public native String getUrl() /*-{
-        var theInstance = this;
-        return theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.EventSource::eventSource.url;
-    }-*/;
+    public String getUrl() {
+        return Js.uncheckedCast(this.eventSource.get("url"));
+    }
 
-    public native String getColor() /*-{
-        var theInstance = this;
-        return theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.EventSource::eventSource.color;
-    }-*/;
+    public String getColor() {
+        return Js.uncheckedCast(this.eventSource.get("color"));
+    }
 
-    public native String getBackgroundColor() /*-{
-        var theInstance = this;
-        return theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.EventSource::eventSource.backgroundColor;
-    }-*/;
+    public String getBackgroundColor() {
+        return Js.uncheckedCast(this.eventSource.get("backgroundColor"));
+    }
 
-    public native String getTextColor() /*-{
-        var theInstance = this;
-        return theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.EventSource::eventSource.textColor;
-    }-*/;
+    public String getTextColor() {
+        return Js.uncheckedCast(this.eventSource.get("textColor"));
+    }
 
-    public native String getBorderColor() /*-{
-        var theInstance = this;
-        return theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.EventSource::eventSource.borderColor;
-    }-*/;
+    public String getBorderColor() {
+        return Js.uncheckedCast(this.eventSource.get("borderColor"));
+    }
 
-    public native String getClassName() /*-{
-        var theInstance = this;
-        return theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.EventSource::eventSource.className;
-    }-*/;
+    public String getClassName() {
+        return Js.uncheckedCast(this.eventSource.get("className"));
+    }
 
-    public native boolean getIsEditable() /*-{
-        var theInstance = this;
-        return theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.EventSource::eventSource.editable;
-    }-*/;
+    public boolean getIsEditable() {
+        return Js.uncheckedCast(this.eventSource.get("editable"));
+    }
 
-    public native boolean getStartEditable() /*-{
-        var theInstance = this;
-        return theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.EventSource::eventSource.startEditable;
-    }-*/;
+    public boolean getStartEditable() {
+        return Js.uncheckedCast(this.eventSource.get("startEditable"));
+    }
 
-    public native boolean getDurationEditable() /*-{
-        var theInstance = this;
-        if (theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.EventSource::eventSource.durationEditable) {
-            return theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.EventSource::eventSource.durationEditable;
+    public boolean getDurationEditable() {
+        if (this.eventSource.has("durationEditable")) {
+            return Js.uncheckedCast(this.eventSource.get("durationEditable"));
         }
         return false;
-    }-*/;
+    }
 
-    public native boolean isAllDayDefault() /*-{
-        var theInstance = this;
-        return theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.EventSource::eventSource.allDayDefault;
-    }-*/;
+    public boolean isAllDayDefault() {
+        return Js.uncheckedCast(this.eventSource.get("allDayDefault"));
+    }
 
-    public native boolean ignoreTimeZone() /*-{
-        var theInstance = this;
-        return theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.EventSource::eventSource.ignoreTimeZone;
-    }-*/;
+    public boolean ignoreTimeZone() {
+        return Js.uncheckedCast(this.eventSource.get("ignoreTimeZone"));
+    }
 
     @Override
     public JavaScriptObject toJavaScript() {
-        return this.eventSource;
+        return Js.uncheckedCast(eventSource);
+    }
+
+    @FunctionalInterface
+    @JsFunction
+    private interface Fn {
+
+        void onInvoke(JavaScriptObject eventData);
     }
 }

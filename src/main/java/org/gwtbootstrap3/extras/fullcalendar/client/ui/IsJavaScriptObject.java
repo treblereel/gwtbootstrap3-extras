@@ -28,5 +28,5 @@ import org.gwtproject.core.client.JavaScriptObject;
  * @author Jeff Isenhart
  */
 public interface IsJavaScriptObject {
-    public JavaScriptObject toJavaScript();
+    JavaScriptObject toJavaScript();
 }

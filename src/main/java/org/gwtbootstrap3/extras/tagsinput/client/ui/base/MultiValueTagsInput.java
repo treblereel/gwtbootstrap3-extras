@@ -44,7 +44,7 @@ import org.gwtproject.event.shared.HandlerRegistration;
 public class MultiValueTagsInput<T> extends TagsInputBase<T> implements HasValueChangeHandlers<List<String>> {
 
     public MultiValueTagsInput() {
-        this(new CollectionDataset<T>(Collections.<T>emptyList()));
+        this(new CollectionDataset<>(Collections.emptyList()));
     }
 
     public MultiValueTagsInput(final Dataset<T> dataset) {
@@ -94,7 +94,7 @@ public class MultiValueTagsInput<T> extends TagsInputBase<T> implements HasValue
         if (isAttached())
             return toMultiValue(getValue(getElement()));
         else    
-            return new ArrayList<String>();
+            return new ArrayList<>();
     }
 
     @Override

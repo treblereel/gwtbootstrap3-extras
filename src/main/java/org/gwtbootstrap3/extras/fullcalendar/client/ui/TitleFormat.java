@@ -22,6 +22,8 @@ package org.gwtbootstrap3.extras.fullcalendar.client.ui;
 
 import java.util.Map;
 
+import jsinterop.base.Js;
+import jsinterop.base.JsPropertyMap;
 import org.gwtproject.core.client.JavaScriptObject;
 
 /**
@@ -54,16 +56,15 @@ public class TitleFormat extends AbstractViewOptionFormat implements IsJavaScrip
         options.put(ViewOptionHash.day, "dddd, MMM d, yyyy");
     }
 
-    private native void newInstance() /*-{
-        var theInstance = this;
-        theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.TitleFormat::format = {};
-        theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.TitleFormat::format.titleFormat = {};
-    }-*/;
+    private void newInstance() {
+        JsPropertyMap format = JsPropertyMap.of();
+        format.set("titleFormat", JsPropertyMap.of());
+        this.format = Js.uncheckedCast(format);
+    }
 
-    private native void setFormat(String format, String viewOption) /*-{
-        var theInstance = this;
-        theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.TitleFormat::format.titleFormat[viewOption] = format;
-    }-*/;
+    private void setFormat(String format, String viewOption) {
+        Js.asPropertyMap(Js.asPropertyMap(this.format).get("titleFormat")).set(viewOption, format);
+    }
 
     @Override
     public JavaScriptObject toJavaScript() {

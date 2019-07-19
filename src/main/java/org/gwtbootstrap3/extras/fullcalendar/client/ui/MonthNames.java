@@ -20,30 +20,30 @@ package org.gwtbootstrap3.extras.fullcalendar.client.ui;
  * #L%
  */
 
+import elemental2.core.JsArray;
+import jsinterop.base.Js;
+import jsinterop.base.JsPropertyMap;
 import org.gwtproject.core.client.JavaScriptObject;
 import org.gwtproject.core.client.JsArrayString;
 import org.gwtproject.i18n.client.LocaleInfo;
 
 /**
  * @author Jeff Isenhart
- * @see http://arshaw.com/fullcalendar/docs/text/monthNames/
- * @see http://arshaw.com/fullcalendar/docs/text/monthNamesShort/
+ * http://arshaw.com/fullcalendar/docs/text/monthNames/
+ * http://arshaw.com/fullcalendar/docs/text/monthNamesShort/
  */
 public class MonthNames implements IsJavaScriptObject {
 
-    private JavaScriptObject names;
+    private JsPropertyMap names;
 
     public MonthNames() {
         newInstance();
     }
 
-    private native void newInstance() /*-{
-        //default vals...
-        var theInstance = this;
-        theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.MonthNames::names = {};
-        theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.MonthNames::names.monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-        theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.MonthNames::names.monthNamesShort = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    }-*/;
+    private void newInstance() {
+        names.set("monthNames", JsArray.of("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"));
+        names.set("monthNamesShort", JsArray.of("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"));
+    }
 
     public void localize() {
         localize(LocaleInfo.getCurrentLocale().getDateTimeFormatInfo().monthsFull(),
@@ -77,14 +77,13 @@ public class MonthNames implements IsJavaScriptObject {
      * @param longNames
      * @param shortNames
      */
-    public native void localize(JsArrayString longNames, JsArrayString shortNames) /*-{
-        var theInstance = this;
-        theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.MonthNames::names.monthNames = longNames;
-        theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.MonthNames::names.monthNamesShort = shortNames;
-    }-*/;
+    public void localize(JsArrayString longNames, JsArrayString shortNames) {
+        Js.asPropertyMap(names).set("monthNames", longNames);
+        Js.asPropertyMap(names).set("monthNamesShort", shortNames);
+    }
 
     @Override
     public JavaScriptObject toJavaScript() {
-        return names;
+        return Js.uncheckedCast(names);
     }
 }

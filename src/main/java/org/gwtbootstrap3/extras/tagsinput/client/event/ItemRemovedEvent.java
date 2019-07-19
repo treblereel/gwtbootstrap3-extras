@@ -64,7 +64,7 @@ public class ItemRemovedEvent<T> extends GwtEvent<ItemRemovedHandler<T>> {
      */
     public static Type<ItemRemovedHandler<?>> getType() {
         if (TYPE == null) {
-            TYPE = new Type<ItemRemovedHandler<?>>();
+            TYPE = new Type<>();
         }
         return TYPE;
     }

@@ -28,7 +28,7 @@ import org.gwtproject.dom.client.NativeEvent;
  *
  */
 public interface SelectEventCallback {
-    public void select(JavaScriptObject start, JavaScriptObject end, NativeEvent event, JavaScriptObject viewObject);
+    void select(JavaScriptObject start, JavaScriptObject end, NativeEvent event, JavaScriptObject viewObject);
     
-    public void unselect(JavaScriptObject viewObject, NativeEvent event);
+    void unselect(JavaScriptObject viewObject, NativeEvent event);
 }

@@ -1,5 +1,7 @@
 package org.gwtbootstrap3.extras.tagsinput.client.ui.base;
 
+import jsinterop.annotations.JsFunction;
+import jsinterop.base.Js;
 import org.gwtbootstrap3.extras.tagsinput.client.callback.ItemTextCallback;
 import org.gwtbootstrap3.extras.tagsinput.client.callback.ItemValueCallback;
 import org.gwtbootstrap3.extras.tagsinput.client.callback.OnTagExistsCallback;
@@ -16,9 +18,9 @@ import org.gwtproject.core.client.JsArrayInteger;
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -29,16 +31,15 @@ import org.gwtproject.core.client.JsArrayInteger;
 
 /**
  * Tags Input options, used for customisation of TagsInput widget.
- *
  * @author Marko Nikolić <marko.nikolic@iten.rs>
  */
 public class TagsInputOptions<T> extends JavaScriptObject {
 
-    protected TagsInputOptions() {}
-    
+    protected TagsInputOptions() {
+    }
+
     /**
      * Creates a new instance of {@link TagsInputOptions}.
-     *
      * @return a new instance of {@link TagsInputOptions}.
      */
     @SuppressWarnings("rawtypes")
@@ -46,71 +47,77 @@ public class TagsInputOptions<T> extends JavaScriptObject {
         return JavaScriptObject.createObject().cast();
     }
 
-    public final native void setTagClass(String className) /*-{
-        this.tagClass = className;
-    }-*/;
+    public final void setTagClass(String className) {
+        Js.asPropertyMap(this).set("tagClass", className);
+    }
 
-    public final native void setTagClass(final TagClassCallback<T> callback) /*-{
-        this.tagClass = function(item) {
-            return callback.@org.gwtbootstrap3.extras.tagsinput.client.callback.TagClassCallback::getTagClass(Ljava/lang/Object;)(item);
-        }
-    }-*/;
-    
-    public final native void setItemValue(String itemValue) /*-{
-        this.itemValue = itemValue;
-    }-*/;
+    public final void setTagClass(final TagClassCallback<T> callback) {
+        Js.asPropertyMap(this).set("tagClass", (Fn) item -> callback.getTagClass((T) item));
+    }
 
-    public final native void setItemValue(final ItemValueCallback<T> callback) /*-{
-        this.itemValue = function(item) {
-            return callback.@org.gwtbootstrap3.extras.tagsinput.client.callback.ItemValueCallback::getItemValue(Ljava/lang/Object;)(item);
-        }
-    }-*/;
-    
-    public final native void setItemText(String itemText) /*-{
-        this.itemText = itemText;
-    }-*/;
-    
-    public final native void setItemText(final ItemTextCallback<T> callback) /*-{
-        this.itemText = function(item) {
-            return callback.@org.gwtbootstrap3.extras.tagsinput.client.callback.ItemTextCallback::getItemText(Ljava/lang/Object;)(item);
-        }
-    }-*/;
+    public final void setItemValue(String itemValue) {
+        Js.asPropertyMap(this).set("itemValue", itemValue);
+    }
 
-    public final native void setConfirmKeys(JsArrayInteger keys) /*-{
-        this.confirmKeys = keys;
-    }-*/;
-    
-    public final native void setMaxTags(int maxTags) /*-{
-        this.maxTags = maxTags;
-    }-*/;
+    public final void setItemValue(final ItemValueCallback<T> callback) {
+        Js.asPropertyMap(this).set("itemValue", (Fn) item -> callback.getItemValue((T) item));
+    }
 
-    public final native void setMaxChars(int maxChars) /*-{
-        this.maxChars = maxChars;
-    }-*/;
-    
-    public final native void setTrimValue(boolean trimValue) /*-{
-        this.trimValue = trimValue;
-    }-*/;
-    
-    public final native void setAllowDuplicates(boolean allowDuplicates) /*-{
-        this.allowDuplicates = allowDuplicates;
-    }-*/;
-    
-    public final native void setFocusClass(String focusClass) /*-{
-        this.focusClass = focusClass;
-    }-*/;
-    
-    public final native void setFreeInput(boolean freeInput) /*-{
-        this.freeInput = freeInput;
-    }-*/;
-    
-    public final native void setCancelConfirmKeysOnEmpty(boolean cancelConfirmKeysOnEmpty) /*-{
-        this.cancelConfirmKeysOnEmpty = cancelConfirmKeysOnEmpty;
-    }-*/;
-    
-    public final native void onTagExists(final OnTagExistsCallback<T> callback) /*-{
-        this.onTagExists = function(item, tag) {
-            callback.@org.gwtbootstrap3.extras.tagsinput.client.callback.OnTagExistsCallback::onTagExists(Ljava/lang/Object;Lcom/google/gwt/dom/client/Element;)(item, tag[0]);
-        }
-    }-*/;
+    public final void setItemText(String itemText) {
+        Js.asPropertyMap(this).set("itemText", itemText);
+    }
+
+    public final void setItemText(final ItemTextCallback<T> callback) {
+        Js.asPropertyMap(this).set("itemText", (Fn) item -> callback.getItemText((T) item));
+    }
+
+    public final void setConfirmKeys(JsArrayInteger keys) {
+        Js.asPropertyMap(this).set("confirmKeys", keys);
+    }
+
+    public final void setMaxTags(int maxTags) {
+        Js.asPropertyMap(this).set("maxTags", maxTags);
+    }
+
+    public final void setMaxChars(int maxChars) {
+        Js.asPropertyMap(this).set("maxChars", maxChars);
+    }
+
+    public final void setTrimValue(boolean trimValue) {
+        Js.asPropertyMap(this).set("trimValue", trimValue);
+    }
+
+    public final void setAllowDuplicates(boolean allowDuplicates) {
+        Js.asPropertyMap(this).set("allowDuplicates", allowDuplicates);
+    }
+
+    public final void setFocusClass(String focusClass) {
+        Js.asPropertyMap(this).set("focusClass", focusClass);
+    }
+
+    public final void setFreeInput(boolean freeInput) {
+        Js.asPropertyMap(this).set("freeInput", freeInput);
+    }
+
+    public final void setCancelConfirmKeysOnEmpty(boolean cancelConfirmKeysOnEmpty) {
+        Js.asPropertyMap(this).set("cancelConfirmKeysOnEmpty", cancelConfirmKeysOnEmpty);
+    }
+
+    public final void onTagExists(final OnTagExistsCallback<T> callback) {
+        Js.asPropertyMap(this).set("onTagExists", (FnOnTagExists) (value, value1) -> callback.onTagExists((T) value, Js.uncheckedCast(Js.asPropertyMap(value1).get("0"))));
+    }
+
+    @FunctionalInterface
+    @JsFunction
+    private interface FnOnTagExists {
+
+        void onInvoke(Object value, JavaScriptObject value1);
+    }
+
+    @FunctionalInterface
+    @JsFunction
+    private interface Fn {
+
+        String onInvoke(JavaScriptObject value1);
+    }
 }

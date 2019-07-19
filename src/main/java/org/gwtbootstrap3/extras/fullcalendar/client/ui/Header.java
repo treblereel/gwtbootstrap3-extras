@@ -9,9 +9,9 @@ package org.gwtbootstrap3.extras.fullcalendar.client.ui;
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -20,6 +20,8 @@ package org.gwtbootstrap3.extras.fullcalendar.client.ui;
  * #L%
  */
 
+import jsinterop.base.Js;
+import jsinterop.base.JsPropertyMap;
 import org.gwtproject.core.client.JavaScriptObject;
 
 /**
@@ -38,43 +40,39 @@ import org.gwtproject.core.client.JavaScriptObject;
  * right:  'today prev,next'
  * }
  * </code>
- *
  * @author Jeff Isenhart
  */
 public class Header {
 
-    private JavaScriptObject header;
+    private JsPropertyMap header;
 
     public Header() {
         newInstance();
     }
 
-    private native void newInstance() /*-{
-        var theInstance = this;
-        theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.Header::header = {left: 'title', center: '', right: 'today prev,next'};
-    }-*/;
+    private void newInstance() {
+        header.set("left", "title");
+        header.set("center", "");
+        header.set("right", "today prev,next");
+    }
 
-    public native void setNoHeader() /*-{
-        var theInstance = this;
-        theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.Header::header = null;
-    }-*/;
+    public void setNoHeader() {
+        header.set("header", null);
+    }
 
-    public native void setLeft(String left) /*-{
-        var theInstance = this;
-        theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.Header::header.left = left;
-    }-*/;
+    public void setLeft(String left) {
+        header.set("left", left);
+    }
 
-    public native void setCenter(String center) /*-{
-        var theInstance = this;
-        theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.Header::header.center = center;
-    }-*/;
+    public void setCenter(String center) {
+        header.set("center", center);
+    }
 
-    public native void setRight(String right) /*-{
-        var theInstance = this;
-        theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.Header::header.right = right;
-    }-*/;
+    public void setRight(String right) {
+        header.set("right", right);
+    }
 
     public JavaScriptObject toJavaScript() {
-        return header;
+        return Js.uncheckedCast(header);
     }
 }

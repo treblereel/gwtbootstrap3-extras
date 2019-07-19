@@ -9,9 +9,9 @@ package org.gwtbootstrap3.extras.fullcalendar.client.ui;
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -25,10 +25,10 @@ import org.gwtproject.dom.client.Element;
 
 /**
  * Callback to receive the eventRender event
- *
  * @author Jeff Isenhart
  * @see http://arshaw.com/fullcalendar/docs/event_rendering/eventRender/
  */
 public interface EventRenderHandler {
-    public void render(JavaScriptObject evt, Element ele);
+
+    void render(JavaScriptObject evt, Element ele);
 }

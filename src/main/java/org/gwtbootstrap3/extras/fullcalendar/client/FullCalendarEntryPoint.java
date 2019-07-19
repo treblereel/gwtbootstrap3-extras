@@ -9,9 +9,9 @@ package org.gwtbootstrap3.extras.fullcalendar.client;
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -20,6 +20,7 @@ package org.gwtbootstrap3.extras.fullcalendar.client;
  * #L%
  */
 
+import jsinterop.base.Js;
 import org.gwtproject.core.client.EntryPoint;
 import org.gwtproject.core.client.ScriptInjector;
 import org.gwtproject.dom.client.StyleInjector;
@@ -44,27 +45,31 @@ public class FullCalendarEntryPoint implements EntryPoint {
         }
     }
 
-    private native boolean isCalendarPresent() /*-{
-        if ($wnd.jQuery && $wnd.jQuery.fullCalendar) {
+    private boolean isCalendarPresent() {
+        if (Js.asPropertyMap(Js.global()).has("jQuery")
+                && Js.asPropertyMap(Js.asPropertyMap(Js.global()).get("jQuery")).has("fullCalendar")) {
             return true;
         } else {
             return false;
         }
-    }-*/;
+    }
 
-    private native boolean isDragAndResizePresent() /*-{
-        if ($wnd.jQuery && $wnd.jQuery.draggable && $wnd.jQuery.resizable) {
+    private boolean isDragAndResizePresent() {
+        if (Js.asPropertyMap(Js.global()).has("jQuery")
+                && Js.asPropertyMap(Js.asPropertyMap(Js.global()).get("jQuery")).has("draggable")
+                && Js.asPropertyMap(Js.asPropertyMap(Js.global()).get("jQuery")).has("resizable")) {
             return true;
         } else {
             return false;
         }
-    }-*/;
+    }
 
-    private native boolean isMomentPresent() /*-{
-        if ($wnd.jQuery && $wnd.jQuery.moment) {
+    private boolean isMomentPresent() {
+        if (Js.asPropertyMap(Js.global()).has("jQuery")
+                && Js.asPropertyMap(Js.asPropertyMap(Js.global()).get("jQuery")).has("moment")) {
             return true;
         } else {
             return false;
         }
-    }-*/;
+    }
 }

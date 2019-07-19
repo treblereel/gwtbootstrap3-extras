@@ -64,7 +64,7 @@ public class BeforeItemRemoveEvent<T> extends GwtEvent<BeforeItemRemoveHandler<T
      */
     public static Type<BeforeItemRemoveHandler<?>> getType() {
         if (TYPE == null) {
-            TYPE = new Type<BeforeItemRemoveHandler<?>>();
+            TYPE = new Type<>();
         }
         return TYPE;
     }
