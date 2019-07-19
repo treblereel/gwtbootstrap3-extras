@@ -9,9 +9,9 @@ package org.gwtbootstrap3.extras.fullcalendar.client.ui;
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -22,6 +22,8 @@ package org.gwtbootstrap3.extras.fullcalendar.client.ui;
 
 import java.util.Map;
 
+import jsinterop.base.Js;
+import jsinterop.base.JsPropertyMap;
 import org.gwtproject.core.client.JavaScriptObject;
 
 /**
@@ -29,6 +31,7 @@ import org.gwtproject.core.client.JavaScriptObject;
  * @http://arshaw.com/fullcalendar/docs/text/timeFormat/
  */
 public class TimeFormat extends AbstractViewOptionFormat implements IsJavaScriptObject {
+
     private JavaScriptObject format;
 
     public TimeFormat() {
@@ -53,20 +56,17 @@ public class TimeFormat extends AbstractViewOptionFormat implements IsJavaScript
         options.put(ViewOptionHash.agenda, "h:mm{ - h:mm}");
     }
 
-    private native void newInstance(String defaultValue) /*-{
-        var theInstance = this;
-        theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.TimeFormat::format = {};
-        theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.TimeFormat::format.timeFormat = {
-            // for all other views
-            '': defaultValue
-        };
+    private void newInstance(String defaultValue) {
+        JsPropertyMap format = JsPropertyMap.of();
+        JsPropertyMap timeFormat = JsPropertyMap.of();
+        timeFormat.set("", defaultValue);
+        format.set("timeFormat", timeFormat);
+        this.format = Js.uncheckedCast(format);
+    }
 
-    }-*/;
-
-    private native void setFormat(String format, String viewOption) /*-{
-        var theInstance = this;
-        theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.TimeFormat::format.timeFormat[viewOption] = format;
-    }-*/;
+    private void setFormat(String format, String viewOption) {
+        Js.asPropertyMap(this.format).set(viewOption, format);
+    }
 
     @Override
     public JavaScriptObject toJavaScript() {

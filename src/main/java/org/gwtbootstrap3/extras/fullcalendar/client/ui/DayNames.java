@@ -9,9 +9,9 @@ package org.gwtbootstrap3.extras.fullcalendar.client.ui;
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -20,6 +20,9 @@ package org.gwtbootstrap3.extras.fullcalendar.client.ui;
  * #L%
  */
 
+import elemental2.core.JsArray;
+import jsinterop.base.Js;
+import jsinterop.base.JsPropertyMap;
 import org.gwtproject.core.client.JavaScriptObject;
 import org.gwtproject.core.client.JsArrayString;
 import org.gwtproject.i18n.client.LocaleInfo;
@@ -30,19 +33,18 @@ import org.gwtproject.i18n.client.LocaleInfo;
  * @see http://arshaw.com/fullcalendar/docs/text/dayNamesShort/
  */
 public class DayNames implements IsJavaScriptObject {
-    private JavaScriptObject names;
+
+    private JsPropertyMap names;
 
     public DayNames() {
         newInstance();
     }
 
-    private native void newInstance() /*-{
-        //default vals...
-        var theInstance = this;
-        theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.DayNames::names = {};
-        theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.DayNames::names.dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-        theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.DayNames::names.dayNamesShort = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-    }-*/;
+    private void newInstance() {
+        names = JsPropertyMap.of();
+        names.set("dayNames", JsArray.of("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"));
+        names.set("dayNamesShort", JsArray.of("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"));
+    }
 
     public void localize() {
         localized(LocaleInfo.getCurrentLocale().getDateTimeFormatInfo().weekdaysFull(),
@@ -51,7 +53,6 @@ public class DayNames implements IsJavaScriptObject {
 
     /**
      * pass in localized names directly
-     *
      * @param longNames
      * @param shortNames
      */
@@ -72,18 +73,16 @@ public class DayNames implements IsJavaScriptObject {
 
     /**
      * pass in localized names directly
-     *
      * @param longNames
      * @param shortNames
      */
-    public native void localized(JsArrayString longNames, JsArrayString shortNames) /*-{
-        var theInstance = this;
-        theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.DayNames::names.dayNames = longNames;
-        theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.DayNames::names.dayNamesShort = shortNames;
-    }-*/;
+    public void localized(JsArrayString longNames, JsArrayString shortNames) {
+        names.set("dayNames", longNames);
+        names.set("dayNamesShort", shortNames);
+    }
 
     @Override
     public JavaScriptObject toJavaScript() {
-        return names;
+        return Js.uncheckedCast(names);
     }
 }

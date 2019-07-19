@@ -9,9 +9,9 @@ package org.gwtbootstrap3.extras.fullcalendar.client.ui;
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -20,6 +20,8 @@ package org.gwtbootstrap3.extras.fullcalendar.client.ui;
  * #L%
  */
 
+import jsinterop.base.Js;
+import jsinterop.base.JsPropertyMap;
 import org.gwtproject.core.client.JavaScriptObject;
 
 /**
@@ -28,47 +30,40 @@ import org.gwtproject.core.client.JavaScriptObject;
  */
 public class ButtonText implements IsJavaScriptObject {
 
-    private JavaScriptObject text;
+    private JsPropertyMap text;
 
     public ButtonText() {
         newInstance();
     }
 
-    private native void newInstance() /*-{
-        //default vals...
-        var theInstance = this;
-        theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.ButtonText::text = {};
-        theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.ButtonText::text.buttonText =
-        {
-            today: 'today',
-            month: 'month',
-            week: 'week',
-            day: 'day'
-        };
-    }-*/;
+    private void newInstance() {
+        text = JsPropertyMap.of();
+        JsPropertyMap buttonText = JsPropertyMap.of();
+        buttonText.set("today", "today");
+        buttonText.set("month", "month");
+        buttonText.set("week", "week");
+        buttonText.set("day", "day");
+        text.set("buttonText", buttonText);
+    }
 
-    public native void setToday(String today) /*-{
-        var theInstance = this;
-        theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.ButtonText::text.buttonText.today = today;
-    }-*/;
+    public void setToday(String today) {
+        Js.asPropertyMap(text.get("buttonText")).set("today", today);
+    }
 
-    public native void setMonth(String month) /*-{
-        var theInstance = this;
-        theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.ButtonText::text.buttonText.month = month;
-    }-*/;
+    public void setMonth(String month) {
+        Js.asPropertyMap(text.get("buttonText")).set("month", month);
+    }
 
-    public native void setWeek(String week) /*-{
-        var theInstance = this;
-        theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.ButtonText::text.buttonText.week = week;
-    }-*/;
+    public void setWeek(String week) {
+        Js.asPropertyMap(text.get("buttonText")).set("week", week);
+    }
 
-    public native void setDay(String day) /*-{
-        var theInstance = this;
-        theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.ButtonText::text.buttonText.day = day;
-    }-*/;
+    public void setDay(String day) {
+        Js.asPropertyMap(text.get("buttonText")).set("day", day);
+    }
 
     @Override
     public JavaScriptObject toJavaScript() {
-        return text;
+        return Js.uncheckedCast(text);
     }
 }

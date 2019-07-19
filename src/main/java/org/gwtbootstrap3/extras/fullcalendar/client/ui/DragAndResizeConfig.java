@@ -9,9 +9,9 @@ package org.gwtbootstrap3.extras.fullcalendar.client.ui;
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -20,14 +20,19 @@ package org.gwtbootstrap3.extras.fullcalendar.client.ui;
  * #L%
  */
 
+import jsinterop.annotations.JsFunction;
+import jsinterop.base.Js;
+import jsinterop.base.JsPropertyMap;
 import org.gwtproject.core.client.JavaScriptObject;
+import org.gwtproject.dom.client.NativeEvent;
 
 /**
  * @author Jeff Iesnhart
  * @see http://arshaw.com/fullcalendar/docs/event_ui/
  */
 public class DragAndResizeConfig implements IsJavaScriptObject {
-    private JavaScriptObject script;
+
+    private JsPropertyMap script;
 
     public DragAndResizeConfig(final DragAndResizeCallback handler) {
         if (handler != null) {
@@ -35,65 +40,91 @@ public class DragAndResizeConfig implements IsJavaScriptObject {
         }
     }
 
-    private native void newInstance(DragAndResizeCallback handler) /*-{
-        var theInstance = this;
-        var dragResizeHandler = handler;
-        theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.DragAndResizeConfig::script = {};
-        theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.DragAndResizeConfig::script.eventDragStart = function (event, jsEvent, ui, view) {
-            if (event && jsEvent) {
-                var originalEvent = null;
-                if (jsEvent.originalEvent) {
-                    originalEvent = jsEvent.originalEvent;
+    private void newInstance(DragAndResizeCallback handler) {
+        script = JsPropertyMap.of();
+        script.set("eventDragStart", (Fn) (event, jsEvent, ui, view) -> {
+            if (event != null && jsEvent != null) {
+                NativeEvent originalEvent = null;
+                if (Js.asPropertyMap(jsEvent).has("originalEvent")) {
+                    originalEvent = (NativeEvent) Js.asPropertyMap(jsEvent).get("originalEvent");
                 }
-                dragResizeHandler.@org.gwtbootstrap3.extras.fullcalendar.client.ui.DragAndResizeCallback::eventDragStart(Lcom/google/gwt/core/client/JavaScriptObject;Lcom/google/gwt/dom/client/NativeEvent;)(event, originalEvent);
+                handler.eventDragStart(event, originalEvent);
             }
-        };
-        theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.DragAndResizeConfig::script.eventDragStop = function (event, jsEvent, ui, view) {
-            if (event && jsEvent) {
-                var originalEvent = null;
-                if (jsEvent.originalEvent) {
-                    originalEvent = jsEvent.originalEvent;
-                }
-                dragResizeHandler.@org.gwtbootstrap3.extras.fullcalendar.client.ui.DragAndResizeCallback::eventDragStop(Lcom/google/gwt/core/client/JavaScriptObject;Lcom/google/gwt/dom/client/NativeEvent;)(event, originalEvent);
-            }
-        };
-        theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.DragAndResizeConfig::script.eventDrop = function (event, delta, revertFunc, jsEvent, ui, view) {
-            var originalEvent = null;
-            if (jsEvent && jsEvent.originalEvent) {
-                originalEvent = jsEvent.originalEvent;
-            }
-            dragResizeHandler.@org.gwtbootstrap3.extras.fullcalendar.client.ui.DragAndResizeCallback::eventDrop(Lcom/google/gwt/core/client/JavaScriptObject;Lcom/google/gwt/core/client/JavaScriptObject;Lcom/google/gwt/dom/client/NativeEvent;)(event, revertFunc, originalEvent);
-        };
+        });
 
-        theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.DragAndResizeConfig::script.eventResizeStart = function (event, jsEvent, ui, view) {
-            if (event && jsEvent) {
-                var originalEvent = null;
-                if (jsEvent.originalEvent) {
-                    originalEvent = jsEvent.originalEvent;
+        script.set("eventDragStop", (Fn) (event, jsEvent, ui, view) -> {
+            if (event != null && jsEvent != null) {
+                NativeEvent originalEvent = null;
+                if (Js.asPropertyMap(jsEvent).has("originalEvent")) {
+                    originalEvent = (NativeEvent) Js.asPropertyMap(jsEvent).get("originalEvent");
                 }
-                dragResizeHandler.@org.gwtbootstrap3.extras.fullcalendar.client.ui.DragAndResizeCallback::eventResizeStart(Lcom/google/gwt/core/client/JavaScriptObject;Lcom/google/gwt/dom/client/NativeEvent;)(event, originalEvent);
+                handler.eventDragStop(event, originalEvent);
             }
-        };
-        theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.DragAndResizeConfig::script.eventResizeStop = function (event, jsEvent, ui, view) {
-            if (event && jsEvent) {
-                var originalEvent = null;
-                if (jsEvent.originalEvent) {
-                    originalEvent = jsEvent.originalEvent;
+        });
+
+        script.set("eventDrop", (FnEventDrop) (event, delta, revertFunc, jsEvent, ui, view) -> {
+            NativeEvent originalEvent = null;
+            if (jsEvent != null && Js.asPropertyMap(jsEvent).has("originalEvent")) {
+                originalEvent = Js.uncheckedCast(Js.asPropertyMap(jsEvent).get("originalEvent"));
+            }
+            handler.eventDrop(event, revertFunc, originalEvent);
+        });
+
+        script.set("eventResizeStart", (Fn) (event, jsEvent, ui, view) -> {
+            if (event != null && jsEvent != null) {
+                NativeEvent originalEvent = null;
+                if (Js.asPropertyMap(jsEvent).has("originalEvent")) {
+                    originalEvent = (NativeEvent) Js.asPropertyMap(jsEvent).get("originalEvent");
                 }
-                dragResizeHandler.@org.gwtbootstrap3.extras.fullcalendar.client.ui.DragAndResizeCallback::eventResizeStop(Lcom/google/gwt/core/client/JavaScriptObject;Lcom/google/gwt/dom/client/NativeEvent;)(event, originalEvent);
+                handler.eventResizeStart(event, originalEvent);
             }
-        };
-        theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.DragAndResizeConfig::script.eventResize = function (event, delta, revertFunc, jsEvent, ui, view) {
-            var originalEvent = null;
-            if (jsEvent && jsEvent.originalEvent) {
-                originalEvent = jsEvent.originalEvent;
+        });
+
+        script.set("eventResizeStop", (Fn) (event, jsEvent, ui, view) -> {
+            if (event != null && jsEvent != null) {
+                NativeEvent originalEvent = null;
+                if (Js.asPropertyMap(jsEvent).has("originalEvent")) {
+                    originalEvent = (NativeEvent) Js.asPropertyMap(jsEvent).get("originalEvent");
+                }
+                handler.eventResizeStop(event, originalEvent);
             }
-            dragResizeHandler.@org.gwtbootstrap3.extras.fullcalendar.client.ui.DragAndResizeCallback::eventResize(Lcom/google/gwt/core/client/JavaScriptObject;Lcom/google/gwt/core/client/JavaScriptObject;Lcom/google/gwt/dom/client/NativeEvent;)(event, revertFunc, originalEvent);
-        };
-    }-*/;
+        });
+
+        script.set("eventResizeStop", (Fn) (event, jsEvent, ui, view) -> {
+            if (event != null && jsEvent != null) {
+                NativeEvent originalEvent = null;
+                if (Js.asPropertyMap(jsEvent).has("originalEvent")) {
+                    originalEvent = (NativeEvent) Js.asPropertyMap(jsEvent).get("originalEvent");
+                }
+                handler.eventResizeStop(event, originalEvent);
+            }
+        });
+
+        script.set("eventResize", (FnEventDrop) (event, delta, revertFunc, jsEvent, ui, view) -> {
+            NativeEvent originalEvent = null;
+            if (jsEvent != null && Js.asPropertyMap(jsEvent).has("originalEvent")) {
+                originalEvent = Js.uncheckedCast(Js.asPropertyMap(jsEvent).get("originalEvent"));
+            }
+            handler.eventResize(event, revertFunc, originalEvent);
+        });
+    }
 
     @Override
     public JavaScriptObject toJavaScript() {
-        return script;
+        return Js.uncheckedCast(script);
+    }
+
+    @FunctionalInterface
+    @JsFunction
+    private interface Fn {
+
+        void onInvoke(JavaScriptObject event, NativeEvent nativeEvent, JavaScriptObject ui, JavaScriptObject view);
+    }
+
+    @FunctionalInterface
+    @JsFunction
+    private interface FnEventDrop {
+
+        void onInvoke(JavaScriptObject event, JavaScriptObject delta, JavaScriptObject revertFunc, NativeEvent nativeEvent, JavaScriptObject ui, JavaScriptObject view);
     }
 }

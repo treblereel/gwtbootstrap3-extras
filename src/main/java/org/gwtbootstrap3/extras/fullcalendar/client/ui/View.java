@@ -9,9 +9,9 @@ package org.gwtbootstrap3.extras.fullcalendar.client.ui;
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -21,6 +21,9 @@ package org.gwtbootstrap3.extras.fullcalendar.client.ui;
  */
 
 import elemental2.core.JsDate;
+import jsinterop.annotations.JsPackage;
+import jsinterop.annotations.JsType;
+import jsinterop.base.Js;
 import org.gwtproject.core.client.JavaScriptObject;
 
 /**
@@ -38,53 +41,49 @@ public class View {
         view = jso;
     }
 
-    public native String getName() /*-{
-        var theInstance = this;
-        return theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.View::view.name;
-    }-*/;
+    public String getName() {
+        return (String) Js.asPropertyMap(view).get("name");
+    }
 
-    public native String getTitle() /*-{
-        var theInstance = this;
-        return theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.View::view.title;
-    }-*/;
+    public String getTitle() {
+        return (String) Js.asPropertyMap(view).get("title");
+    }
 
-    public native JsDate getStart() /*-{
-        var theInstance = this;
-        var returnVal = theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.View::view.start;
-        if (returnVal) {
-            return returnVal.toDate();
+    public JsDate getStart() {
+        if (Js.asPropertyMap(view).has("start")) {
+            return ((HasToDate) Js.uncheckedCast(Js.asPropertyMap(view).get("start"))).toDate();
         }
         return null;
-    }-*/;
+    }
 
-    public native JsDate getEnd() /*-{
-        var theInstance = this;
-        var returnVal = theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.View::view.end;
-        if (returnVal) {
-            return returnVal.toDate();
+    public JsDate getEnd() {
+        if (Js.asPropertyMap(view).has("end")) {
+            return ((HasToDate) Js.uncheckedCast(Js.asPropertyMap(view).get("end"))).toDate();
         }
         return null;
-    }-*/;
+    }
 
-    public native JsDate getIntervalStart() /*-{
-        var theInstance = this;
-        var returnVal = theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.View::view.intervalStart;
-        if (returnVal) {
-            return returnVal.toDate();
+    public JsDate getIntervalStart() {
+        if (Js.asPropertyMap(view).has("intervalStart")) {
+            return ((HasToDate) Js.uncheckedCast(Js.asPropertyMap(view).get("intervalStart"))).toDate();
         }
         return null;
-    }-*/;
+    }
 
-    public native JsDate getIntervalEnd() /*-{
-        var theInstance = this;
-        var returnVal = theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.View::view.intervalEnd;
-        if (returnVal) {
-            return returnVal.toDate();
+    public JsDate getIntervalEnd() {
+        if (Js.asPropertyMap(view).has("intervalEnd")) {
+            return ((HasToDate) Js.uncheckedCast(Js.asPropertyMap(view).get("intervalEnd"))).toDate();
         }
         return null;
-    }-*/;
+    }
 
     public JavaScriptObject toJavaScript() {
         return this.view;
+    }
+
+    @JsType(namespace = JsPackage.GLOBAL, isNative = true, name = "Object")
+    private class HasToDate {
+
+        public native JsDate toDate();
     }
 }

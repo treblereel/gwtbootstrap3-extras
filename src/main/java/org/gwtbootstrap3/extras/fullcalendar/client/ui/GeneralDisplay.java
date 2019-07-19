@@ -9,9 +9,9 @@ package org.gwtbootstrap3.extras.fullcalendar.client.ui;
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -20,15 +20,22 @@ package org.gwtbootstrap3.extras.fullcalendar.client.ui;
  * #L%
  */
 
+import elemental2.core.JsArray;
+import elemental2.dom.DomGlobal;
+import jsinterop.annotations.JsFunction;
+import jsinterop.base.Js;
+import jsinterop.base.JsPropertyMap;
 import org.gwtproject.core.client.JavaScriptObject;
 import org.gwtproject.core.client.JsArrayInteger;
+import org.gwtproject.dom.client.NativeEvent;
 
 /**
  * @author Jeff Isenhart
  * @see http://arshaw.com/fullcalendar/docs/display/
  */
 public class GeneralDisplay implements IsJavaScriptObject {
-    private JavaScriptObject general;
+
+    private JsPropertyMap general;
 
     public GeneralDisplay() {
         this(new Header());
@@ -41,71 +48,56 @@ public class GeneralDisplay implements IsJavaScriptObject {
         }
     }
 
-    private native void newInstance() /*-{
-        var theInstance = this;
-        theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.GeneralDisplay::general = {
-            firstDay: 0,
-            isRTL: false,
-            weekends: true,
-            hiddenDays: [],
-            weekMode: 'fixed',
-            weekNumbers: false,
-            weekNumberCalculation: 'local',
-            aspectRatio: 1.35,
-            handleWindowResize: true,
-            prev: 'left-single-arrow',
-            next: 'right-single-arrow',
-            prevYear: 'left-double-arrow',
-            nextYear: 'right-double-arrow'
-        };
-    }-*/;
+    private void newInstance() {
+        general = JsPropertyMap.of();
 
-    public native void setViewRenderCallback(ViewRenderCallback callback) /*-{
-        if (callback) {
-            var theInstance = this;
-            theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.GeneralDisplay::general.viewRender = function (view, element) {
-                callback.@org.gwtbootstrap3.extras.fullcalendar.client.ui.ViewRenderCallback::viewRender(Lcom/google/gwt/core/client/JavaScriptObject;Lcom/google/gwt/dom/client/Element;)(view, element[0]);
-            };
+        general.set("firstDay", 0);
+        general.set("isRTL", false);
+        general.set("weekends", true);
+        general.set("hiddenDays", new JsArray<>());
+        general.set("weekMode", "fixed");
+        general.set("weekNumbers", 0);
+        general.set("weekNumberCalculation", "local");
+        general.set("aspectRatio", 1.35);
+        general.set("handleWindowResize", true);
+        general.set("prev", "left-single-arro'");
+        general.set("next", "right-single-arrow");
+        general.set("prevYear", "right-single-arrow");
+        general.set("next", "right-double-arrow");
+    }
 
-            theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.GeneralDisplay::general.viewDestroy = function (view, element) {
-                callback.@org.gwtbootstrap3.extras.fullcalendar.client.ui.ViewRenderCallback::viewDestroy(Lcom/google/gwt/core/client/JavaScriptObject;Lcom/google/gwt/dom/client/Element;)(view, element[0]);
-            };
+    public void setViewRenderCallback(ViewRenderCallback callback) {
+        if (callback != null) {
+            DomGlobal.console.log("setViewRenderCallback check here ");
 
-            theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.GeneralDisplay::general.dayRender = function (date, cell) {
-                callback.@org.gwtbootstrap3.extras.fullcalendar.client.ui.ViewRenderCallback::dayRender(Lcom/google/gwt/core/client/JavaScriptObject;Lcom/google/gwt/dom/client/Element;)(date, cell);
-            };
-
-            theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.GeneralDisplay::general.windowResize = function (view) {
-                callback.@org.gwtbootstrap3.extras.fullcalendar.client.ui.ViewRenderCallback::windowResize(Lcom/google/gwt/core/client/JavaScriptObject;)(view);
-            };
+            general.set("viewRender", (Fn2Args) (view, element) -> callback.viewRender(view, Js.uncheckedCast(Js.asPropertyMap(element).get("0"))));
+            general.set("viewDestroy", (Fn2Args) (view, element) -> callback.viewDestroy(view, Js.uncheckedCast(Js.asPropertyMap(element).get("0"))));
+            general.set("dayRender", (Fn2Args) (date, cell) -> callback.dayRender(date, Js.uncheckedCast(cell)));
+            general.set("windowResize", (Fn) (view) -> callback.windowResize(view));
         }
-    }-*/;
+    }
 
-    public native void setFirstDayOption(int firstDay) /*-{
+    public void setFirstDayOption(int firstDay) {
         if (firstDay >= 0 && firstDay <= 6) {
-            var theInstance = this;
-            theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.GeneralDisplay::general.firstDay = firstDay;
+            general.set("firstDay", firstDay);
         }
-    }-*/;
+    }
 
-    public native void setIsRTL(boolean rtl) /*-{
-        var theInstance = this;
-        return theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.GeneralDisplay::general.isRTL = rtl;
-    }-*/;
+    public void setIsRTL(boolean rtl) {
+        general.set("isRTL", rtl);
+    }
 
     public void setHeader(final Header header) {
         setHeader(header == null ? null : header.toJavaScript());
     }
 
-    private native void setHeader(JavaScriptObject header) /*-{
-        var theInstance = this;
-        theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.GeneralDisplay::general.header = header;
-    }-*/;
+    private void setHeader(JavaScriptObject header) {
+        general.set("header", header);
+    }
 
-    public native void setWeekends(boolean weekends) /*-{
-        var theInstance = this;
-        return theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.GeneralDisplay::general.weekends = weekends;
-    }-*/;
+    public void setWeekends(boolean weekends) {
+        general.set("weekends", weekends);
+    }
 
     public void setHiddenDays(final int... days) {
         if (days != null) {
@@ -118,93 +110,89 @@ public class GeneralDisplay implements IsJavaScriptObject {
         }
     }
 
-    public native void setHiddenDays(JsArrayInteger hiddenDays) /*-{
-        var theInstance = this;
-        theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.GeneralDisplay::general.hiddenDays = hiddenDays;
-    }-*/;
+    public void setHiddenDays(JsArrayInteger hiddenDays) {
+        general.set("hiddenDays", hiddenDays);
+    }
 
-    public native void setWeekMode(String mode) /*-{
-        if (mode) {
-            if (mode == 'fixed' || mode == 'liquid' || mode == 'variable') {
-                var theInstance = this;
-                theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.GeneralDisplay::general.weekMode = mode;
+    public void setWeekMode(String mode) {
+        if (mode != null) {
+            if (mode.equals("fixed") || mode.equals("liquid") || mode.equals("variable")) {
+                general.set("weekMode", mode);
             }
         }
+    }
 
-    }-*/;
+    public void setWeekNumbers(boolean weekNumbers) {
+        general.set("weekNumbers", weekNumbers);
+    }
 
-    public native void setWeekNumbers(boolean weekNumbers) /*-{
-        var theInstance = this;
-        return theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.GeneralDisplay::general.weekNumbers = weekNumbers;
-
-    }-*/;
-
-    public native void setWeekNumberCaculation(String calculation) /*-{
-        if (calculation) {
-            if (calculation == 'local' || calculation == 'ISO') {
-                var theInstance = this;
-                theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.GeneralDisplay::general.weekNumberCalculation = calculation;
+    public void setWeekNumberCaculation(String calculation) {
+        if (calculation != null) {
+            if (calculation.equals("local") || calculation.equals("ISO")) {
+                general.set("weekNumberCalculation", calculation);
             }
         }
-
-    }-*/;
+    }
 
     //to-do: make this a callback
-    public native void setWeekNumberCaculation(JavaScriptObject weekNumberFunction) /*-{
-        if (weekNumberFunction) {
-            var theInstance = this;
-            theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.GeneralDisplay::general.weekNumberCalculation = weekNumberFunction;
+    public void setWeekNumberCaculation(JavaScriptObject weekNumberFunction) {
+        if (weekNumberFunction != null) {
+            general.set("weekNumberCalculation", weekNumberFunction);
         }
+    }
 
-    }-*/;
-    
-    public native void setBusinessHours(boolean businessHours) /*-{
-        var theInstance = this;
-        theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.GeneralDisplay::general.businessHours = businessHours;
-    }-*/;
+    public void setBusinessHours(boolean businessHours) {
+        general.set("businessHours", businessHours);
+    }
 
-    public native void setHeight(int height) /*-{
-        var theInstance = this;
-        theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.GeneralDisplay::general.height = height;
-    }-*/;
+    public void setHeight(int height) {
+        general.set("height", height);
+    }
 
-    public native void setContentHeight(int contentHeight) /*-{
-        var theInstance = this;
-        theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.GeneralDisplay::general.contentHeight = contentHeight;
-    }-*/;
+    public void setContentHeight(int contentHeight) {
+        general.set("contentHeight", contentHeight);
+    }
 
-    public native void setAspectRatio(double aspectRatio) /*-{
-        var theInstance = this;
-        theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.GeneralDisplay::general.aspectRatio = aspectRatio;
-    }-*/;
+    public void setAspectRatio(double aspectRatio) {
+        general.set("aspectRatio", aspectRatio);
+    }
 
-    public native void setHandleWindowResize(boolean handleWindowResize) /*-{
-        var theInstance = this;
-        return theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.GeneralDisplay::general.handleWindowResize = handleWindowResize;
-    }-*/;
+    public void setHandleWindowResize(boolean handleWindowResize) {
+        general.set("handleWindowResize", handleWindowResize);
+    }
 
-    public native void setPrev(String previous) /*-{
-        var theInstance = this;
-        theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.GeneralDisplay::general.prev = previous;
-    }-*/;
+    public void setPrev(String previous) {
+        general.set("prev", previous);
+    }
 
-    public native void setNext(String next) /*-{
-        var theInstance = this;
-        theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.GeneralDisplay::general.next = next;
-    }-*/;
+    public void setNext(String next) {
+        general.set("next", next);
+    }
 
-    public native void setPrevYear(String previousYear) /*-{
-        var theInstance = this;
-        theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.GeneralDisplay::general.prevYear = previousYear;
-    }-*/;
+    public void setPrevYear(String previousYear) {
+        general.set("prevYear", previousYear);
+    }
 
-    public native void setNextYear(String nextYear) /*-{
-        var theInstance = this;
-        theInstance.@org.gwtbootstrap3.extras.fullcalendar.client.ui.GeneralDisplay::general.nextYear = nextYear;
-    }-*/;
+    public void setNextYear(String nextYear) {
+        general.set("nextYear", nextYear);
+    }
 
     @Override
     public JavaScriptObject toJavaScript() {
-        return general;
+        return Js.uncheckedCast(general);
+    }
+
+    @FunctionalInterface
+    @JsFunction
+    private interface Fn {
+
+        void onInvoke(JavaScriptObject view);
+    }
+
+    @FunctionalInterface
+    @JsFunction
+    private interface Fn2Args {
+
+        void onInvoke(JavaScriptObject view, NativeEvent jsEvent);
     }
 }
