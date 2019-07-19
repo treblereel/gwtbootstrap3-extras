@@ -52,7 +52,7 @@ public class BeforeItemAddEvent<T> extends GwtEvent<BeforeItemAddHandler<T>> {
      */
     public static <T> void fire(final HasBeforeItemAddHandlers<T> source, T item) {
         if (TYPE != null) {
-            BeforeItemAddEvent<T> event = new BeforeItemAddEvent<T>(item);
+            BeforeItemAddEvent<T> event = new BeforeItemAddEvent<>(item);
             source.fireEvent(event);
         }
     }
@@ -64,7 +64,7 @@ public class BeforeItemAddEvent<T> extends GwtEvent<BeforeItemAddHandler<T>> {
      */
     public static Type<BeforeItemAddHandler<?>> getType() {
         if (TYPE == null) {
-            TYPE = new Type<BeforeItemAddHandler<?>>();
+            TYPE = new Type<>();
         }
         return TYPE;
     }
