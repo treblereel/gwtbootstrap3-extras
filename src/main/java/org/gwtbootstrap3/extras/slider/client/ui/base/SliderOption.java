@@ -31,7 +31,7 @@ package org.gwtbootstrap3.extras.slider.client.ui.base;
  * @author Xiaodong SUN
  * @see https://github.com/seiyria/bootstrap-slider#options
  */
-enum SliderOption {
+public enum SliderOption {
 
     ID("id"),
     MIN("min"),
@@ -65,7 +65,7 @@ enum SliderOption {
     /**
      * @param name the option name
      */
-    private SliderOption(final String name) {
+    SliderOption(final String name) {
         this.name = name;
         this.dataAttrName = name.replaceAll("_", "-");
     }

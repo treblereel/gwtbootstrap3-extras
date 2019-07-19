@@ -35,7 +35,7 @@ public enum ScaleType implements Type {
 
     private final String type;
 
-    private ScaleType(final String type) {
+    ScaleType(final String type) {
         this.type = type;
     }
 

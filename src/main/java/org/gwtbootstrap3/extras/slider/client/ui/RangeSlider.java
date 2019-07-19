@@ -9,9 +9,9 @@ package org.gwtbootstrap3.extras.slider.client.ui;
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -20,16 +20,18 @@ package org.gwtbootstrap3.extras.slider.client.ui;
  * #L%
  */
 
+import jsinterop.base.Js;
 import org.gwtbootstrap3.extras.slider.client.ui.base.SliderBase;
-
+import org.gwtbootstrap3.extras.slider.client.ui.base.SliderCommand;
+import org.gwtbootstrap3.extras.slider.client.ui.base.SliderOption;
 import org.gwtproject.core.client.JavaScriptObject;
+import org.gwtproject.core.client.JsArrayNumber;
 import org.gwtproject.dom.client.Element;
 import org.gwtproject.event.shared.Event;
 import org.gwtproject.uibinder.client.UiConstructor;
 
 /**
  * This slider takes as value a range with a min value and a max value.
- *
  * @author Xiaodong SUN
  */
 public class RangeSlider extends SliderBase<Range> {
@@ -43,7 +45,6 @@ public class RangeSlider extends SliderBase<Range> {
 
     /**
      * Creates a range slider with min, max, and range value.
-     *
      * @param min
      * @param max
      * @param range
@@ -59,7 +60,6 @@ public class RangeSlider extends SliderBase<Range> {
      * Creates a range slider with min, max, and range value.<br>
      * <br>
      * Useful for UiBinder.
-     *
      * @param min
      * @param max
      * @param value
@@ -70,46 +70,48 @@ public class RangeSlider extends SliderBase<Range> {
     }
 
     @Override
-    protected native void setValue(Element e, Range value) /*-{
-        var range = value.@org.gwtbootstrap3.extras.slider.client.ui.Range::toJsArray()();
-        if (this.@org.gwtbootstrap3.extras.slider.client.ui.RangeSlider::isSliderNamespaceAvailable()())
-            $wnd.jQuery(e).slider(@org.gwtbootstrap3.extras.slider.client.ui.base.SliderCommand::SET_VALUE, range);
-        else
-            $wnd.jQuery(e).bootstrapSlider(@org.gwtbootstrap3.extras.slider.client.ui.base.SliderCommand::SET_VALUE, range);
-    }-*/;
+    protected void setValue(Element e, Range value) {
+        JsArrayNumber range = value.toJsArray();
+        if (isSliderNamespaceAvailable()) {
+            Slider.JSlider.jQuery(e).slider(SliderCommand.SET_VALUE, range);
+        } else {
+            Slider.JSlider.jQuery(e).bootstrapSlider(SliderCommand.SET_VALUE, range);
+        }
+    }
 
     @Override
-    protected native Range getValue(Element e) /*-{
-        var range;
-        if (this.@org.gwtbootstrap3.extras.slider.client.ui.RangeSlider::isSliderNamespaceAvailable()())
-            range = $wnd.jQuery(e).slider(@org.gwtbootstrap3.extras.slider.client.ui.base.SliderCommand::GET_VALUE);
-        else
-            range = $wnd.jQuery(e).bootstrapSlider(@org.gwtbootstrap3.extras.slider.client.ui.base.SliderCommand::GET_VALUE);
-        return @org.gwtbootstrap3.extras.slider.client.ui.Range::new(Lcom/google/gwt/core/client/JsArrayNumber;)(range);
-    }-*/;
+    protected Range getValue(Element e) {
+        Object value;
+        if (isSliderNamespaceAvailable()) {
+            value = Slider.JSlider.jQuery(e).slider(SliderCommand.GET_VALUE);
+        } else {
+            value = Slider.JSlider.jQuery(e).bootstrapSlider(SliderCommand.GET_VALUE);
+        }
+        return new Range(Js.uncheckedCast(value));
+    }
 
     @Override
-    protected native void setFormatterOption(JavaScriptObject options) /*-{
-        var slider = this;
-        options.formatter = function(value) {
-            var range = @org.gwtbootstrap3.extras.slider.client.ui.Range::new(Lcom/google/gwt/core/client/JsArrayNumber;)(value);
-            return slider.@org.gwtbootstrap3.extras.slider.client.ui.RangeSlider::formatTooltip(Lorg/gwtbootstrap3/extras/slider/client/ui/Range;)(range);
+    protected void setFormatterOption(JavaScriptObject options) {
+        Slider.JSlider.Fn formatter = value -> {
+            Range range = new Range(Js.uncheckedCast(value));
+            return formatTooltip(range);
         };
-    }-*/;
+        Js.asPropertyMap(options).set("formatter", formatter);
+    }
 
     @Override
-    protected native void setFormatter(Element e) /*-{
-        var slider = this;
-        var attr = @org.gwtbootstrap3.extras.slider.client.ui.base.SliderOption::FORMATTER;
-        var formatter = function(value) {
-            var range = @org.gwtbootstrap3.extras.slider.client.ui.Range::new(Lcom/google/gwt/core/client/JsArrayNumber;)(value);
-            return slider.@org.gwtbootstrap3.extras.slider.client.ui.RangeSlider::formatTooltip(Lorg/gwtbootstrap3/extras/slider/client/ui/Range;)(range);
+    protected void setFormatter(Element e) {
+        SliderOption attr = SliderOption.FORMATTER;
+        Slider.JSlider.Fn formatter = value -> {
+            Range range = new Range(Js.uncheckedCast(value));
+            return formatTooltip(range);
         };
-        if (this.@org.gwtbootstrap3.extras.slider.client.ui.RangeSlider::isSliderNamespaceAvailable()())
-            $wnd.jQuery(e).slider(@org.gwtbootstrap3.extras.slider.client.ui.base.SliderCommand::SET_ATTRIBUTE, attr, formatter);
-        else
-            $wnd.jQuery(e).bootstrapSlider(@org.gwtbootstrap3.extras.slider.client.ui.base.SliderCommand::SET_ATTRIBUTE, attr, formatter);
-    }-*/;
+        if (isSliderNamespaceAvailable()) {
+            Slider.JSlider.jQuery(e).slider(SliderCommand.SET_ATTRIBUTE, attr, formatter);
+        } else {
+            Slider.JSlider.jQuery(e).bootstrapSlider(SliderCommand.SET_ATTRIBUTE, attr, formatter);
+        }
+    }
 
     @Override
     protected String format(Range value) {
@@ -122,27 +124,27 @@ public class RangeSlider extends SliderBase<Range> {
     }
 
     @Override
-    protected native void onSlide(Event event) /*-{
-        var range = @org.gwtbootstrap3.extras.slider.client.ui.Range::new(Lcom/google/gwt/core/client/JsArrayNumber;)(event.value);
-        this.@org.gwtbootstrap3.extras.slider.client.ui.RangeSlider::fireSlideEvent(Lorg/gwtbootstrap3/extras/slider/client/ui/Range;)(range);
-    }-*/;
+    protected void onSlide(Event event) {
+        Range range = new Range(Js.uncheckedCast(Js.asPropertyMap(event).get("value")));
+        fireSlideEvent(range);
+    }
 
     @Override
-    protected native void onSlideStart(Event event) /*-{
-        var range = @org.gwtbootstrap3.extras.slider.client.ui.Range::new(Lcom/google/gwt/core/client/JsArrayNumber;)(event.value);
-        this.@org.gwtbootstrap3.extras.slider.client.ui.RangeSlider::fireSlideStartEvent(Lorg/gwtbootstrap3/extras/slider/client/ui/Range;)(range);
-    }-*/;
+    protected void onSlideStart(Event event) {
+        Range range = new Range(Js.uncheckedCast(Js.asPropertyMap(event).get("value")));
+        fireSlideStartEvent(range);
+    }
 
     @Override
-    protected native void onSlideStop(Event event) /*-{
-        var range = @org.gwtbootstrap3.extras.slider.client.ui.Range::new(Lcom/google/gwt/core/client/JsArrayNumber;)(event.value);
-        this.@org.gwtbootstrap3.extras.slider.client.ui.RangeSlider::fireSlideStopEvent(Lorg/gwtbootstrap3/extras/slider/client/ui/Range;)(range);
-    }-*/;
+    protected void onSlideStop(Event event) {
+        Range range = new Range(Js.uncheckedCast(Js.asPropertyMap(event).get("value")));
+        fireSlideStopEvent(range);
+    }
 
     @Override
-    protected native void onSlideChange(Event event) /*-{
-        var range = @org.gwtbootstrap3.extras.slider.client.ui.Range::new(Lcom/google/gwt/core/client/JsArrayNumber;)(event.value.newValue);
-        this.@org.gwtbootstrap3.extras.slider.client.ui.RangeSlider::fireChangeEvent(Lorg/gwtbootstrap3/extras/slider/client/ui/Range;)(range);
-    }-*/;
-
+    protected void onSlideChange(Event event) {
+        JsArrayNumber value = Js.uncheckedCast(Js.asPropertyMap(Js.asPropertyMap(event).get("value")).get("newValue"));
+        Range range = new Range(value);
+        fireChangeEvent(range);
+    }
 }

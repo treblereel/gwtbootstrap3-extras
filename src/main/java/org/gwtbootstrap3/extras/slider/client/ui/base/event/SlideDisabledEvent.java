@@ -49,7 +49,7 @@ public class SlideDisabledEvent extends GwtEvent<SlideDisabledHandler> {
      */
     public static Type<SlideDisabledHandler> getType() {
         if (TYPE == null) {
-            TYPE = new Type<SlideDisabledHandler>();
+            TYPE = new Type<>();
         }
         return TYPE;
     }
