@@ -9,9 +9,9 @@ package org.gwtbootstrap3.extras.slider.client.ui.base;
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -24,6 +24,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import elemental2.dom.DomGlobal;
+import jsinterop.annotations.JsFunction;
+import jsinterop.annotations.JsOverlay;
+import jsinterop.base.Js;
+import org.gwtbootstrap3.client.shared.js.JQuery;
 import org.gwtbootstrap3.client.ui.base.HasId;
 import org.gwtbootstrap3.client.ui.base.HasResponsiveness;
 import org.gwtbootstrap3.client.ui.base.helper.StyleHelper;
@@ -63,25 +68,25 @@ import org.gwtproject.user.client.ui.HasEnabled;
 import org.gwtproject.user.client.ui.HasValue;
 import org.gwtproject.user.client.ui.Widget;
 
+import static org.gwtbootstrap3.extras.slider.client.ui.base.SliderBase.JSlider.*;
+
 /**
- *
- *
  * @param <T> slider value type
- *
- * @see https://github.com/seiyria/bootstrap-slider
  * @author Xiaodong Sun
+ * @see https://github.com/seiyria/bootstrap-slider
  */
 public abstract class SliderBase<T> extends Widget implements
                                                    HasValue<T>,
                                                    IsEditor<LeafValueEditor<T>>,
-                                                   HasEnabled, HasId,
-                                                   HasResponsiveness, HasAllSlideHandlers<T> {
+                                                   HasEnabled,
+                                                   HasId,
+                                                   HasResponsiveness,
+                                                   HasAllSlideHandlers<T> {
 
+    private final AttributeMixin<SliderBase<T>> attributeMixin = new AttributeMixin<SliderBase<T>>(this);
     private FormatterCallback<T> formatterCallback;
     private LeafValueEditor<T> editor;
     private boolean sliderNamespaceAvailable = true;
-
-    private final AttributeMixin<SliderBase<T>> attributeMixin = new AttributeMixin<SliderBase<T>>(this);
 
     protected SliderBase() {
         setElement(Document.get().createTextInputElement());
@@ -101,7 +106,6 @@ public abstract class SliderBase<T> extends Widget implements
 
     /**
      * Sets formatter option if defined when attaching to the DOM.
-     *
      * @param options
      */
     protected abstract void setFormatterOption(JavaScriptObject options);
@@ -113,6 +117,11 @@ public abstract class SliderBase<T> extends Widget implements
         sliderCommand(getElement(), SliderCommand.DESTROY);
     }
 
+    @Override
+    public String getId() {
+        return getStringAttribute(SliderOption.ID);
+    }
+
     /**
      * Sets the id of the slider element when it's created.
      */
@@ -121,18 +130,12 @@ public abstract class SliderBase<T> extends Widget implements
         updateSlider(SliderOption.ID, id);
     }
 
-    @Override
-    public String getId() {
-        return getStringAttribute(SliderOption.ID);
-    }
-
     public double getMin() {
         return getDoubleAttribute(SliderOption.MIN, 0);
     }
 
     /**
      * Sets the minimum possible value.
-     *
      * @param min
      */
     public void setMin(final double min) {
@@ -145,7 +148,6 @@ public abstract class SliderBase<T> extends Widget implements
 
     /**
      * Sets the maximum possible value.
-     *
      * @param max
      */
     public void setMax(final double max) {
@@ -158,7 +160,6 @@ public abstract class SliderBase<T> extends Widget implements
 
     /**
      * Sets the increment step.
-     *
      * @param step
      */
     public void setStep(final double step) {
@@ -173,7 +174,6 @@ public abstract class SliderBase<T> extends Widget implements
      * Sets the number of digits shown after the decimal.<br>
      * <br>
      * Defaults to the number of digits after the decimal of step value.
-     *
      * @param precision
      */
     public void setPrecision(final double precision) {
@@ -186,7 +186,6 @@ public abstract class SliderBase<T> extends Widget implements
 
     /**
      * Sets the orientation.
-     *
      * @param orientation
      * @see OrientationType
      */
@@ -201,7 +200,6 @@ public abstract class SliderBase<T> extends Widget implements
     /**
      * Make range slider if set to <code>true</code>. If initial value is scalar,
      * max will be used for second value.
-     *
      * @param range
      */
     protected void setRange(final boolean range) {
@@ -214,7 +212,6 @@ public abstract class SliderBase<T> extends Widget implements
 
     /**
      * Sets the selection type.
-     *
      * @param selection
      * @see SelectionType
      */
@@ -228,7 +225,6 @@ public abstract class SliderBase<T> extends Widget implements
 
     /**
      * Sets the tool-tip type.
-     *
      * @param tooltip
      * @see TooltipType
      */
@@ -243,7 +239,6 @@ public abstract class SliderBase<T> extends Widget implements
     /**
      * Show one too-tip if set to <code>false</code>, otherwise
      * show two tool-tips one for each handler.
-     *
      * @param tooltipSplit
      */
     public void setTooltipSplit(final boolean tooltipSplit) {
@@ -258,7 +253,6 @@ public abstract class SliderBase<T> extends Widget implements
 
     /**
      * Sets the tool-tip position.
-     *
      * @param position
      * @see TooltipPosition
      */
@@ -272,7 +266,6 @@ public abstract class SliderBase<T> extends Widget implements
 
     /**
      * Sets the handle shape.
-     *
      * @param handle
      * @see HandleType
      */
@@ -286,7 +279,6 @@ public abstract class SliderBase<T> extends Widget implements
 
     /**
      * Sets whether or not the slider should be reversed.
-     *
      * @param reversed
      */
     public void setReversed(final boolean reversed) {
@@ -316,7 +308,6 @@ public abstract class SliderBase<T> extends Widget implements
 
     /**
      * Sets the formatter callback.
-     *
      * @param formatterCallback
      */
     public void setFormatter(final FormatterCallback<T> formatterCallback) {
@@ -329,21 +320,20 @@ public abstract class SliderBase<T> extends Widget implements
 
     /**
      * Sets the callback function of the {@link SliderOption#FORMATTER} attribute.
-     *
      * @param element
      */
     protected abstract void setFormatter(Element element);
 
     protected String formatTooltip(final T value) {
-        if (formatterCallback != null)
+        if (formatterCallback != null) {
             return formatterCallback.formatTooltip(value);
+        }
         return format(value);
     }
 
     /**
      * Formats the slider value to string value to be displayed
      * as tool-tip text.
-     *
      * @param value
      * @return
      */
@@ -361,7 +351,6 @@ public abstract class SliderBase<T> extends Widget implements
      * <br>
      * By default the arrow keys are oriented by arrow up/right to the
      * higher slider value, arrow down/left to the lower slider value.
-     *
      * @param naturalArrowKeys
      */
     public void setNaturalArrowKeys(final boolean naturalArrowKeys) {
@@ -377,7 +366,6 @@ public abstract class SliderBase<T> extends Widget implements
      * special values in the range.<br>
      * <br>
      * This option overwrites min and max options.
-     *
      * @param ticks
      */
     public void setTicks(final List<Double> ticks) {
@@ -391,7 +379,6 @@ public abstract class SliderBase<T> extends Widget implements
     /**
      * Defines the positions of the tick values in percentages.<br>
      * The first value should always be 0, the last value should always be 100 percent.
-     *
      * @param ticksPositions
      */
     public void setTicksPositions(final List<Double> ticksPositions) {
@@ -406,7 +393,6 @@ public abstract class SliderBase<T> extends Widget implements
      * Sets the labels below the tick marks.<br>
      * <br>
      * Accepts HTML input.
-     *
      * @param ticksLabels
      */
     public void setTicksLabels(final List<String> ticksLabels) {
@@ -420,7 +406,6 @@ public abstract class SliderBase<T> extends Widget implements
     /**
      * Sets the snap bounds of a tick. Snaps to the tick if value
      * is within these bounds.
-     *
      * @param ticksSnapBounds
      */
     public void setTicksSnapBounds(final double ticksSnapBounds) {
@@ -432,13 +417,12 @@ public abstract class SliderBase<T> extends Widget implements
     }
 
     /**
-     * Focus the appropriate slider handle after a value change.
-     * Defaults to false.
-     *
-     * @param focus
+     * Sets the slider scale type.
+     * @param scale
+     * @see ScaleType
      */
-    public void setFocusHandle(final boolean focus) {
-        updateSlider(SliderOption.FOCUS, focus);
+    public void setScale(final ScaleType scale) {
+        updateSlider(SliderOption.SCALE, scale.getType());
     }
 
     public boolean getFocusHandle() {
@@ -446,13 +430,20 @@ public abstract class SliderBase<T> extends Widget implements
     }
 
     /**
-     * Sets the slider scale type.
-     *
-     * @param scale
-     * @see ScaleType
+     * Focus the appropriate slider handle after a value change.
+     * Defaults to false.
+     * @param focus
      */
-    public void setScale(final ScaleType scale) {
-        updateSlider(SliderOption.SCALE, scale.getType());
+    public void setFocusHandle(final boolean focus) {
+        updateSlider(SliderOption.FOCUS, focus);
+    }
+
+    @Override
+    public boolean isVisible() {
+        if (isAttached()) {
+            return isVisible(getElement(getElement()));
+        }
+        return isVisible();
     }
 
     @Override
@@ -465,14 +456,6 @@ public abstract class SliderBase<T> extends Widget implements
     }
 
     @Override
-    public boolean isVisible() {
-        if (isAttached()) {
-            return isVisible(getElement(getElement()));
-        }
-        return isVisible();
-    }
-
-    @Override
     public void setVisibleOn(final DeviceSize deviceSize) {
         StyleHelper.setVisibleOn(this, deviceSize);
     }
@@ -480,11 +463,6 @@ public abstract class SliderBase<T> extends Widget implements
     @Override
     public void setHiddenOn(final DeviceSize deviceSize) {
         StyleHelper.setHiddenOn(this, deviceSize);
-    }
-
-    @Override
-    public void setValue(final T value) {
-        setValue(value, false);
     }
 
     @Override
@@ -508,7 +486,6 @@ public abstract class SliderBase<T> extends Widget implements
     /**
      * Sets the given value to the slider. This method is only relevant if the
      * slider has been initialized and it will NOT fire the <b>slide</b> event.
-     *
      * @param e
      * @param value
      */
@@ -523,9 +500,13 @@ public abstract class SliderBase<T> extends Widget implements
         return convertValue(attrVal);
     }
 
+    @Override
+    public void setValue(final T value) {
+        setValue(value, false);
+    }
+
     /**
      * Returns the value by invoking the JSNI <strong>getValue</strong> command.
-     *
      * @param e
      * @return
      */
@@ -534,7 +515,6 @@ public abstract class SliderBase<T> extends Widget implements
     /**
      * Converts the value of the {@link SliderOption#VALUE} attribute to the
      * slider value.
-     *
      * @param value
      * @return
      */
@@ -772,27 +752,29 @@ public abstract class SliderBase<T> extends Widget implements
         return sliderNamespaceAvailable;
     }
 
-    private native boolean isSliderNamespaceBound() /*-{
-        return ($wnd.jQuery.fn.slider === 'undefined');
-    }-*/;
+    private boolean isSliderNamespaceBound() {
+        DomGlobal.console.log("check SliderNamespaceBound <- REMOVE IT");
+        boolean check = Js.asPropertyMap(Js.asPropertyMap(Js.global().get("jQuery")).get("fn")).has("slider");
+        DomGlobal.console.log("result " + check);
+        return check;
+    }
 
-    private native void initSlider(Element e, JavaScriptObject options) /*-{
-        if (this.@org.gwtbootstrap3.extras.slider.client.ui.base.SliderBase::isSliderNamespaceAvailable()())
-            $wnd.jQuery(e).slider(options);
-        else
-            $wnd.jQuery(e).bootstrapSlider(options);
-    }-*/;
+    private void initSlider(Element e, JavaScriptObject options) {
+        if (isSliderNamespaceAvailable()) {
+            jQuery(e).slider(options);
+        } else {
+            jQuery(e).bootstrapSlider(options);
+        }
+    }
 
     /**
      * Called when a {@link SlideEvent} is fired.
-     *
      * @param event the native event
      */
     protected abstract void onSlide(final Event event);
 
     /**
      * Fires a {@link SlideEvent} event.
-     *
      * @param value the new slide value
      */
     protected void fireSlideEvent(final T value) {
@@ -801,14 +783,12 @@ public abstract class SliderBase<T> extends Widget implements
 
     /**
      * Called when a {@link SlideStartEvent} is fired.
-     *
      * @param event the native event
      */
     protected abstract void onSlideStart(final Event event);
 
     /**
      * Fires a {@link SlideStartEvent} event.
-     *
      * @param value the new slide value
      */
     protected void fireSlideStartEvent(final T value) {
@@ -817,14 +797,12 @@ public abstract class SliderBase<T> extends Widget implements
 
     /**
      * Called when a {@link SlideStopEvent} is fired.
-     *
      * @param event the native event
      */
     protected abstract void onSlideStop(final Event event);
 
     /**
      * Fires a {@link SlideStopEvent} event.
-     *
      * @param value the new slide value
      */
     protected void fireSlideStopEvent(final T value) {
@@ -833,14 +811,12 @@ public abstract class SliderBase<T> extends Widget implements
 
     /**
      * Called when a {@link ValueChangeEvent} is fired.
-     *
      * @param event the native event
      */
     protected abstract void onSlideChange(final Event event);
 
     /**
      * Fires a {@link ValueChangeEvent} event.
-     *
      * @param value the new slide value
      */
     protected void fireChangeEvent(final T value) {
@@ -849,127 +825,147 @@ public abstract class SliderBase<T> extends Widget implements
 
     /**
      * Binds the slider events.
-     *
      * @param e
      */
-    private native void bindSliderEvents(Element e) /*-{
-        var slider = this;
-        $wnd.jQuery(e).on(@org.gwtbootstrap3.extras.slider.client.ui.base.event.HasAllSlideHandlers::SLIDE_EVENT, function(event) {
-            slider.@org.gwtbootstrap3.extras.slider.client.ui.base.SliderBase::onSlide(Lcom/google/gwt/user/client/Event;)(event);
-        });
-        $wnd.jQuery(e).on(@org.gwtbootstrap3.extras.slider.client.ui.base.event.HasAllSlideHandlers::SLIDE_START_EVENT, function(event) {
-            slider.@org.gwtbootstrap3.extras.slider.client.ui.base.SliderBase::onSlideStart(Lcom/google/gwt/user/client/Event;)(event);
-        });
-        $wnd.jQuery(e).on(@org.gwtbootstrap3.extras.slider.client.ui.base.event.HasAllSlideHandlers::SLIDE_STOP_EVENT, function(event) {
-            slider.@org.gwtbootstrap3.extras.slider.client.ui.base.SliderBase::onSlideStop(Lcom/google/gwt/user/client/Event;)(event);
-        });
-        $wnd.jQuery(e).on(@org.gwtbootstrap3.extras.slider.client.ui.base.event.HasAllSlideHandlers::SLIDE_CHANGE_EVENT, function(event) {
-            slider.@org.gwtbootstrap3.extras.slider.client.ui.base.SliderBase::onSlideChange(Lcom/google/gwt/user/client/Event;)(event);
-        });
-        $wnd.jQuery(e).on(@org.gwtbootstrap3.extras.slider.client.ui.base.event.HasAllSlideHandlers::SLIDE_ENABLED_EVENT, function(event) {
-            @org.gwtbootstrap3.extras.slider.client.ui.base.event.SlideEnabledEvent::fire(Lorg/gwtbootstrap3/extras/slider/client/ui/base/event/HasSlideEnabledHandlers;)(slider);
-        });
-        $wnd.jQuery(e).on(@org.gwtbootstrap3.extras.slider.client.ui.base.event.HasAllSlideHandlers::SLIDE_DISABLED_EVENT, function(event) {
-            @org.gwtbootstrap3.extras.slider.client.ui.base.event.SlideDisabledEvent::fire(Lorg/gwtbootstrap3/extras/slider/client/ui/base/event/HasSlideDisabledHandlers;)(slider);
-        });
-    }-*/;
+    private void bindSliderEvents(Element e) {
+        jQuery(e).on(HasAllSlideHandlers.SLIDE_EVENT, (event) -> onSlide(Js.uncheckedCast(event)));
+        jQuery(e).on(HasAllSlideHandlers.SLIDE_START_EVENT, (event) -> onSlideStart(Js.uncheckedCast(event)));
+        jQuery(e).on(HasAllSlideHandlers.SLIDE_STOP_EVENT, (event) -> onSlideStop(Js.uncheckedCast(event)));
+        jQuery(e).on(HasAllSlideHandlers.SLIDE_CHANGE_EVENT, (event) -> onSlideChange(Js.uncheckedCast(event)));
+        jQuery(e).on(HasAllSlideHandlers.SLIDE_ENABLED_EVENT, (event) -> SlideEnabledEvent.fire(Js.uncheckedCast(event)));
+        jQuery(e).on(HasAllSlideHandlers.SLIDE_DISABLED_EVENT, (event) -> SlideDisabledEvent.fire(Js.uncheckedCast(event)));
+    }
 
     /**
      * Unbinds the slider events.
-     *
      * @param e
      */
-    private native void unbindSliderEvents(Element e) /*-{
-        $wnd.jQuery(e).off(@org.gwtbootstrap3.extras.slider.client.ui.base.event.HasAllSlideHandlers::SLIDE_EVENT);
-        $wnd.jQuery(e).off(@org.gwtbootstrap3.extras.slider.client.ui.base.event.HasAllSlideHandlers::SLIDE_START_EVENT);
-        $wnd.jQuery(e).off(@org.gwtbootstrap3.extras.slider.client.ui.base.event.HasAllSlideHandlers::SLIDE_STOP_EVENT);
-        $wnd.jQuery(e).off(@org.gwtbootstrap3.extras.slider.client.ui.base.event.HasAllSlideHandlers::SLIDE_CHANGE_EVENT);
-        $wnd.jQuery(e).off(@org.gwtbootstrap3.extras.slider.client.ui.base.event.HasAllSlideHandlers::SLIDE_ENABLED_EVENT);
-        $wnd.jQuery(e).off(@org.gwtbootstrap3.extras.slider.client.ui.base.event.HasAllSlideHandlers::SLIDE_DISABLED_EVENT);
-    }-*/;
+    private void unbindSliderEvents(Element e) {
+        jQuery(e).off(HasAllSlideHandlers.SLIDE_EVENT);
+        jQuery(e).off(HasAllSlideHandlers.SLIDE_START_EVENT);
+        jQuery(e).off(HasAllSlideHandlers.SLIDE_STOP_EVENT);
+        jQuery(e).off(HasAllSlideHandlers.SLIDE_CHANGE_EVENT);
+        jQuery(e).off(HasAllSlideHandlers.SLIDE_ENABLED_EVENT);
+        jQuery(e).off(HasAllSlideHandlers.SLIDE_DISABLED_EVENT);
+    }
 
-    private native boolean isEnabled(Element e) /*-{
-        if (this.@org.gwtbootstrap3.extras.slider.client.ui.base.SliderBase::isSliderNamespaceAvailable()())
-            return $wnd.jQuery(e).slider(@org.gwtbootstrap3.extras.slider.client.ui.base.SliderCommand::IS_ENABLED);
-        return $wnd.jQuery(e).bootstrapSlider(@org.gwtbootstrap3.extras.slider.client.ui.base.SliderCommand::IS_ENABLED);
-    }-*/;
+    private boolean isEnabled(Element e) {
+        if (isSliderNamespaceAvailable()) {
+            return jQuery(e).slider(SliderCommand.IS_ENABLED);
+        } else {
+            return jQuery(e).bootstrapSlider(SliderCommand.IS_ENABLED);
+        }
+    }
 
-    private native void sliderCommand(Element e, String cmd) /*-{
-        if (this.@org.gwtbootstrap3.extras.slider.client.ui.base.SliderBase::isSliderNamespaceAvailable()())
-            $wnd.jQuery(e).slider(cmd);
-        else
-            $wnd.jQuery(e).bootstrapSlider(cmd);
-    }-*/;
+    private void sliderCommand(Element e, String cmd) {
+        if (isSliderNamespaceAvailable()) {
+            jQuery(e).slider(cmd);
+        } else {
+            jQuery(e).bootstrapSlider(cmd);
+        }
+    }
 
-    private native Element getElement(Element e) /*-{
-        if (this.@org.gwtbootstrap3.extras.slider.client.ui.base.SliderBase::isSliderNamespaceAvailable()())
-            return $wnd.jQuery(e).slider(@org.gwtbootstrap3.extras.slider.client.ui.base.SliderCommand::GET_ELEMENT);
-        return $wnd.jQuery(e).bootstrapSlider(@org.gwtbootstrap3.extras.slider.client.ui.base.SliderCommand::GET_ELEMENT);
-    }-*/;
+    private Element getElement(Element e) {
+        if (isSliderNamespaceAvailable()) {
+            return jQuery(e).slider(SliderCommand.GET_ELEMENT);
+        } else {
+            return jQuery(e).bootstrapSlider(SliderCommand.GET_ELEMENT);
+        }
+    }
 
-    private native void setAttribute(Element e, String attr, String value) /*-{
-        if (this.@org.gwtbootstrap3.extras.slider.client.ui.base.SliderBase::isSliderNamespaceAvailable()())
-            $wnd.jQuery(e).slider(@org.gwtbootstrap3.extras.slider.client.ui.base.SliderCommand::SET_ATTRIBUTE, attr, value);
-        else
-            $wnd.jQuery(e).bootstrapSlider(@org.gwtbootstrap3.extras.slider.client.ui.base.SliderCommand::SET_ATTRIBUTE, attr, value);
-    }-*/;
+    private void setAttribute(Element e, String attr, String value) {
+        setAttributeAsObject(e, attr, value);
+    }
 
-    private native void setAttribute(Element e, String attr, boolean value) /*-{
-        if (this.@org.gwtbootstrap3.extras.slider.client.ui.base.SliderBase::isSliderNamespaceAvailable()())
-            $wnd.jQuery(e).slider(@org.gwtbootstrap3.extras.slider.client.ui.base.SliderCommand::SET_ATTRIBUTE, attr, value);
-        else
-            $wnd.jQuery(e).bootstrapSlider(@org.gwtbootstrap3.extras.slider.client.ui.base.SliderCommand::SET_ATTRIBUTE, attr, value);
-    }-*/;
+    private void setAttribute(Element e, String attr, boolean value) {
+        setAttributeAsObject(e, attr, value);
+    }
 
-    private native void setAttribute(Element e, String attr, double value) /*-{
-        if (this.@org.gwtbootstrap3.extras.slider.client.ui.base.SliderBase::isSliderNamespaceAvailable()())
-            $wnd.jQuery(e).slider(@org.gwtbootstrap3.extras.slider.client.ui.base.SliderCommand::SET_ATTRIBUTE, attr, value);
-        else
-            $wnd.jQuery(e).bootstrapSlider(@org.gwtbootstrap3.extras.slider.client.ui.base.SliderCommand::SET_ATTRIBUTE, attr, value);
-    }-*/;
+    private void setAttribute(Element e, String attr, double value) {
+        setAttributeAsObject(e, attr, value);
+    }
 
-    private native void setAttribute(Element e, String attr, JsArrayNumber value) /*-{
-        if (this.@org.gwtbootstrap3.extras.slider.client.ui.base.SliderBase::isSliderNamespaceAvailable()())
-            $wnd.jQuery(e).slider(@org.gwtbootstrap3.extras.slider.client.ui.base.SliderCommand::SET_ATTRIBUTE, attr, value);
-        else
-            $wnd.jQuery(e).bootstrapSlider(@org.gwtbootstrap3.extras.slider.client.ui.base.SliderCommand::SET_ATTRIBUTE, attr, value);
-    }-*/;
+    private void setAttribute(Element e, String attr, JsArrayNumber value) {
+        setAttributeAsObject(e, attr, value);
+    }
 
-    private native void setAttribute(Element e, String attr, JsArrayString value) /*-{
-        if (this.@org.gwtbootstrap3.extras.slider.client.ui.base.SliderBase::isSliderNamespaceAvailable()())
-            $wnd.jQuery(e).slider(@org.gwtbootstrap3.extras.slider.client.ui.base.SliderCommand::SET_ATTRIBUTE, attr, value);
-        else
-            $wnd.jQuery(e).bootstrapSlider(@org.gwtbootstrap3.extras.slider.client.ui.base.SliderCommand::SET_ATTRIBUTE, attr, value);
-    }-*/;
+    private void setAttribute(Element e, String attr, JsArrayString value) {
+        setAttributeAsObject(e, attr, value);
+    }
 
-    private native String getStringAttribute(Element e, String attr) /*-{
-        if (this.@org.gwtbootstrap3.extras.slider.client.ui.base.SliderBase::isSliderNamespaceAvailable()())
-            return $wnd.jQuery(e).slider(@org.gwtbootstrap3.extras.slider.client.ui.base.SliderCommand::GET_ATTRIBUTE, attr);
-        return $wnd.jQuery(e).bootstrapSlider(@org.gwtbootstrap3.extras.slider.client.ui.base.SliderCommand::GET_ATTRIBUTE, attr);
-    }-*/;
+    private void setAttributeAsObject(Element e, String attr, Object value) {
+        if (isSliderNamespaceAvailable()) {
+            jQuery(e).slider(SliderCommand.SET_ATTRIBUTE, attr, value);
+        } else {
+            jQuery(e).bootstrapSlider(SliderCommand.SET_ATTRIBUTE, attr, value);
+        }
+    }
 
-    private native boolean getBooleanAttribute(Element e, String attr) /*-{
-        if (this.@org.gwtbootstrap3.extras.slider.client.ui.base.SliderBase::isSliderNamespaceAvailable()())
-            return $wnd.jQuery(e).slider(@org.gwtbootstrap3.extras.slider.client.ui.base.SliderCommand::GET_ATTRIBUTE, attr);
-        return $wnd.jQuery(e).bootstrapSlider(@org.gwtbootstrap3.extras.slider.client.ui.base.SliderCommand::GET_ATTRIBUTE, attr);
-    }-*/;
+    private String getStringAttribute(Element e, String attr) {
+        if (isSliderNamespaceAvailable()) {
+            return jQuery(e).slider(SliderCommand.GET_ATTRIBUTE, attr);
+        }
+        return jQuery(e).bootstrapSlider(SliderCommand.GET_ATTRIBUTE, attr);
+    }
 
-    private native double getDoubleAttribute(Element e, String attr) /*-{
-        if (this.@org.gwtbootstrap3.extras.slider.client.ui.base.SliderBase::isSliderNamespaceAvailable()())
-            return $wnd.jQuery(e).slider(@org.gwtbootstrap3.extras.slider.client.ui.base.SliderCommand::GET_ATTRIBUTE, attr);
-        return $wnd.jQuery(e).bootstrapSlider(@org.gwtbootstrap3.extras.slider.client.ui.base.SliderCommand::GET_ATTRIBUTE, attr);
-    }-*/;
+    private boolean getBooleanAttribute(Element e, String attr) {
+        if (isSliderNamespaceAvailable()) {
+            return jQuery(e).slider(SliderCommand.GET_ATTRIBUTE, attr);
+        }
+        return jQuery(e).bootstrapSlider(SliderCommand.GET_ATTRIBUTE, attr);
+    }
 
-    private native JsArrayNumber getNumberArrayAttribute(Element e, String attr) /*-{
-        if (this.@org.gwtbootstrap3.extras.slider.client.ui.base.SliderBase::isSliderNamespaceAvailable()())
-            return $wnd.jQuery(e).slider(@org.gwtbootstrap3.extras.slider.client.ui.base.SliderCommand::GET_ATTRIBUTE, attr);
-        return $wnd.jQuery(e).bootstrapSlider(@org.gwtbootstrap3.extras.slider.client.ui.base.SliderCommand::GET_ATTRIBUTE, attr);
-    }-*/;
+    private double getDoubleAttribute(Element e, String attr) {
+        if (isSliderNamespaceAvailable()) {
+            return jQuery(e).slider(SliderCommand.GET_ATTRIBUTE, attr);
+        } else {
+            return jQuery(e).bootstrapSlider(SliderCommand.GET_ATTRIBUTE, attr);
+        }
+    }
 
-    private native JsArrayString getStringArrayAttribute(Element e, String attr) /*-{
-        if (this.@org.gwtbootstrap3.extras.slider.client.ui.base.SliderBase::isSliderNamespaceAvailable()())
-            return $wnd.jQuery(e).slider(@org.gwtbootstrap3.extras.slider.client.ui.base.SliderCommand::GET_ATTRIBUTE, attr);
-        return $wnd.jQuery(e).bootstrapSlider(@org.gwtbootstrap3.extras.slider.client.ui.base.SliderCommand::GET_ATTRIBUTE, attr);
-    }-*/;
+    private JsArrayNumber getNumberArrayAttribute(Element e, String attr) {
+        if (isSliderNamespaceAvailable()) {
+            return jQuery(e).slider(SliderCommand.GET_ATTRIBUTE, attr);
+        } else {
+            return jQuery(e).bootstrapSlider(SliderCommand.GET_ATTRIBUTE, attr);
+        }
+    }
 
+    private JsArrayString getStringArrayAttribute(Element e, String attr) {
+        if (isSliderNamespaceAvailable()) {
+            return jQuery(e).slider(SliderCommand.GET_ATTRIBUTE, attr);
+        } else {
+            return jQuery(e).bootstrapSlider(SliderCommand.GET_ATTRIBUTE, attr);
+        }
+    }
+
+    protected static class JSlider extends JQuery {
+
+        @JsOverlay
+        public static JSlider jQuery(Element e) {
+            return (JSlider) JQuery.jQuery(e);
+        }
+
+        public native Object slider();
+
+        public native JSlider on(String var1, Object arg);
+
+        public native void slider(String setAttribute, Object attr, Object value);
+
+        public native void bootstrapSlider(String setAttribute, Object attr, Object value);
+
+        public native <T> T slider(Object value);
+
+        public native <T> T bootstrapSlider(Object value);
+
+        public native <T> T slider(String getValue, Object value);
+
+        public native <T> T bootstrapSlider(String getValue, Object value);
+
+        @FunctionalInterface
+        @JsFunction
+        public interface Fn {
+            Object onInvoke(Object value);
+        }
+    }
 }

@@ -9,9 +9,9 @@ package org.gwtbootstrap3.extras.toggleswitch.client.ui.base;
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -20,6 +20,10 @@ package org.gwtbootstrap3.extras.toggleswitch.client.ui.base;
  * #L%
  */
 
+import jsinterop.annotations.JsFunction;
+import jsinterop.annotations.JsOverlay;
+import jsinterop.base.Js;
+import org.gwtbootstrap3.client.shared.js.JQuery;
 import org.gwtbootstrap3.client.ui.Icon;
 import org.gwtbootstrap3.client.ui.base.HasId;
 import org.gwtbootstrap3.client.ui.base.HasReadOnly;
@@ -33,6 +37,8 @@ import org.gwtbootstrap3.client.ui.constants.IconSize;
 import org.gwtbootstrap3.client.ui.constants.IconType;
 import org.gwtbootstrap3.extras.toggleswitch.client.ui.base.constants.ColorType;
 import org.gwtbootstrap3.extras.toggleswitch.client.ui.base.constants.SizeType;
+import org.gwtbootstrap3.extras.typeahead.client.base.Suggestion;
+import org.gwtbootstrap3.extras.typeahead.client.base.SuggestionCallback;
 import org.gwtproject.dom.client.Element;
 import org.gwtproject.dom.client.InputElement;
 import org.gwtproject.editor.client.IsEditor;
@@ -42,6 +48,7 @@ import org.gwtproject.event.logical.shared.HasValueChangeHandlers;
 import org.gwtproject.event.logical.shared.ValueChangeEvent;
 import org.gwtproject.event.logical.shared.ValueChangeHandler;
 import org.gwtproject.event.shared.HandlerRegistration;
+import org.gwtproject.user.client.Event;
 import org.gwtproject.user.client.ui.HasEnabled;
 import org.gwtproject.user.client.ui.HasName;
 import org.gwtproject.user.client.ui.HasValue;
@@ -50,7 +57,6 @@ import org.gwtproject.user.client.ui.Widget;
 
 /**
  * Original source from http://www.bootstrap-switch.org/
- *
  * @author Grant Slender
  * @author Steven Jardine
  */
@@ -58,16 +64,19 @@ public class ToggleSwitchBase extends Widget implements HasSize<SizeType>,
                                                         HasValue<Boolean>,
                                                         HasValueChangeHandlers<Boolean>,
                                                         HasEnabled,
-                                                        HasVisibility, HasId,
-                                                        HasName, HasReadOnly, HasResponsiveness,
+                                                        HasVisibility,
+                                                        HasId,
+                                                        HasName,
+                                                        HasReadOnly,
+                                                        HasResponsiveness,
                                                         IsEditor<LeafValueEditor<Boolean>> {
 
     private final InputElement element;
+    private final IdMixin<ToggleSwitchBase> idMixin = new IdMixin<ToggleSwitchBase>(this);
+    private final AttributeMixin<ToggleSwitchBase> attributeMixin = new AttributeMixin<ToggleSwitchBase>(this);
     private SizeType size = SizeType.REGULAR;
     private ColorType onColor = ColorType.DEFAULT;
     private ColorType offColor = ColorType.PRIMARY;
-    private final IdMixin<ToggleSwitchBase> idMixin = new IdMixin<ToggleSwitchBase>(this);
-    private final AttributeMixin<ToggleSwitchBase> attributeMixin = new AttributeMixin<ToggleSwitchBase>(this);
     private LeafValueEditor<Boolean> editor;
 
     protected ToggleSwitchBase(InputElement element) {
@@ -98,23 +107,23 @@ public class ToggleSwitchBase extends Widget implements HasSize<SizeType>,
     }
 
     @Override
-    public void setId(final String id) {
-        idMixin.setId(id);
-    }
-
-    @Override
     public String getId() {
         return idMixin.getId();
     }
 
     @Override
-    public void setName(String name) {
-        element.setName(name);
+    public void setId(final String id) {
+        idMixin.setId(id);
     }
 
     @Override
     public String getName() {
         return element.getName();
+    }
+
+    @Override
+    public void setName(String name) {
+        element.setName(name);
     }
 
     @Override
@@ -301,20 +310,20 @@ public class ToggleSwitchBase extends Widget implements HasSize<SizeType>,
     }
 
     @Override
+    public boolean isVisible() {
+        if (isAttached()) {
+            return isVisible(getElement().getParentElement().getParentElement());
+        }
+        return super.isVisible();
+    }
+
+    @Override
     public void setVisible(boolean visible) {
         if (isAttached()) {
             setVisible(getElement().getParentElement().getParentElement(), visible);
         } else {
             super.setVisible(visible);
         }
-    }
-
-    @Override
-    public boolean isVisible() {
-        if (isAttached()) {
-            return isVisible(getElement().getParentElement().getParentElement());
-        }
-        return super.isVisible();
     }
 
     private String createIconHtml(IconType iconType) {
@@ -362,41 +371,61 @@ public class ToggleSwitchBase extends Widget implements HasSize<SizeType>,
         }
     }
 
-    private native void switchInit(Element e) /*-{
-        $wnd.jQuery(e).bootstrapSwitch();
+    private void switchInit(Element e) {
+        BootstrapSwitch.jQuery(e).bootstrapSwitch();
+        BootstrapSwitch.jQuery(e).on("switchChange.bootstrapSwitch", (BootstrapSwitch.Fn) (on, state) -> onChange(state));
+    }
 
-        var me = this;
-        $wnd.jQuery(e).on('switchChange.bootstrapSwitch', function (em, state) {
-            me.@org.gwtbootstrap3.extras.toggleswitch.client.ui.base.ToggleSwitchBase::onChange(Z)(state);
-        });
-    }-*/;
+    private void switchDestroy(Element e) {
+        BootstrapSwitch.jQuery(e).off("switchChange.bootstrapSwitch");
+        BootstrapSwitch.jQuery(e).bootstrapSwitch("destroy");
+    }
 
-    private native void switchDestroy(Element e) /*-{
-        $wnd.jQuery(e).off('switchChange.bootstrapSwitch');
-        $wnd.jQuery(e).bootstrapSwitch('destroy');
-    }-*/;
+    private void switchCmd(Element e, String cmd, String value) {
+        BootstrapSwitch.jQuery(e).bootstrapSwitch(cmd, value);
+    }
 
-    private native void switchCmd(Element e, String cmd, String value) /*-{
-        $wnd.jQuery(e).bootstrapSwitch(cmd, value);
-    }-*/;
+    private void switchCmd(Element e, String cmd, boolean value) {
+        BootstrapSwitch.jQuery(e).bootstrapSwitch(cmd, value);
+    }
 
-    private native void switchCmd(Element e, String cmd, boolean value) /*-{
-        $wnd.jQuery(e).bootstrapSwitch(cmd, value);
-    }-*/;
+    private String getCommandStringValue(Element e, String cmd) {
+        return Js.uncheckedCast(BootstrapSwitch.jQuery(e).bootstrapSwitch(cmd));
+    }
 
-    private native String getCommandStringValue(Element e, String cmd) /*-{
-        return $wnd.jQuery(e).bootstrapSwitch(cmd);
-    }-*/;
+    private boolean getCommandBooleanValue(Element e, String cmd) {
+        return Js.uncheckedCast(BootstrapSwitch.jQuery(e).bootstrapSwitch(cmd));
+    }
 
-    private native boolean getCommandBooleanValue(Element e, String cmd) /*-{
-        return $wnd.jQuery(e).bootstrapSwitch(cmd);
-    }-*/;
+    private void switchState(Element e, boolean value, boolean skip) {
+        BootstrapSwitch.jQuery(e).bootstrapSwitch("state", value, skip);
+    }
 
-    private native void switchState(Element e, boolean value, boolean skip) /*-{
-        $wnd.jQuery(e).bootstrapSwitch('state', value, skip);
-    }-*/;
+    private boolean switchState(Element e) {
+        return Js.uncheckedCast(BootstrapSwitch.jQuery(e).bootstrapSwitch("state"));
+    }
 
-    private native boolean switchState(Element e) /*-{
-        return $wnd.jQuery(e).bootstrapSwitch('state');
-    }-*/;
+    private static class BootstrapSwitch extends JQuery {
+
+        @JsOverlay
+        public static BootstrapSwitch jQuery(Element e) {
+            return (BootstrapSwitch) JQuery.jQuery(e);
+        }
+
+        public native Object bootstrapSwitch();
+
+        public native Object bootstrapSwitch(String val);
+
+        public native void bootstrapSwitch(String val, boolean value, boolean skip);
+
+        public native Object bootstrapSwitch(Object val, Object value);
+
+        public native BootstrapSwitch on(String var1, Object arg);
+
+        @FunctionalInterface
+        @JsFunction
+        interface Fn {
+            void onInvoke(String on, boolean state);
+        }
+    }
 }

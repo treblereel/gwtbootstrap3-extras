@@ -36,7 +36,7 @@ public class TypeaheadOpenedEvent<T> extends GwtEvent<TypeaheadOpenedHandler<T>>
         source.fireEvent(event);
     }
 
-    private static final Type<TypeaheadOpenedHandler<?>> TYPE = new Type<TypeaheadOpenedHandler<?>>();
+    private static final Type<TypeaheadOpenedHandler<?>> TYPE = new Type<>();
 
     private final Typeahead<T> typeahead;
     private final Event nativeEvent;

@@ -107,7 +107,7 @@ public abstract class Dataset<T> {
      * @param query    the user input
      * @param callback callback for suggestions
      */
-    public abstract void findMatches(final String query, final SuggestionCallback<T> callback);
+    public abstract Object findMatches(final String query, final SuggestionCallback<T> callback);
 
     @Override
     public boolean equals(final Object o) {

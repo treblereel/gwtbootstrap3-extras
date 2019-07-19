@@ -37,7 +37,7 @@ public enum HandleType implements Type {
 
     private final String type;
 
-    private HandleType(final String type) {
+    HandleType(final String type) {
         this.type = type;
     }
 
