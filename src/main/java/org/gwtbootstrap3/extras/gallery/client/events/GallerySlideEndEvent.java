@@ -37,7 +37,7 @@ public class GallerySlideEndEvent extends GwtEvent<GallerySlideEndHandler> {
         source.fireEvent(event);
     }
 
-    private static final Type<GallerySlideEndHandler> TYPE = new Type<GallerySlideEndHandler>();
+    private static final Type<GallerySlideEndHandler> TYPE = new Type<>();
 
     private final Gallery gallery;
     private final Event nativeEvent;
