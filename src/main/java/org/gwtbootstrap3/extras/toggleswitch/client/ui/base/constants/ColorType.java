@@ -25,7 +25,7 @@ public enum ColorType {
 
     private final String type;
 
-    private ColorType(final String type) {
+    ColorType(final String type) {
         this.type = type;
     }
 
