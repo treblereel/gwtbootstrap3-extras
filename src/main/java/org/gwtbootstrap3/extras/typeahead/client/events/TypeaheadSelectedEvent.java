@@ -37,7 +37,7 @@ public class TypeaheadSelectedEvent<T> extends GwtEvent<TypeaheadSelectedHandler
         source.fireEvent(event);
     }
 
-    private static final Type<TypeaheadSelectedHandler<?>> TYPE = new Type<TypeaheadSelectedHandler<?>>();
+    private static final Type<TypeaheadSelectedHandler<?>> TYPE = new Type<>();
 
     private final Typeahead<T> typeahead;
     private final Suggestion<T> suggestion;

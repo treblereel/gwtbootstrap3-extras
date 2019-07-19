@@ -5,10 +5,18 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import jsinterop.annotations.JsFunction;
+import jsinterop.annotations.JsOverlay;
+import jsinterop.base.Js;
+import jsinterop.base.JsPropertyMap;
+import org.gwtbootstrap3.client.shared.js.JQuery;
 import org.gwtbootstrap3.client.ui.TextBox;
 import org.gwtbootstrap3.extras.typeahead.client.base.CollectionDataset;
 import org.gwtbootstrap3.extras.typeahead.client.base.Dataset;
 import org.gwtbootstrap3.extras.typeahead.client.base.Suggestion;
+import org.gwtbootstrap3.extras.typeahead.client.base.SuggestionCallback;
+import org.gwtbootstrap3.extras.typeahead.client.base.SuggestionTemplate;
+import org.gwtbootstrap3.extras.typeahead.client.base.Template;
 import org.gwtbootstrap3.extras.typeahead.client.events.TypeaheadAutoCompletedEvent;
 import org.gwtbootstrap3.extras.typeahead.client.events.TypeaheadAutoCompletedHandler;
 import org.gwtbootstrap3.extras.typeahead.client.events.TypeaheadClosedEvent;
@@ -34,9 +42,9 @@ import org.gwtproject.user.client.Event;
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -47,12 +55,12 @@ import org.gwtproject.user.client.Event;
 
 /**
  * Twitter typeahead.js
- *
+ * <p>
  * https://github.com/twitter/typeahead.js
- *
  * @author Florian Kremser <florian.kremser@sage.com>
  */
 public class Typeahead<T> extends TextBox {
+
     private Collection<? extends Dataset<T>> datasets;
     private boolean highlight = false;
     private boolean hint = true;
@@ -67,7 +75,6 @@ public class Typeahead<T> extends TextBox {
      * A typeahead is composed of one or more datasets. When an end-user
      * modifies the value of a typeahead, each dataset will attempt to
      * render suggestions for the new value.
-     *
      * @param dataset a dataset for providing suggestions
      */
     public Typeahead(final Dataset<T> dataset) {
@@ -87,7 +94,7 @@ public class Typeahead<T> extends TextBox {
         super(e);
         setDatasets(datasets);
     }
-    
+
     public void setDatasets(final Dataset<T> dataset) {
         this.datasets = Arrays.asList(dataset);
     }
@@ -106,7 +113,6 @@ public class Typeahead<T> extends TextBox {
      * If {@code true}, when suggestions are rendered, pattern matches for the
      * current query in text nodes will be wrapped in a {@code strong} element
      * with the {@code tt-highlight} class. Defaults to {@code false}.
-     *
      * @param highlight {@code true} to highlight pattern matches in suggestions
      */
     public void setHighlight(final boolean highlight) {
@@ -115,7 +121,6 @@ public class Typeahead<T> extends TextBox {
 
     /**
      * If {@code false}, the typeahead will not show a hint. Defaults to {@code true}.
-     *
      * @param hint {@code true} to show a hint
      */
     public void setHint(final boolean hint) {
@@ -125,7 +130,6 @@ public class Typeahead<T> extends TextBox {
     /**
      * The minimum character length needed before suggestions start getting
      * rendered. Defaults to 1.
-     *
      * @param minLength minimum required input length for matching
      */
     public void setMinLength(final int minLength) {
@@ -154,7 +158,6 @@ public class Typeahead<T> extends TextBox {
 
     /**
      * Triggered when the dropdown menu of the typeahead is opened.
-     *
      * @param event the event
      */
     private void onOpened(final Event event) {
@@ -163,7 +166,6 @@ public class Typeahead<T> extends TextBox {
 
     /**
      * Triggered when the dropdown menu of the typeahead is closed.
-     *
      * @param event the event
      */
     private void onClosed(final Event event) {
@@ -172,7 +174,6 @@ public class Typeahead<T> extends TextBox {
 
     /**
      * Triggered when the dropdown menu cursor is moved to a different suggestion.
-     *
      * @param event the event
      * @param suggestion the suggestion object
      */
@@ -182,7 +183,6 @@ public class Typeahead<T> extends TextBox {
 
     /**
      * Triggered when the query is autocompleted. Autocompleted means the query was changed to the hint.
-     *
      * @param event the event
      * @param suggestion the suggestion object
      */
@@ -192,7 +192,6 @@ public class Typeahead<T> extends TextBox {
 
     /**
      * Triggered when a suggestion from the dropdown menu is selected.
-     *
      * @param event the event
      * @param suggestion the suggestion object
      */
@@ -226,71 +225,95 @@ public class Typeahead<T> extends TextBox {
         configure(getElement(), highlight, hint, minLength, datasetJSOs);
     }
 
-    private native JavaScriptObject toJSO(Dataset<T> dataset) /*-{
-        var emptyTemplate = dataset.@org.gwtbootstrap3.extras.typeahead.client.base.Dataset::getEmptyTemplate()();
-        var headerTemplate = dataset.@org.gwtbootstrap3.extras.typeahead.client.base.Dataset::getHeaderTemplate()();
-        var footerTemplate = dataset.@org.gwtbootstrap3.extras.typeahead.client.base.Dataset::getFooterTemplate()();
-        var suggestionTemplate = dataset.@org.gwtbootstrap3.extras.typeahead.client.base.Dataset::getSuggestionTemplate()();
+    private JavaScriptObject toJSO(Dataset<T> dataset) {
+        Template emptyTemplate = dataset.getEmptyTemplate();
+        Template headerTemplate = dataset.getHeaderTemplate();
+        Template footerTemplate = dataset.getFooterTemplate();
+        SuggestionTemplate suggestionTemplate = dataset.getSuggestionTemplate();
 
-        var findMatches = function () {
-            return function (query, cb) {
-                var scb = @org.gwtbootstrap3.extras.typeahead.client.base.SuggestionCallback::new(Lcom/google/gwt/core/client/JavaScriptObject;)(cb);
-                return dataset.@org.gwtbootstrap3.extras.typeahead.client.base.Dataset::findMatches(Ljava/lang/String;Lorg/gwtbootstrap3/extras/typeahead/client/base/SuggestionCallback;)(query, scb);
-            };
+        TypeaHead.Fn findMatches = () -> (TypeaHead.Fn2ObjectArgs) (query, fn) -> {
+            SuggestionCallback scb = new SuggestionCallback(fn);
+            return dataset.findMatches(query, scb);
         };
 
-        return {
-            name: dataset.@org.gwtbootstrap3.extras.typeahead.client.base.Dataset::name,
-            source: findMatches(),
-            templates: {
-                empty: (emptyTemplate != null ? function (query) {
-                    return emptyTemplate.@org.gwtbootstrap3.extras.typeahead.client.base.Template::render()();
-                } : undefined),
-                header: (headerTemplate != null ? function (query) {
-                    return headerTemplate.@org.gwtbootstrap3.extras.typeahead.client.base.Template::render()();
-                } : undefined),
-                footer: (footerTemplate != null ? function (query) {
-                    return footerTemplate.@org.gwtbootstrap3.extras.typeahead.client.base.Template::render()();
-                } : undefined),
-                suggestion: (suggestionTemplate != null ? function (suggestion) {
-                    return suggestionTemplate.@org.gwtbootstrap3.extras.typeahead.client.base.SuggestionTemplate::render(Lorg/gwtbootstrap3/extras/typeahead/client/base/Suggestion;)(suggestion);
-                } : undefined)
-            }
+        JsPropertyMap result = JsPropertyMap.of();
+        JsPropertyMap templates = JsPropertyMap.of();
 
-        };
-    }-*/;
+        result.set("name", dataset.getName());
+        result.set("source", findMatches.onInvoke());
+        result.set("templates", templates);
 
-    private native void configure(
-            Element e, boolean highlight, boolean hint, int minLength, JsArray<JavaScriptObject> datasets) /*-{
-        var that = this;
-        $wnd.jQuery(e).typeahead({
-                highlight: highlight,
-                hint: hint,
-                minLength: minLength
-            },
-            datasets)
-            .on('typeahead:opened', function (e) {
-                that.@org.gwtbootstrap3.extras.typeahead.client.ui.Typeahead::onOpened(Lcom/google/gwt/user/client/Event;)(e);
-            })
-            .on('typeahead:closed', function (e) {
-                that.@org.gwtbootstrap3.extras.typeahead.client.ui.Typeahead::onClosed(Lcom/google/gwt/user/client/Event;)(e);
-            })
-            .on('typeahead:cursorchanged', function (e, value, datasetName) {
-                that.@org.gwtbootstrap3.extras.typeahead.client.ui.Typeahead::onCursorChanged(Lcom/google/gwt/user/client/Event;Lorg/gwtbootstrap3/extras/typeahead/client/base/Suggestion;)(e, value);
-            })
-            .on('typeahead:autocompleted', function (e, value, datasetName) {
-                that.@org.gwtbootstrap3.extras.typeahead.client.ui.Typeahead::onAutoCompleted(Lcom/google/gwt/user/client/Event;Lorg/gwtbootstrap3/extras/typeahead/client/base/Suggestion;)(e, value);
-            })
-            .on('typeahead:selected', function (e, value, datasetName) {
-                that.@org.gwtbootstrap3.extras.typeahead.client.ui.Typeahead::onSelected(Lcom/google/gwt/user/client/Event;Lorg/gwtbootstrap3/extras/typeahead/client/base/Suggestion;)(e, value);
-            });
-    }-*/;
+        templates.set("empty", emptyTemplate != null ? (TypeaHead.Fn1Arg) arg -> emptyTemplate.render() : null);
+        templates.set("header", headerTemplate != null ? (TypeaHead.Fn1Arg) arg -> headerTemplate.render() : null);
+        templates.set("suggestion", suggestionTemplate != null ? (TypeaHead.Fn1Arg) arg -> suggestionTemplate.render(Js.uncheckedCast(arg)) : null);
+        templates.set("header", footerTemplate != null ? (TypeaHead.Fn1Arg) arg -> footerTemplate.render() : null);
 
-    private native void remove(Element e) /*-{
-        $wnd.jQuery(e).typeahead('destroy');
-    }-*/;
+        return Js.uncheckedCast(result);
+    }
 
-    private native void setValueNative(Element e, String value) /*-{
-        $wnd.jQuery(e).typeahead('val', value);
-    }-*/;
+    private void configure(
+            Element e, boolean highlight, boolean hint, int minLength, JsArray<JavaScriptObject> datasets) {
+        JsPropertyMap templates = JsPropertyMap.of();
+        templates.set("highlight", highlight);
+        templates.set("hint", hint);
+        templates.set("minLength", minLength);
+
+        TypeaHead.jQuery(e).typeahead(templates, datasets).on("typeahead:opened", (TypeaHead.FnEvent) event -> onOpened(event))
+                .on("typeahead:closed", (TypeaHead.FnEvent) event -> onClosed(event))
+                .on("typeahead:cursorchanged", (TypeaHead.FnEventAndSuggestion) (event, value, datasetName) -> onCursorChanged(event, value))
+                .on("typeahead:autocompleted", (TypeaHead.FnEventAndSuggestion) (event, value, datasetName) -> onAutoCompleted(event, value))
+                .on("typeahead:selected", (TypeaHead.FnEventAndSuggestion) (event, value, datasetName) -> onSelected(event, value));
+    }
+
+    private void remove(Element e) {
+        TypeaHead.jQuery(e).typeahead("destroy");
+    }
+
+    private void setValueNative(Element e, String value) {
+        TypeaHead.jQuery(e).typeahead("val", value);
+    }
+
+    static class TypeaHead extends JQuery {
+
+        @JsOverlay
+        public static TypeaHead jQuery(Element e) {
+            return (TypeaHead) JQuery.jQuery(e);
+        }
+
+        public native TypeaHead typeahead(String val);
+
+        public native TypeaHead typeahead(Object val, Object value);
+
+        public native TypeaHead on(String var1, Object arg);
+
+        @FunctionalInterface
+        @JsFunction
+        interface Fn {
+            Object onInvoke();
+        }
+
+        @FunctionalInterface
+        @JsFunction
+        interface FnEvent {
+            void onInvoke(Event event);
+        }
+
+        @FunctionalInterface
+        @JsFunction
+        interface FnEventAndSuggestion {
+            void onInvoke(Event event, Suggestion suggestion, Object datasetName);
+        }
+
+        @FunctionalInterface
+        @JsFunction
+        interface Fn1Arg {
+            Object onInvoke(Object arg);
+        }
+
+        @FunctionalInterface
+        @JsFunction
+        interface Fn2ObjectArgs {
+            Object onInvoke(String query, SuggestionCallback.Fn fn);
+        }
+    }
 }
