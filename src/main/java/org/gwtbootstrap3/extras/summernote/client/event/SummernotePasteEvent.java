@@ -52,7 +52,7 @@ public class SummernotePasteEvent extends GwtEvent<SummernotePasteHandler> {
      */
     public static Type<SummernotePasteHandler> getType() {
         if (TYPE == null) {
-            TYPE = new Type<SummernotePasteHandler>();
+            TYPE = new Type<>();
         }
         return TYPE;
     }

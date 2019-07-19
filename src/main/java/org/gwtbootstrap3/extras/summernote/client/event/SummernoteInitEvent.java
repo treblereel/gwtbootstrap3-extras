@@ -51,7 +51,7 @@ public class SummernoteInitEvent extends GwtEvent<SummernoteInitHandler> {
      */
     public static Type<SummernoteInitHandler> getType() {
         if (TYPE == null) {
-            TYPE = new Type<SummernoteInitHandler>();
+            TYPE = new Type<>();
         }
         return TYPE;
     }

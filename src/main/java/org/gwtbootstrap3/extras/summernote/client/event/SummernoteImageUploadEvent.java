@@ -21,6 +21,7 @@ package org.gwtbootstrap3.extras.summernote.client.event;
  */
 
 import elemental2.core.JsArray;
+import jsinterop.base.Js;
 import org.gwtproject.core.client.JavaScriptObject;
 import org.gwtproject.event.legacy.shared.GwtEvent;
 
@@ -40,17 +41,16 @@ public class SummernoteImageUploadEvent extends GwtEvent<SummernoteImageUploadHa
         protected ImageFile() {
         }
 
-        public final native String getName() /*-{
-            return this.name;
-        }-*/;
+        public final String getName() {
+            return (String) Js.asPropertyMap(this).get("name");
+        }
 
-        public final native double getSize() /*-{
-            return this.size;
-        }-*/;
-
-        public final native String getType() /*-{
-            return this.type;
-        }-*/;
+        public final double getSize() {
+            return (double) Js.asPropertyMap(this).get("size");
+        }
+        public final String getType() {
+            return (String) Js.asPropertyMap(this).get("type");
+        }
 
         public final String getMetadata() {
             return new StringBuilder("ImageFile [")
@@ -86,7 +86,7 @@ public class SummernoteImageUploadEvent extends GwtEvent<SummernoteImageUploadHa
      */
     public static Type<SummernoteImageUploadHandler> getType() {
         if (TYPE == null) {
-            TYPE = new Type<SummernoteImageUploadHandler>();
+            TYPE = new Type<>();
         }
         return TYPE;
     }

@@ -51,7 +51,7 @@ public class SummernoteBlurEvent extends GwtEvent<SummernoteBlurHandler> {
      */
     public static Type<SummernoteBlurHandler> getType() {
         if (TYPE == null) {
-            TYPE = new Type<SummernoteBlurHandler>();
+            TYPE = new Type<>();
         }
         return TYPE;
     }
