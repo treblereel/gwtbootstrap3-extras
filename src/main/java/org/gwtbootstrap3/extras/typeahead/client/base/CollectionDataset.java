@@ -56,7 +56,7 @@ public class CollectionDataset<T> extends Dataset<T> {
     }
 
     @Override
-    public void findMatches(final String query, final SuggestionCallback<T> callback) {
+    public Object findMatches(final String query, final SuggestionCallback<T> callback) {
         String queryLower = query.toLowerCase();
         Collection<Suggestion<T>> suggestions = new ArrayList<Suggestion<T>>();
         if (data != null) {
@@ -69,5 +69,6 @@ public class CollectionDataset<T> extends Dataset<T> {
               }
         }
         callback.execute(suggestions);
+        return suggestions;
     }
 }
