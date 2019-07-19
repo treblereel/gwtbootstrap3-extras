@@ -400,7 +400,7 @@ public class Animate {
             namespace = "<global>",
             name = "jQuery"
     )
-    static class JQueryExt extends JQuery {
+    private static class JQueryExt extends JQuery {
 
     @JsMethod
     native void one(JsArray arrayString, JsObject params, Fn callback);
