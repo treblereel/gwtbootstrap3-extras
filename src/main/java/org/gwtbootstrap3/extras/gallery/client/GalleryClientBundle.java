@@ -26,6 +26,7 @@ import org.gwtproject.resources.client.TextResource;
 /**
  * @author Ben Dol
  */
+//@Resource
 public interface GalleryClientBundle extends ClientBundle {
 
     GalleryClientBundle INSTANCE = new GalleryClientBundleImpl();
@@ -35,4 +36,13 @@ public interface GalleryClientBundle extends ClientBundle {
 
     @ClientBundle.Source("resource/js/bootstrap-image-gallery-3.4.2.min.cache.js")
     TextResource GALLERY_JS();
+
+    @ClientBundle.Source("resource/css/blueimp-gallery-2.18.2.min.cache.css")
+    TextResource GALLERY_CSS();
+
+    @ClientBundle.Source("resource/css/blueimp-gallery-2.18.2-fix.cache.css")
+    TextResource GALLERY_FIX_CSS();
+
+    @ClientBundle.Source("resource/css/bootstrap-image-gallery-3.4.2.min.cache.css")
+    TextResource GALLERY_IMAGE_CSS();
 }

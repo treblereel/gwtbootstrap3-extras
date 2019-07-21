@@ -26,6 +26,7 @@ import org.gwtproject.resources.client.TextResource;
 /**
  * @author Sven Jacobs
  */
+//@Resource
 public interface DatePickerClientBundle extends ClientBundle {
 
     DatePickerClientBundle INSTANCE = new DatePickerClientBundleImpl();
@@ -35,6 +36,9 @@ public interface DatePickerClientBundle extends ClientBundle {
 
     @Source("resource/js/bootstrap-datepicker-" + VERSION + ".min.cache.js")
     TextResource datePicker();
+
+    @Source("resource/css/bootstrap-datepicker3-" + VERSION + ".min.cache.css")
+    TextResource datePickerCss();
 
     @Source(LOCALES_DIR + "bootstrap-datepicker.ar.min.js")
     TextResource ar();

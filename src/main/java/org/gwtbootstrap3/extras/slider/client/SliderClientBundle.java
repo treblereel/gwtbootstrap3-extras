@@ -26,10 +26,14 @@ import org.gwtproject.resources.client.TextResource;
 /**
  * @author Xiaodong SUN
  */
+//@Resource
 interface SliderClientBundle extends ClientBundle {
 
     SliderClientBundle INSTANCE = new SliderClientBundleImpl();
 
     @Source("resource/js/bootstrap-slider-9.2.0.min.cache.js")
     TextResource slider();
+
+    @Source("resource/css/bootstrap-slider-9.2.0.min.cache.css")
+    TextResource slider_css();
 }

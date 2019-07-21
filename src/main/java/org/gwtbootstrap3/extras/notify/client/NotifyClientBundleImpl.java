@@ -22,7 +22,7 @@ package org.gwtbootstrap3.extras.notify.client;
 
 import org.gwtproject.resources.client.ResourcePrototype;
 
-public class NotifyClientBundleImpl implements org.gwtbootstrap3.extras.notify.client.NotifyClientBundle {
+public class NotifyClientBundleImpl implements NotifyClientBundle {
   private static NotifyClientBundleImpl _instance0 = new NotifyClientBundleImpl();
   private void notifyJSInitializer() {
     notifyJS = new org.gwtproject.resources.client.TextResource() {
@@ -47,18 +47,44 @@ public class NotifyClientBundleImpl implements org.gwtbootstrap3.extras.notify.c
   public org.gwtproject.resources.client.TextResource notifyJS() {
     return notifyJSInitializer.get();
   }
+  private void notify_cssInitializer() {
+    notify_css = new org.gwtproject.resources.client.TextResource() {
+      // file:/home/treblereel/workspace/gwt/gwtbootstrap3-extras/target/classes/org/gwtbootstrap3/extras/notify/client/resource/css/bootstrap-notify-custom.min.cache.css
+      public String getText() {
+        return "/* Bootstrap Notify Custom CSS | Website: http://bootstrap-notify.remabledesigns.com/ */\n[data-notify=\"progressbar\"]{margin-bottom:0;position:absolute;bottom:0;left:0;width:100%;height:5px;}";
+      }
+      public String getName() {
+        return "notify_css";
+      }
+    }
+    ;
+  }
+  private static class notify_cssInitializer {
+    static {
+      _instance0.notify_cssInitializer();
+    }
+    static org.gwtproject.resources.client.TextResource get() {
+      return notify_css;
+    }
+  }
+  public org.gwtproject.resources.client.TextResource notify_css() {
+    return notify_cssInitializer.get();
+  }
   private static java.util.HashMap<String, ResourcePrototype> resourceMap;
   private static org.gwtproject.resources.client.TextResource notifyJS;
+  private static org.gwtproject.resources.client.TextResource notify_css;
   
   public ResourcePrototype[] getResources() {
     return new ResourcePrototype[] {
       notifyJS(), 
+      notify_css(), 
     };
   }
   public ResourcePrototype getResource(String name) {
       if (resourceMap == null) {
         resourceMap = new java.util.HashMap<String, ResourcePrototype>();
         resourceMap.put("notifyJS", notifyJS());
+        resourceMap.put("notify_css", notify_css());
       }
       return resourceMap.get(name);
   }

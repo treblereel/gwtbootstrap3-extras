@@ -7,9 +7,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * 
  *      http://www.apache.org/licenses/LICENSE-2.0
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -33,25 +33,25 @@ import org.gwtbootstrap3.extras.bootbox.client.callback.SimpleCallback;
 @JsType(isNative = true, name = "Object", namespace = JsPackage.GLOBAL)
 public class DialogOptions<E extends DialogOptions> {
 
-    String locale;
+    private String locale;
 
-    String className;
+    private String className;
 
-    boolean show;
+    private boolean show;
 
-    boolean backdrop;
+    private boolean backdrop;
 
-    boolean closeButton;
+    private boolean closeButton;
 
-    Object onEscape;
+    private Object onEscape;
 
-    boolean animate;
+    private boolean animate;
 
-    String size;
+    private String size;
 
-    String title;
+    private String title;
 
-    String message;
+    private String message;
 
     private JsPropertyMap buttons;
 

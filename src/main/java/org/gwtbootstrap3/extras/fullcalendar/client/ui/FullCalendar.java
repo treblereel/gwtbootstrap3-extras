@@ -9,9 +9,9 @@ package org.gwtbootstrap3.extras.fullcalendar.client.ui;
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * 
  *      http://www.apache.org/licenses/LICENSE-2.0
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -458,6 +458,11 @@ public class FullCalendar extends FlowPanel implements HasLoadHandlers {
         void onInvoke();
     }
 
+    @JsType(
+            isNative = true,
+            namespace = "<global>",
+            name = "jQuery"
+    )
     private static class JFullCalendar extends JQuery {
 
         @JsOverlay
@@ -478,7 +483,7 @@ public class FullCalendar extends FlowPanel implements HasLoadHandlers {
     }
 
     @JsType(namespace = JsPackage.GLOBAL, isNative = true, name = "Object")
-    private class HasToDate {
+    private static class HasToDate {
 
         native JsDate toDate();
     }

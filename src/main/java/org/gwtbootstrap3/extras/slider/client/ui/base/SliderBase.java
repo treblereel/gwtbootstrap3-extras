@@ -9,9 +9,9 @@ package org.gwtbootstrap3.extras.slider.client.ui.base;
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * 
  *      http://www.apache.org/licenses/LICENSE-2.0
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -27,6 +27,7 @@ import java.util.List;
 import elemental2.dom.DomGlobal;
 import jsinterop.annotations.JsFunction;
 import jsinterop.annotations.JsOverlay;
+import jsinterop.annotations.JsType;
 import jsinterop.base.Js;
 import org.gwtbootstrap3.client.shared.js.JQuery;
 import org.gwtbootstrap3.client.ui.base.HasId;
@@ -939,6 +940,11 @@ public abstract class SliderBase<T> extends Widget implements
         }
     }
 
+    @JsType(
+            isNative = true,
+            namespace = "<global>",
+            name = "jQuery"
+    )
     protected static class JSlider extends JQuery {
 
         @JsOverlay

@@ -23,10 +23,14 @@ package org.gwtbootstrap3.extras.notify.client;
 import org.gwtproject.resources.client.ClientBundle;
 import org.gwtproject.resources.client.TextResource;
 
+//@Resource
 public interface NotifyClientBundle extends ClientBundle {
 
     NotifyClientBundle INSTANCE = new NotifyClientBundleImpl();
 
     @ClientBundle.Source("resource/js/bootstrap-notify-3.1.3.min.cache.js")
     TextResource notifyJS();
+
+    @ClientBundle.Source("resource/css/bootstrap-notify-custom.min.cache.css")
+    TextResource notify_css();
 }

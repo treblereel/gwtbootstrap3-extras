@@ -9,9 +9,9 @@ package org.gwtbootstrap3.extras.datepicker.client.ui.base;
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * 
  *      http://www.apache.org/licenses/LICENSE-2.0
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -89,7 +89,7 @@ import org.gwtproject.event.dom.client.BlurHandler;
 import org.gwtproject.event.logical.shared.ValueChangeEvent;
 import org.gwtproject.event.logical.shared.ValueChangeHandler;
 import org.gwtproject.event.shared.HandlerRegistration;
-import org.gwtproject.i18n.client.DateTimeFormat;
+import org.gwtproject.i18n.shared.DateTimeFormat;
 import org.gwtproject.user.client.Event;
 import org.gwtproject.user.client.ui.HasEnabled;
 import org.gwtproject.user.client.ui.HasName;
@@ -164,6 +164,7 @@ public class DatePickerBase extends Widget implements HasEnabled,
     private Widget container = null;
     private DatePickerLanguage language = DatePickerLanguage.EN;
     private DatePickerPosition position = DatePickerPosition.AUTO;
+
     public DatePickerBase() {
         textBox = new TextBox();
         setElement(textBox.getElement());

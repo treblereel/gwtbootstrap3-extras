@@ -26,10 +26,14 @@ import org.gwtproject.resources.client.TextResource;
 /**
  * @author Grant Slender
  */
+//@Resource
 interface ToggleSwitchClientBundle extends ClientBundle {
 
     ToggleSwitchClientBundle INSTANCE = new ToggleSwitchClientBundleImpl();
 
     @Source("resource/js/bootstrap-switch-3.3.2.min.cache.js")
     TextResource toggleswitch();
+
+    @Source("resource/css/bootstrap-switch-3.3.2.min.cache.css")
+    TextResource toggleswitch_css();
 }

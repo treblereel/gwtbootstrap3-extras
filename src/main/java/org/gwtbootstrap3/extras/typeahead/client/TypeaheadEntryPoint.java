@@ -22,6 +22,7 @@ package org.gwtbootstrap3.extras.typeahead.client;
 
 import org.gwtproject.core.client.EntryPoint;
 import org.gwtproject.core.client.ScriptInjector;
+import org.gwtproject.dom.client.StyleInjector;
 
 /**
  * @author Florian Kremser <florian.kremser@sage.com>
@@ -33,5 +34,6 @@ public class TypeaheadEntryPoint implements EntryPoint {
         ScriptInjector.fromString(TypeaheadClientBundle.INSTANCE.typeahead().getText())
                 .setWindow(ScriptInjector.TOP_WINDOW)
                 .inject();
+        StyleInjector.injectStylesheetAtEnd(TypeaheadClientBundle.INSTANCE.typeahead_css().getText());
     }
 }

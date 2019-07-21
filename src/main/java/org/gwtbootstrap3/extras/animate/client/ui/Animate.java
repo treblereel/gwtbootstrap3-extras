@@ -418,7 +418,7 @@ public class Animate {
             name = "Object",
             namespace = "<global>"
     )
-    class HasRemoveClass implements JsPropertyMap {
+    static class HasRemoveClass implements JsPropertyMap {
         native void removeClass(String animation);
     }
 

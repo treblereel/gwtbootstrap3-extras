@@ -22,7 +22,7 @@ package org.gwtbootstrap3.extras.tagsinput.client;
 
 import org.gwtproject.resources.client.ResourcePrototype;
 
-public class TagsInputClientBundleImpl implements org.gwtbootstrap3.extras.tagsinput.client.TagsInputClientBundle {
+public class TagsInputClientBundleImpl implements TagsInputClientBundle {
   private static TagsInputClientBundleImpl _instance0 = new TagsInputClientBundleImpl();
   private void tagsinputInitializer() {
     tagsinput = new org.gwtproject.resources.client.TextResource() {
@@ -47,18 +47,70 @@ public class TagsInputClientBundleImpl implements org.gwtbootstrap3.extras.tagsi
   public org.gwtproject.resources.client.TextResource tagsinput() {
     return tagsinputInitializer.get();
   }
+  private void tagsinput_cssInitializer() {
+    tagsinput_css = new org.gwtproject.resources.client.TextResource() {
+      // file:/home/treblereel/workspace/gwt/gwtbootstrap3-extras/target/classes/org/gwtbootstrap3/extras/tagsinput/client/resource/css/bootstrap-tagsinput.css
+      public String getText() {
+        return "/*\n * bootstrap-tagsinput v0.8.0\n * \n */\n\n.bootstrap-tagsinput {\n  background-color: #fff;\n  border: 1px solid #ccc;\n  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);\n  display: inline-block;\n  padding: 4px 6px;\n  color: #555;\n  vertical-align: middle;\n  border-radius: 4px;\n  max-width: 100%;\n  line-height: 22px;\n  cursor: text;\n}\n.bootstrap-tagsinput input {\n  border: none;\n  box-shadow: none;\n  outline: none;\n  background-color: transparent;\n  padding: 0 6px;\n  margin: 0;\n  width: auto;\n  max-width: inherit;\n}\n.bootstrap-tagsinput.form-control input::-moz-placeholder {\n  color: #777;\n  opacity: 1;\n}\n.bootstrap-tagsinput.form-control input:-ms-input-placeholder {\n  color: #777;\n}\n.bootstrap-tagsinput.form-control input::-webkit-input-placeholder {\n  color: #777;\n}\n.bootstrap-tagsinput input:focus {\n  border: none;\n  box-shadow: none;\n}\n.bootstrap-tagsinput .tag {\n  margin-right: 2px;\n  color: white;\n}\n.bootstrap-tagsinput .tag [data-role=\"remove\"] {\n  margin-left: 8px;\n  cursor: pointer;\n}\n.bootstrap-tagsinput .tag [data-role=\"remove\"]:after {\n  content: \"x\";\n  padding: 0px 2px;\n}\n.bootstrap-tagsinput .tag [data-role=\"remove\"]:hover {\n  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);\n}\n.bootstrap-tagsinput .tag [data-role=\"remove\"]:hover:active {\n  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);\n}\n";
+      }
+      public String getName() {
+        return "tagsinput_css";
+      }
+    }
+    ;
+  }
+  private static class tagsinput_cssInitializer {
+    static {
+      _instance0.tagsinput_cssInitializer();
+    }
+    static org.gwtproject.resources.client.TextResource get() {
+      return tagsinput_css;
+    }
+  }
+  public org.gwtproject.resources.client.TextResource tagsinput_css() {
+    return tagsinput_cssInitializer.get();
+  }
+  private void tagsinput_typeahead_cssInitializer() {
+    tagsinput_typeahead_css = new org.gwtproject.resources.client.TextResource() {
+      // file:/home/treblereel/workspace/gwt/gwtbootstrap3-extras/target/classes/org/gwtbootstrap3/extras/tagsinput/client/resource/css/bootstrap-tagsinput-typeahead.css
+      public String getText() {
+        return "/*\n * bootstrap-tagsinput v0.8.0\n * \n */\n\n.twitter-typeahead .tt-query,\n.twitter-typeahead .tt-hint {\n    margin-bottom: 0;\n}\n\n.twitter-typeahead .tt-hint\n{\n    display: none;\n}\n\n.tt-menu {\n    position: absolute;\n    top: 100%;\n    left: 0;\n    z-index: 1000;\n    display: none;\n    float: left;\n    min-width: 160px;\n    padding: 5px 0;\n    margin: 2px 0 0;\n    list-style: none;\n    font-size: 14px;\n    background-color: #ffffff;\n    border: 1px solid #cccccc;\n    border: 1px solid rgba(0, 0, 0, 0.15);\n    border-radius: 4px;\n    -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);\n    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);\n    background-clip: padding-box;\n    cursor: pointer;\n}\n\n.tt-suggestion {\n    display: block;\n    padding: 3px 20px;\n    clear: both;\n    font-weight: normal;\n    line-height: 1.428571429;\n    color: #333333;\n    white-space: nowrap;\n}\n\n.tt-suggestion:hover,\n.tt-suggestion:focus {\n    color: #ffffff;\n    text-decoration: none;\n    outline: 0;\n    background-color: #428bca;\n}\n";
+      }
+      public String getName() {
+        return "tagsinput_typeahead_css";
+      }
+    }
+    ;
+  }
+  private static class tagsinput_typeahead_cssInitializer {
+    static {
+      _instance0.tagsinput_typeahead_cssInitializer();
+    }
+    static org.gwtproject.resources.client.TextResource get() {
+      return tagsinput_typeahead_css;
+    }
+  }
+  public org.gwtproject.resources.client.TextResource tagsinput_typeahead_css() {
+    return tagsinput_typeahead_cssInitializer.get();
+  }
   private static java.util.HashMap<String, ResourcePrototype> resourceMap;
   private static org.gwtproject.resources.client.TextResource tagsinput;
+  private static org.gwtproject.resources.client.TextResource tagsinput_css;
+  private static org.gwtproject.resources.client.TextResource tagsinput_typeahead_css;
   
   public ResourcePrototype[] getResources() {
     return new ResourcePrototype[] {
       tagsinput(), 
+      tagsinput_css(), 
+      tagsinput_typeahead_css(), 
     };
   }
   public ResourcePrototype getResource(String name) {
       if (resourceMap == null) {
         resourceMap = new java.util.HashMap<String, ResourcePrototype>();
         resourceMap.put("tagsinput", tagsinput());
+        resourceMap.put("tagsinput_css", tagsinput_css());
+        resourceMap.put("tagsinput_typeahead_css", tagsinput_typeahead_css());
       }
       return resourceMap.get(name);
   }

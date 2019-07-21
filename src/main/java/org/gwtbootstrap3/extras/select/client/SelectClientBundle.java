@@ -21,12 +21,12 @@ package org.gwtbootstrap3.extras.select.client;
  */
 
 import org.gwtproject.resources.client.ClientBundle;
-import org.gwtproject.resources.client.Resource;
 import org.gwtproject.resources.client.TextResource;
 
 /**
  * @author godi
  */
+//@Resource
 public interface SelectClientBundle extends ClientBundle {
 
     SelectClientBundle INSTANCE = new SelectClientBundleImpl();
@@ -36,6 +36,9 @@ public interface SelectClientBundle extends ClientBundle {
 
     @ClientBundle.Source("resource/js/bootstrap-select-" + VERSION + ".min.cache.js")
     TextResource select();
+
+    @ClientBundle.Source("resource/css/bootstrap-select-" + VERSION + ".min.cache.css")
+    TextResource select_css();
 
     @Source(I18N_DIR + "defaults-ar_AR.min.js")
     TextResource ar();

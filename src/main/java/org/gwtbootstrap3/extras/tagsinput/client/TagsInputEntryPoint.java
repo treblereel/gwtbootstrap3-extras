@@ -22,6 +22,7 @@ package org.gwtbootstrap3.extras.tagsinput.client;
 
 import org.gwtproject.core.client.EntryPoint;
 import org.gwtproject.core.client.ScriptInjector;
+import org.gwtproject.dom.client.StyleInjector;
 
 /**
  * @author Marko Nikolić <marko.nikolic@iten.rs>
@@ -31,6 +32,7 @@ public class TagsInputEntryPoint implements EntryPoint {
     @Override
     public void onModuleLoad() {
         ScriptInjector.fromString(TagsInputClientBundle.INSTANCE.tagsinput().getText()).setWindow(ScriptInjector.TOP_WINDOW).inject();
+        StyleInjector.injectStylesheetAtEnd(TagsInputClientBundle.INSTANCE.tagsinput_css().getText());
+        StyleInjector.injectStylesheetAtEnd(TagsInputClientBundle.INSTANCE.tagsinput_typeahead_css().getText());
     }
-
 }
