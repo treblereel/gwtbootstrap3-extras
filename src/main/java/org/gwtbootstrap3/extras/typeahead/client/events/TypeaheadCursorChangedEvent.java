@@ -33,11 +33,11 @@ import org.gwtproject.user.client.Event;
 public class TypeaheadCursorChangedEvent<T> extends GwtEvent<TypeaheadCursorChangedHandler<T>> {
 
     public static <T> void fire(final Typeahead<T> source, final Suggestion<T> suggestion, final Event nativeEvent) {
-        TypeaheadCursorChangedEvent<T> event = new TypeaheadCursorChangedEvent<T>(source, suggestion, nativeEvent);
+        TypeaheadCursorChangedEvent<T> event = new TypeaheadCursorChangedEvent<>(source, suggestion, nativeEvent);
         source.fireEvent(event);
     }
 
-    private static final Type<TypeaheadCursorChangedHandler<?>> TYPE = new Type<TypeaheadCursorChangedHandler<?>>();
+    private static final Type<TypeaheadCursorChangedHandler<?>> TYPE = new Type<>();
 
     private final Typeahead<T> typeahead;
     private final Suggestion<T> suggestion;

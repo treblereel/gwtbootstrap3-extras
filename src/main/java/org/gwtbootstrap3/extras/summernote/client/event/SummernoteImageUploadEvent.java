@@ -21,6 +21,7 @@ package org.gwtbootstrap3.extras.summernote.client.event;
  */
 
 import elemental2.core.JsArray;
+import jsinterop.annotations.JsConstructor;
 import jsinterop.base.Js;
 import org.gwtproject.core.client.JavaScriptObject;
 import org.gwtproject.event.legacy.shared.GwtEvent;
@@ -38,6 +39,7 @@ public class SummernoteImageUploadEvent extends GwtEvent<SummernoteImageUploadHa
      */
     public static class ImageFile extends JavaScriptObject {
 
+        @JsConstructor
         protected ImageFile() {
         }
 

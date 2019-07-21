@@ -39,15 +39,12 @@ public class Trigger extends Icon {
         sinkEvents(Event.ONCLICK);
 
         // When user clicks front, show back
-        addHandler(new ClickHandler() {
-            @Override
-            public void onClick(final ClickEvent event) {
-                if (getParent() != null && getParent().getParent() != null) {
-                    if (getParent().getParent().getStyleName().contains(CardStyles.FLIPPED)) {
-                        getParent().getParent().removeStyleName(CardStyles.FLIPPED);
-                    } else {
-                        getParent().getParent().addStyleName(CardStyles.FLIPPED);
-                    }
+        addHandler(event -> {
+            if (getParent() != null && getParent().getParent() != null) {
+                if (getParent().getParent().getStyleName().contains(CardStyles.FLIPPED)) {
+                    getParent().getParent().removeStyleName(CardStyles.FLIPPED);
+                } else {
+                    getParent().getParent().addStyleName(CardStyles.FLIPPED);
                 }
             }
         }, ClickEvent.getType());

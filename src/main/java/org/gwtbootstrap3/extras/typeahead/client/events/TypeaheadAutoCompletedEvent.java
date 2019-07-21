@@ -33,11 +33,11 @@ import org.gwtproject.user.client.Event;
 public class TypeaheadAutoCompletedEvent<T> extends GwtEvent<TypeaheadAutoCompletedHandler<T>> {
 
     public static <T> void fire(final Typeahead<T> source, final Suggestion<T> suggestion, final Event nativeEvent) {
-        TypeaheadAutoCompletedEvent<T> event = new TypeaheadAutoCompletedEvent<T>(source, suggestion, nativeEvent);
+        TypeaheadAutoCompletedEvent<T> event = new TypeaheadAutoCompletedEvent<>(source, suggestion, nativeEvent);
         source.fireEvent(event);
     }
 
-    private static final Type<TypeaheadAutoCompletedHandler<?>> TYPE = new Type<TypeaheadAutoCompletedHandler<?>>();
+    private static final Type<TypeaheadAutoCompletedHandler<?>> TYPE = new Type<>();
 
     private final Typeahead<T> typeahead;
     private final Suggestion<T> suggestion;

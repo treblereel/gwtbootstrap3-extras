@@ -22,6 +22,7 @@ package org.gwtbootstrap3.extras.gallery.client;
 
 import org.gwtproject.core.client.EntryPoint;
 import org.gwtproject.core.client.ScriptInjector;
+import org.gwtproject.dom.client.StyleInjector;
 
 /**
  * @author Ben Dol
@@ -32,6 +33,10 @@ public class GalleryEntryPoint implements EntryPoint {
     public void onModuleLoad() {
         inject(GalleryClientBundle.INSTANCE.BLUEIMP_JS().getText());
         inject(GalleryClientBundle.INSTANCE.GALLERY_JS().getText());
+        StyleInjector.injectStylesheetAtEnd(GalleryClientBundle.INSTANCE.GALLERY_CSS().getText());
+        StyleInjector.injectStylesheetAtEnd(GalleryClientBundle.INSTANCE.GALLERY_FIX_CSS().getText());
+        StyleInjector.injectStylesheetAtEnd(GalleryClientBundle.INSTANCE.GALLERY_IMAGE_CSS().getText());
+
     }
 
     private void inject(String resource) {

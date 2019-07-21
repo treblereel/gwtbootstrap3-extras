@@ -26,9 +26,13 @@ import org.gwtproject.resources.client.TextResource;
 /**
  * @author Florian Kremser <florian.kremser@sage.com>
  */
+//@Resource
 public interface TypeaheadClientBundle extends ClientBundle {
   TypeaheadClientBundle INSTANCE = new TypeaheadClientBundleImpl();
 
   @ClientBundle.Source("resource/js/typeahead.jquery-0.10.5.min.cache.js")
   TextResource typeahead();
+
+  @ClientBundle.Source("resource/css/typeahead-0.10.5.min.cache.css")
+  TextResource typeahead_css();
 }

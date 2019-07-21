@@ -82,7 +82,7 @@ public class RespondClientBundleImpl implements org.gwtbootstrap3.extras.respond
   }
   public ResourcePrototype getResource(String name) {
       if (resourceMap == null) {
-        resourceMap = new java.util.HashMap<String, ResourcePrototype>();
+        resourceMap = new java.util.HashMap<>();
         resourceMap.put("html5Shiv", html5Shiv());
         resourceMap.put("respond", respond());
       }

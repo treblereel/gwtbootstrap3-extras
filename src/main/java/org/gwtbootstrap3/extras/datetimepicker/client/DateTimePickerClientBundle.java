@@ -21,6 +21,7 @@ package org.gwtbootstrap3.extras.datetimepicker.client;
  */
 
 import org.gwtproject.resources.client.ClientBundle;
+import org.gwtproject.resources.client.Resource;
 import org.gwtproject.resources.client.TextResource;
 
 /**
@@ -31,10 +32,13 @@ public interface DateTimePickerClientBundle extends ClientBundle {
     DateTimePickerClientBundle INSTANCE = new DateTimePickerClientBundleImpl();
 
     String VERSION = "2.4.4";
-    final String I18N_DIR = "resource/js/locales-" + VERSION + "/";
+    String I18N_DIR = "resource/js/locales-" + VERSION + "/";
 
     @Source("resource/js/bootstrap-datetimepicker-" + VERSION + ".min.cache.js")
     TextResource dateTimePicker();
+
+    @Source("resource/css/bootstrap-datetimepicker-" + VERSION + ".min.cache.css")
+    TextResource dateTimePickerCss();
 
     @Source(I18N_DIR + "bootstrap-datetimepicker.ar.js")
     TextResource ar();

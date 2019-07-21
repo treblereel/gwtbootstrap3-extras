@@ -22,6 +22,7 @@ package org.gwtbootstrap3.extras.datetimepicker.client;
 
 import org.gwtproject.core.client.EntryPoint;
 import org.gwtproject.core.client.ScriptInjector;
+import org.gwtproject.dom.client.StyleInjector;
 
 /**
  * @author Sven Jacobs
@@ -30,6 +31,7 @@ public class DateTimePickerEntryPoint implements EntryPoint {
 
     @Override
     public void onModuleLoad() {
+        StyleInjector.injectAtEnd(DateTimePickerClientBundle.INSTANCE.dateTimePickerCss().getText());
         ScriptInjector.fromString(DateTimePickerClientBundle.INSTANCE.dateTimePicker().getText())
                 .setWindow(ScriptInjector.TOP_WINDOW).inject();
     }

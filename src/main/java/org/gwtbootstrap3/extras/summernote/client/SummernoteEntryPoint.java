@@ -22,6 +22,7 @@ package org.gwtbootstrap3.extras.summernote.client;
 
 import org.gwtproject.core.client.EntryPoint;
 import org.gwtproject.core.client.ScriptInjector;
+import org.gwtproject.dom.client.StyleInjector;
 
 /**
  * @author godi
@@ -30,5 +31,6 @@ public class SummernoteEntryPoint implements EntryPoint {
     @Override
     public void onModuleLoad() {
         ScriptInjector.fromString(SummernoteClientBundle.INSTANCE.summernote().getText()).setWindow(ScriptInjector.TOP_WINDOW).inject();
+        StyleInjector.injectStylesheetAtEnd(SummernoteClientBundle.INSTANCE.summernote_css().getText());
     }
 }

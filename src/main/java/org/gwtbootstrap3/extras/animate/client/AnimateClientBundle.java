@@ -1,10 +1,10 @@
-package org.gwtbootstrap3.extras.select.client;
+package org.gwtbootstrap3.extras.animate.client;
 
 /*
  * #%L
  * GwtBootstrap3
  * %%
- * Copyright (C) 2013 - 2016 GwtBootstrap3
+ * Copyright (C) 2013 - 2019 GwtBootstrap3
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,19 +20,19 @@ package org.gwtbootstrap3.extras.select.client;
  * #L%
  */
 
-import org.gwtproject.core.client.EntryPoint;
-import org.gwtproject.core.client.ScriptInjector;
-import org.gwtproject.dom.client.StyleInjector;
+import org.gwtproject.resources.client.ClientBundle;
+import org.gwtproject.resources.client.TextResource;
 
 /**
- * @author godi
+ * @author Dmitrii Tikhomirov
+ * Created by treblereel 7/20/19
  */
-public class SelectEntryPoint implements EntryPoint {
+//@Resource
+public interface AnimateClientBundle extends ClientBundle {
 
-    @Override
-    public void onModuleLoad() {
-        ScriptInjector.fromString(SelectClientBundle.INSTANCE.select().getText())
-            .setWindow(ScriptInjector.TOP_WINDOW).inject();
-        StyleInjector.injectStylesheetAtEnd(SelectClientBundle.INSTANCE.select_css().getText());
-    }
+    AnimateClientBundle INSTANCE = new AnimateClientBundleImpl();
+
+    @Source("resource/css/animate-3.5.2.min.cache.css")
+    TextResource animate_css();
 }
+

@@ -26,6 +26,7 @@ import org.gwtproject.resources.client.TextResource;
 /**
  * @author godi
  */
+//@Resource
 public interface SummernoteClientBundle extends ClientBundle {
 
     SummernoteClientBundle INSTANCE = new SummernoteClientBundleImpl();
@@ -34,6 +35,9 @@ public interface SummernoteClientBundle extends ClientBundle {
 
     @Source("resource/js/summernote-" + VERSION + ".min.cache.js")
     TextResource summernote();
+
+    @Source("resource/css/summernote-" + VERSION + ".min.cache.css")
+    TextResource summernote_css();
 
     @Source(LOCALE_DIR + "summernote-ar-AR.js")
     TextResource ar_AR();

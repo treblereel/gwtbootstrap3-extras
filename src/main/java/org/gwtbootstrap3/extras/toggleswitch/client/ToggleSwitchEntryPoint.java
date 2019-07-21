@@ -22,6 +22,7 @@ package org.gwtbootstrap3.extras.toggleswitch.client;
 
 import org.gwtproject.core.client.EntryPoint;
 import org.gwtproject.core.client.ScriptInjector;
+import org.gwtproject.dom.client.StyleInjector;
 
 /**
  * @author Grant Slender
@@ -32,5 +33,7 @@ public class ToggleSwitchEntryPoint implements EntryPoint {
     public void onModuleLoad() {
         ScriptInjector.fromString(ToggleSwitchClientBundle.INSTANCE.toggleswitch().getText()).setWindow(ScriptInjector.TOP_WINDOW)
                 .inject();
+        StyleInjector.injectStylesheetAtEnd(ToggleSwitchClientBundle.INSTANCE.toggleswitch_css().getText());
+
     }
 }

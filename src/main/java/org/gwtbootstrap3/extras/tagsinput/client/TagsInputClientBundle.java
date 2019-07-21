@@ -26,10 +26,17 @@ import org.gwtproject.resources.client.TextResource;
 /**
  * @author Marko Nikolić <marko.nikolic@iten.rs>
  */
+//@Resource
 public interface TagsInputClientBundle extends ClientBundle {
     TagsInputClientBundle INSTANCE = new TagsInputClientBundleImpl();
     String VERSION = "0.8.0";
 
     @Source("resource/js/bootstrap-tagsinput-" + VERSION + ".min.cache.js")
     TextResource tagsinput();
+
+    @Source("resource/css/bootstrap-tagsinput.css")
+    TextResource tagsinput_css();
+
+    @Source("resource/css/bootstrap-tagsinput-typeahead.css")
+    TextResource tagsinput_typeahead_css();
 }
