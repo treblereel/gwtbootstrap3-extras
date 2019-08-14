@@ -67,6 +67,6 @@ public class RenderedEvent extends GwtEvent<RenderedHandler> {
     /**
      * Creates a rendered event.
      */
-    protected RenderedEvent() {}
+    public RenderedEvent() {}
 
 }

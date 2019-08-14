@@ -539,12 +539,12 @@ public class SummernoteBase extends Div implements HasAllSummernoteHandlers,
 
         @JsOverlay
         public static JSummernote jQuery(Element e) {
-            return (JSummernote) JQuery.jQuery(e);
+            return (JSummernote) JQuery.$(e);
         }
 
         public native JSummernote on(String var1, Object arg);
 
-        public native void summernote(String setAttribute, Object attr, Object value);
+        public native <T> T summernote(String setAttribute, Object attr, Object value);
 
         public native <T> T summernote(Object value);
 

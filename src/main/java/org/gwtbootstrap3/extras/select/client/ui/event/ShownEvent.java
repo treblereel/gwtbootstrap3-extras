@@ -68,6 +68,6 @@ public class ShownEvent extends GwtEvent<ShownHandler> {
     /**
      * Creates a shown event.
      */
-    protected ShownEvent() {}
+    public ShownEvent() {}
 
 }

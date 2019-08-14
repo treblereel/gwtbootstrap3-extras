@@ -22,6 +22,9 @@ package org.gwtbootstrap3.extras.notify.client.ui;
 
 import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsFunction;
+import jsinterop.annotations.JsOverlay;
+import jsinterop.annotations.JsPackage;
+import jsinterop.annotations.JsType;
 import jsinterop.base.Js;
 import jsinterop.base.JsPropertyMap;
 import org.gwtbootstrap3.extras.animate.client.ui.constants.Animation;
@@ -47,7 +50,8 @@ import org.gwtproject.core.client.JavaScriptObject;
  * @author Xiaodong SUN
  * @see #makeDefault()
  */
-public class NotifySettings extends JavaScriptObject {
+@JsType(isNative = true, namespace = JsPackage.GLOBAL, name = "Object")
+public class NotifySettings {
 
     /**
      * Default constructor
@@ -60,14 +64,16 @@ public class NotifySettings extends JavaScriptObject {
      * Creates a new instance of {@link NotifySettings}.
      * @return a new instance of {@link NotifySettings}.
      */
+    @JsOverlay
     public static NotifySettings newSettings() {
-        return JavaScriptObject.createObject().cast();
+        return new NotifySettings();
     }
 
     /**
      * Set element name or class or ID to append Notify to. Default is 'body'.
      * @param element Name, class or ID
      */
+    @JsOverlay
     public final void setElement(String element) {
         Js.asPropertyMap(this).set("element", element);
     }
@@ -76,6 +82,7 @@ public class NotifySettings extends JavaScriptObject {
      * Set custom position to the Notify container element. Default is null.
      * @param position one of STATIC, FIXED, RELATIVE, ABSOLUTE, or null
      */
+    @JsOverlay
     public final void setPosition(final NotifyPosition position) {
         setPosition((position != null) ? position.getPosition() : null);
     }
@@ -84,6 +91,7 @@ public class NotifySettings extends JavaScriptObject {
      * Set native property of Notify's position.
      * @param position Notify's position to the container element
      */
+    @JsOverlay
     private final void setPosition(String position) {
         Js.asPropertyMap(this).set("position", position);
     }
@@ -93,6 +101,7 @@ public class NotifySettings extends JavaScriptObject {
      * @param type one of INFO, WARNING, DANGER, SUCCESS
      * @see NotifyType
      */
+    @JsOverlay
     public final void setType(final NotifyType type) {
         setType((type != null) ? type.getCssName() : NotifyType.INFO.getCssName());
     }
@@ -101,6 +110,7 @@ public class NotifySettings extends JavaScriptObject {
      * Set custom style name to Notify. Resulting class name is "alert-[customType]".
      * @param customType Style name to set
      */
+    @JsOverlay
     public final void setType(String customType) {
         Js.asPropertyMap(this).set("type", customType);
     }
@@ -110,6 +120,7 @@ public class NotifySettings extends JavaScriptObject {
      * the template will be hidden. Default is <code>true</code>.
      * @param allowDismiss if <code>false</code>, the close icon will be hidden
      */
+    @JsOverlay
     public final void setAllowDismiss(boolean allowDismiss) {
         Js.asPropertyMap(this).set("allow_dismiss", allowDismiss);
     }
@@ -120,6 +131,7 @@ public class NotifySettings extends JavaScriptObject {
      * @param showProgressbar if <code>true</code>, the progress bar will be displayed
      * @since 3.0.1
      */
+    @JsOverlay
     public final void setShowProgressbar(boolean showProgressbar) {
         Js.asPropertyMap(this).set("showProgressbar", showProgressbar);
     }
@@ -129,6 +141,7 @@ public class NotifySettings extends JavaScriptObject {
      * @param placement Notify's placement on screen
      * @see NotifyPlacement
      */
+    @JsOverlay
     public final void setPlacement(final NotifyPlacement placement) {
         setNotifyPlacement((placement != null) ? placement : NotifyPlacement.TOP_RIGHT);
     }
@@ -137,6 +150,7 @@ public class NotifySettings extends JavaScriptObject {
      * Set native property of Notify's placement.
      * @param placement Notify's placement on screen
      */
+    @JsOverlay
     private final void setNotifyPlacement(final NotifyPlacement placement) {
         String from = placement.getFrom();
         String align = placement.getAlign();
@@ -160,6 +174,7 @@ public class NotifySettings extends JavaScriptObject {
      * @param newestOnTop if <code>true</code>, newer notifications push down older ones
      * @since 3.0.0
      */
+    @JsOverlay
     public final void setNewestOnTop(boolean newestOnTop) {
         Js.asPropertyMap(this).set("newest_on_top", newestOnTop);
     }
@@ -169,6 +184,7 @@ public class NotifySettings extends JavaScriptObject {
      * @param offX Offset for X axis in PX
      * @param offY Offset for Y axis in PX
      */
+    @JsOverlay
     public final void setOffset(int offX, int offY) {
         JsPropertyMap map = JsPropertyMap.of();
         map.set("x", offX);
@@ -181,6 +197,7 @@ public class NotifySettings extends JavaScriptObject {
      * Set custom spacing between two Notifies. Default is 10 PX.
      * @param space Spacing in PX
      */
+    @JsOverlay
     public final void setSpacing(int space) {
         Js.asPropertyMap(this).set("spacing", space);
     }
@@ -189,6 +206,7 @@ public class NotifySettings extends JavaScriptObject {
      * Set custom Z-index. Default is 1031.
      * @param zIndex Z-index
      */
+    @JsOverlay
     public final void setZIndex(int zIndex) {
         Js.asPropertyMap(this).set("z_index", zIndex);
     }
@@ -198,6 +216,7 @@ public class NotifySettings extends JavaScriptObject {
      * Set to zero for unlimited time.
      * @param mDelay Delay in milliseconds or zero for unlimited
      */
+    @JsOverlay
     public final void setDelay(int mDelay) {
         Js.asPropertyMap(this).set("delay", mDelay);
     }
@@ -209,6 +228,7 @@ public class NotifySettings extends JavaScriptObject {
      * @param timer Time in milliseconds
      * @see #setDelay(int)
      */
+    @JsOverlay
     public final void setTimer(int timer) {
         Js.asPropertyMap(this).set("timer", timer);
     }
@@ -219,6 +239,7 @@ public class NotifySettings extends JavaScriptObject {
      * Defaults to {@link NotifyUrlTarget#BLANK}.
      * @param urlTarget URL target
      */
+    @JsOverlay
     public final void setUrlTarget(NotifyUrlTarget urlTarget) {
         setUrlTarget((urlTarget != null) ? urlTarget.getTarget() : NotifyUrlTarget.BLANK.getTarget());
     }
@@ -229,6 +250,7 @@ public class NotifySettings extends JavaScriptObject {
      * See http://www.w3schools.com/tags/att_a_target.asp for possible values.
      * @param customUrlTarget URL target
      */
+    @JsOverlay
     public final void setUrlTarget(String customUrlTarget) {
         Js.asPropertyMap(this).set("url_target", customUrlTarget);
     }
@@ -238,6 +260,7 @@ public class NotifySettings extends JavaScriptObject {
      * Countdown continues (not restarted) if mouse leaves the Notify.
      * @param pauseOnMouseOver TRUE = pause / FALSE = not pause
      */
+    @JsOverlay
     public final void setPauseOnMouseOver(boolean pauseOnMouseOver) {
         Js.asPropertyMap(this).set("mouse_over", pauseOnMouseOver ? "pause" : null);
     }
@@ -250,6 +273,7 @@ public class NotifySettings extends JavaScriptObject {
      * @param exit animation style when Notify exists the screen
      * @see org.gwtbootstrap3.extras.animate.client.ui.constants.Animation
      */
+    @JsOverlay
     public final void setAnimation(Animation enter, Animation exit) {
         setAnimation((enter != null) ? enter.getCssName() : Animation.NO_ANIMATION.getCssName(),
                      (exit != null) ? exit.getCssName() : Animation.NO_ANIMATION.getCssName());
@@ -261,6 +285,7 @@ public class NotifySettings extends JavaScriptObject {
      * @param enter animation style when Notify enters the screen
      * @param exit animation style when Notify exists the screen
      */
+    @JsOverlay
     public final void setAnimation(String enter, String exit) {
         JsPropertyMap conf = JsPropertyMap.of();
         conf.set("enter", enter);
@@ -273,10 +298,12 @@ public class NotifySettings extends JavaScriptObject {
      * the show instance method is called.
      * @param handler
      */
+    @JsOverlay
     public final void setShowHandler(final NotifyShowHandler handler) {
         onShow((handler != null) ? handler : NotifyShowHandler.DEFAULT_SHOW_HANDLER);
     }
 
+    @JsOverlay
     private final void onShow(NotifyShowHandler handler) {
         Js.asPropertyMap(this).set("onShow", (Fn) () -> handler.onShow());
     }
@@ -286,10 +313,12 @@ public class NotifySettings extends JavaScriptObject {
      * been made visible to the user (will wait for CSS transitions to complete).
      * @param handler
      */
+    @JsOverlay
     public final void setShownHandler(final NotifyShownHandler handler) {
         onShown((handler != null) ? handler : NotifyShownHandler.DEFAULT_SHOWN_HANDLER);
     }
 
+    @JsOverlay
     private final void onShown(NotifyShownHandler handler) {
         Js.asPropertyMap(this).set("onShow", (Fn) () -> handler.onShown());
     }
@@ -299,10 +328,12 @@ public class NotifySettings extends JavaScriptObject {
      * the notification is closing.
      * @param handler
      */
+    @JsOverlay
     public final void setCloseHandler(final NotifyCloseHandler handler) {
         onClose((handler != null) ? handler : NotifyCloseHandler.DEFAULT_CLOSE_HANDLER);
     }
 
+    @JsOverlay
     private final void onClose(NotifyCloseHandler handler) {
         Js.asPropertyMap(this).set("onClose", (Fn) () -> handler.onClose());
     }
@@ -313,10 +344,12 @@ public class NotifySettings extends JavaScriptObject {
      * transitions to complete).
      * @param handler
      */
+    @JsOverlay
     public final void setClosedHandler(final NotifyClosedHandler handler) {
         onClosed((handler != null) ? handler : NotifyClosedHandler.DEFAULT_CLOSED_HANDLER);
     }
 
+    @JsOverlay
     private final void onClosed(NotifyClosedHandler handler) {
         Js.asPropertyMap(this).set("onClosed", (Fn) () -> handler.onClosed());
     }
@@ -330,6 +363,7 @@ public class NotifySettings extends JavaScriptObject {
      * @param iconType the icon type
      * @see NotifyIconType
      */
+    @JsOverlay
     public final void setIconType(NotifyIconType iconType) {
         setIconType((iconType != null) ? iconType.getType() : NotifyIconType.CLASS.getType());
     }
@@ -338,6 +372,7 @@ public class NotifySettings extends JavaScriptObject {
      * Set native property of Notify's icon type.
      * @param iconType Notify's icon type.
      */
+    @JsOverlay
     private final void setIconType(String iconType) {
         Js.asPropertyMap(this).set("icon_type", iconType);
     }
@@ -369,6 +404,7 @@ public class NotifySettings extends JavaScriptObject {
      * @param html Custom HTML template
      * @see documentation at: http://bootstrap-notify.remabledesigns.com/
      */
+    @JsOverlay
     public final void setTemplate(String html) {
         Js.asPropertyMap(this).set("template", html);
     }
@@ -379,8 +415,9 @@ public class NotifySettings extends JavaScriptObject {
      * Values set to this NotifySettings overrides original default values.
      * If value for some property is not set, original default value is kept.
      */
+    @JsOverlay
     public final void makeDefault() {
-        Notify.get().notifyDefaults();
+        Notify._Notify.notifyDefaults();
     }
 
     @FunctionalInterface

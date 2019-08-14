@@ -67,6 +67,6 @@ public class LoadedEvent extends GwtEvent<LoadedHandler> {
     /**
      * Creates a loaded event.
      */
-    protected LoadedEvent() {}
+    public LoadedEvent() {}
 
 }

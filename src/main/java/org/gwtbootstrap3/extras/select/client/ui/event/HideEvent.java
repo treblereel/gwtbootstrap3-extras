@@ -67,6 +67,6 @@ public class HideEvent extends GwtEvent<HideHandler> {
     /**
      * Creates a hide event.
      */
-    protected HideEvent() {}
+    public HideEvent() {}
 
 }

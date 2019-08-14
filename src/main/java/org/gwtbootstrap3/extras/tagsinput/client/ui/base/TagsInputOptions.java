@@ -46,7 +46,7 @@ public class TagsInputOptions<T> extends JavaScriptObject {
      */
     @SuppressWarnings("rawtypes")
     static TagsInputOptions create() {
-        return JavaScriptObject.createObject().cast();
+        return new TagsInputOptions();
     }
 
     public final void setTagClass(String className) {

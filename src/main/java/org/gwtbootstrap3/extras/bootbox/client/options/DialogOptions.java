@@ -55,6 +55,18 @@ public class DialogOptions<E extends DialogOptions> {
 
     private JsPropertyMap buttons;
 
+    /**
+     * Creates a new {@link ConfirmOptions}.
+     * @param message
+     * @return
+     */
+    @JsOverlay
+    public static final <E> E newOptions(final String message) {
+        DialogOptions options = new DialogOptions();
+        options.setMessage(message);
+        return Js.uncheckedCast(options);
+    }
+
     @JsOverlay
     public final E setLocale(String locale) {
         this.locale = locale;
@@ -128,6 +140,29 @@ public class DialogOptions<E extends DialogOptions> {
     @JsOverlay
     public final E setMessage(String message) {
         this.message = message;
+        return (E) this;
+    }
+
+    @JsOverlay
+    public final E addButton(String name) {
+        if (!Js.asPropertyMap(this).has("buttons")) {
+            Js.asPropertyMap(this).set("buttons", JsPropertyMap.of());
+        }
+        JsPropertyMap button = JsPropertyMap.of();
+        buttons.set(name, button);
+        return (E) this;
+    }
+
+    @JsOverlay
+    public final E addButton(String name, String className, SimpleCallback callback) {
+        if (!Js.asPropertyMap(this).has("buttons")) {
+            Js.asPropertyMap(this).set("buttons", JsPropertyMap.of());
+        }
+
+        JsPropertyMap button = JsPropertyMap.of();
+        button.set("className", className);
+        button.set("callback", callback);
+        buttons.set(name, button);
         return (E) this;
     }
 

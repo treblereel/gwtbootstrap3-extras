@@ -50,7 +50,7 @@ class SummernoteOptions extends JavaScriptObject {
      * @return a new instance of {@link SummernoteOptions}.
      */
     static SummernoteOptions newOptions() {
-        return JavaScriptObject.createObject().cast();
+        return new SummernoteOptions();
     }
 
     /**

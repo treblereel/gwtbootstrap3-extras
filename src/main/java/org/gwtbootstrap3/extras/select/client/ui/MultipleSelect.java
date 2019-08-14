@@ -263,7 +263,7 @@ public class MultipleSelect extends SelectBase<List<String>> {
     }
 
     private JsArrayString getValue(Element e) {
-        JsArrayString value  = (JsArrayString)SelectPicker.jQuery(e).selectpicker("val");
+        JsArrayString value  = SelectPicker.jQuery(e).selectpicker("val");
         if(value != null) {
             return value;
         }

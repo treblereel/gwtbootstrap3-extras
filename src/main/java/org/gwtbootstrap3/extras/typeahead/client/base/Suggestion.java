@@ -21,29 +21,33 @@ package org.gwtbootstrap3.extras.typeahead.client.base;
  */
 
 import jsinterop.annotations.JsConstructor;
-import jsinterop.base.Js;
-import jsinterop.base.JsPropertyMap;
-import org.gwtproject.core.client.JavaScriptObject;
 
 /**
  * @author Florian Kremser <florian.kremser@sage.com>
  */
-public final class Suggestion<T> extends JavaScriptObject {
+public final class Suggestion<T> {
+
+    private T data;
+
+    private String value;
+
+    private Dataset<T> dataset;
+
 
     @JsConstructor
     protected Suggestion() {
     }
 
     public String getValue() {
-        return (String) Js.asPropertyMap(this).get("value");
+        return value;
     }
 
     public T getData() {
-        return (T) Js.asPropertyMap(this).get("data");
+        return data;
     }
 
     public Dataset<T> getDataset() {
-        return (Dataset<T>) Js.asPropertyMap(this).get("data");
+        return dataset;
     }
 
     /**
@@ -56,10 +60,17 @@ public final class Suggestion<T> extends JavaScriptObject {
      * @return a Suggestion object
      */
     public static <T> Suggestion<T> create(String value, T data, Dataset<T> dataset) {
-        JsPropertyMap result = JsPropertyMap.of();
-        result.set("value", value);
-        result.set("data", data);
-        result.set("dataset", dataset);
-        return Js.uncheckedCast(result);
+        Suggestion suggestion = new Suggestion();
+        suggestion.value = value;
+        suggestion.data = data;
+        suggestion.dataset = dataset;
+        return suggestion;
+    }
+
+    @Override
+    public String toString() {
+        return "Suggestion{" +
+                "value='" + value + '\'' +
+                '}';
     }
 }

@@ -25,10 +25,10 @@ import java.util.Collection;
 
 /**
  * A Dataset operating on a collection of values.
- *
  * @author Florian Kremser <florian.kremser@sage.com>
  */
 public class CollectionDataset<T> extends Dataset<T> {
+
     private Collection<T> data;
 
     public CollectionDataset(final Collection<T> data) {
@@ -47,7 +47,6 @@ public class CollectionDataset<T> extends Dataset<T> {
      * Return the (display) value associated with a particular datum. If the
      * given datum is selected from the suggestions, then value will be set as
      * text of the input.
-     *
      * @param datum a datum instance from this {@link Dataset}
      * @return the text representing the data
      */
@@ -58,15 +57,15 @@ public class CollectionDataset<T> extends Dataset<T> {
     @Override
     public Object findMatches(final String query, final SuggestionCallback<T> callback) {
         String queryLower = query.toLowerCase();
-        Collection<Suggestion<T>> suggestions = new ArrayList<Suggestion<T>>();
+        Collection<Suggestion<T>> suggestions = new ArrayList<>();
         if (data != null) {
-              for (T datum : data) {
-                  String value = getValue(datum);
-                      if (value.toLowerCase().contains(queryLower)) {
-                          Suggestion<T> suggestion = Suggestion.create(value, datum, this);
-                          suggestions.add(suggestion);
-                      }
-              }
+            for (T datum : data) {
+                String value = getValue(datum);
+                if (value.toLowerCase().contains(queryLower)) {
+                    Suggestion<T> suggestion = Suggestion.create(value, datum, this);
+                    suggestions.add(suggestion);
+                }
+            }
         }
         callback.execute(suggestions);
         return suggestions;

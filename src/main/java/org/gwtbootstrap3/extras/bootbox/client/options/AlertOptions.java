@@ -35,18 +35,6 @@ public class AlertOptions extends DialogOptions<AlertOptions> {
 
     SimpleCallback callback;
 
-    /**
-     * Creates a new {@link ConfirmOptions}.
-     * @param message
-     * @return
-     */
-    @JsOverlay
-    public static final AlertOptions newOptions(final String message) {
-        AlertOptions options = new AlertOptions();
-        options.setMessage(message);
-        return options;
-    }
-
     @JsOverlay
     public final AlertOptions setCallback(SimpleCallback callback) {
         this.callback = callback;

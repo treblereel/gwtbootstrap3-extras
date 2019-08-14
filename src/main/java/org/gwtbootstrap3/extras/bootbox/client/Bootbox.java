@@ -20,6 +20,7 @@ package org.gwtbootstrap3.extras.bootbox.client;
  * #L%
  */
 
+import jsinterop.annotations.JsOverlay;
 import jsinterop.annotations.JsPackage;
 import jsinterop.annotations.JsType;
 import org.gwtbootstrap3.extras.bootbox.client.callback.ConfirmCallback;
@@ -123,14 +124,25 @@ public class Bootbox {
      * @param options
      */
     public static native void setDefaults(DialogOptions options);
+
     /**
      * Sets a locale.
      *
      * @param locale if <code>null</code>, defaults to {@link BootboxLocale#EN}.
      */
-    public static native void setLocale(final BootboxLocale locale);
+    /*
+    @JsOverlay
+    public static void setLocale(final BootboxLocale locale) {
+        BootboxLocale l = (locale != null) ? locale : BootboxLocale.getDefault();
+        setLocale(l.getLocale());
+    }*/
 
-    private static native void setLocale(String locale);
+        /**
+         * Sets a locale.
+         *
+         * @param locale if <code>null</code>, defaults to {@link BootboxLocale#EN}.
+         */
+     public static native void setLocale(String locale);
 
     /**
      * Hide all currently active bootbox dialogs.

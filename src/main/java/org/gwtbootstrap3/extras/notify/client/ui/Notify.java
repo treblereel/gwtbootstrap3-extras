@@ -20,7 +20,6 @@ package org.gwtbootstrap3.extras.notify.client.ui;
  * #L%
  */
 
-import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsMethod;
 import jsinterop.annotations.JsPackage;
 import jsinterop.annotations.JsType;
@@ -29,9 +28,9 @@ import jsinterop.base.JsPropertyMap;
 import org.gwtbootstrap3.client.shared.js.JQuery;
 import org.gwtbootstrap3.client.ui.constants.IconType;
 import org.gwtbootstrap3.client.ui.constants.Styles;
+import org.gwtbootstrap3.extras.JsUtils;
 import org.gwtbootstrap3.extras.notify.client.constants.NotifyPlacement;
 import org.gwtbootstrap3.extras.notify.client.constants.NotifyType;
-import org.gwtproject.core.client.JavaScriptObject;
 
 /**
  * This class represent instance of displayed Notify.
@@ -58,10 +57,10 @@ import org.gwtproject.core.client.JavaScriptObject;
  * @author Sven Jacobs
  * @author Joshua Godi
  * @author Pavel Zlámal
+ * @author treblereel
  */
-public class Notify extends JavaScriptObject {
+public class Notify {
 
-    @JsConstructor
     protected Notify() {
     }
 
@@ -73,7 +72,7 @@ public class Notify extends JavaScriptObject {
     public static final Notify notify(final String message) {
         JsPropertyMap map = JsPropertyMap.of();
         map.set("message", message);
-        return get().notify(map, null);
+        return _Notify.notify(map, null);
     }
 
     /**
@@ -86,7 +85,7 @@ public class Notify extends JavaScriptObject {
         JsPropertyMap map = JsPropertyMap.of();
         map.set("message", message);
         map.set("title", title);
-        return get().notify(map, null);
+        return _Notify.notify(map, null);
     }
 
     /**
@@ -101,7 +100,7 @@ public class Notify extends JavaScriptObject {
         map.set("message", message);
         map.set("title", title);
         map.set("icon", icon);
-        return get().notify(map, null);
+        return _Notify.notify(map, null);
     }
 
     /**
@@ -129,7 +128,7 @@ public class Notify extends JavaScriptObject {
         map.set("title", title);
         map.set("icon", icon);
         map.set("url", url);
-        return get().notify(map, null);
+        return _Notify.notify(map, null);
     }
 
     /**
@@ -157,7 +156,7 @@ public class Notify extends JavaScriptObject {
         JsPropertyMap tmap = JsPropertyMap.of();
         tmap.set("type", type.getCssName());
 
-        return get().notify(map, tmap);
+        return _Notify.notify(map, tmap);
     }
 
     /**
@@ -175,7 +174,7 @@ public class Notify extends JavaScriptObject {
         JsPropertyMap tmap = JsPropertyMap.of();
         tmap.set("type", type.getCssName());
 
-        return get().notify(map, tmap);
+        return _Notify.notify(map, tmap);
     }
 
     /**
@@ -195,7 +194,7 @@ public class Notify extends JavaScriptObject {
         JsPropertyMap tmap = JsPropertyMap.of();
         tmap.set("type", type.getCssName());
 
-        return get().notify(map, tmap);
+        return _Notify.notify(map, tmap);
     }
 
     /**
@@ -230,7 +229,7 @@ public class Notify extends JavaScriptObject {
         JsPropertyMap tmap = JsPropertyMap.of();
         tmap.set("type", type.getCssName());
 
-        return get().notify(map, tmap);
+        return _Notify.notify(map, tmap);
     }
 
     /**
@@ -257,7 +256,7 @@ public class Notify extends JavaScriptObject {
     public static final Notify notify(final String message, final NotifySettings settings) {
         JsPropertyMap map = JsPropertyMap.of();
         map.set("message", message);
-        return get().notify(map, settings);
+        return _Notify.notify(map, settings);
     }
 
     /**
@@ -272,7 +271,7 @@ public class Notify extends JavaScriptObject {
         JsPropertyMap map = JsPropertyMap.of();
         map.set("message", message);
         map.set("title", title);
-        return get().notify(map, settings);
+        return _Notify.notify(map, settings);
     }
 
     /**
@@ -289,7 +288,7 @@ public class Notify extends JavaScriptObject {
         map.set("message", message);
         map.set("title", title);
         map.set("icon", icon);
-        return get().notify(map, settings);
+        return _Notify.notify(map, settings);
     }
 
     /**
@@ -321,7 +320,7 @@ public class Notify extends JavaScriptObject {
         map.set("title", title);
         map.set("icon", icon);
         map.set("url", url);
-        return get().notify(map, settings);
+        return _Notify.notify(map, settings);
     }
 
     /**
@@ -342,7 +341,7 @@ public class Notify extends JavaScriptObject {
      * Hide all displayed Notifies.
      */
     public static final void hideAll() {
-        get().notifyClose();
+        _Notify.notifyClose();
     }
 
     /**
@@ -352,12 +351,8 @@ public class Notify extends JavaScriptObject {
      */
     public static final void hideAll(NotifyPlacement placement) {
         if (placement != null) {
-            get().notifyClose(placement.getPlacement());
+            _Notify.notifyClose(placement.getPlacement());
         }
-    }
-
-    static _Notify get() {
-        return ((_Notify) Js.global().get("jQuery"));
     }
 
     /**
@@ -448,18 +443,21 @@ public class Notify extends JavaScriptObject {
             namespace = "<global>",
             name = "jQuery"
     )
-    static class _Notify extends JQuery {
+    static class _Notify {
 
         @JsMethod
-        native Notify notify(JsPropertyMap value, Object var);
+        native static Notify notify(String msg);
 
         @JsMethod
-        native void notifyClose();
+        native static Notify notify(JsPropertyMap value, Object var);
 
         @JsMethod
-        native void notifyClose(String placement);
+        native static void notifyClose();
 
         @JsMethod
-        native void notifyDefaults();
+        native static void notifyClose(String placement);
+
+        @JsMethod
+        native static void notifyDefaults();
     }
 }

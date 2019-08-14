@@ -24,6 +24,9 @@ import jsinterop.base.Js;
 import org.gwtbootstrap3.extras.slider.client.ui.base.SliderBase;
 import org.gwtbootstrap3.extras.slider.client.ui.base.SliderCommand;
 import org.gwtbootstrap3.extras.slider.client.ui.base.SliderOption;
+import org.gwtbootstrap3.extras.slider.client.ui.base.event.SlideEvent;
+import org.gwtbootstrap3.extras.slider.client.ui.base.event.SlideStartEvent;
+import org.gwtbootstrap3.extras.slider.client.ui.base.event.SlideStopEvent;
 import org.gwtproject.core.client.JavaScriptObject;
 import org.gwtproject.dom.client.Element;
 import org.gwtproject.event.shared.Event;
@@ -57,7 +60,7 @@ public class Slider extends SliderBase<Double> {
     }
 
     @Override
-    protected void setValue(Element e, Double value) {
+    public void setValue(Element e, Double value) {
         double doubleValue = value.doubleValue();
         if (isSliderNamespaceAvailable()) {
             JSlider.jQuery(e).slider(SliderCommand.SET_VALUE, doubleValue);
@@ -67,7 +70,7 @@ public class Slider extends SliderBase<Double> {
     }
 
     @Override
-    protected Double getValue(Element e) {
+    public Double getValue(Element e) {
         Object value;
         if (isSliderNamespaceAvailable()) {
             value = JSlider.jQuery(e).slider(SliderCommand.GET_VALUE);
@@ -78,7 +81,7 @@ public class Slider extends SliderBase<Double> {
     }
 
     @Override
-    protected void setFormatterOption(JavaScriptObject options) {
+    public void setFormatterOption(JavaScriptObject options) {
         JSlider.Fn formatter = value -> {
             Double val = new Double(Js.uncheckedCast(value));
             return formatTooltip(val);
@@ -87,7 +90,7 @@ public class Slider extends SliderBase<Double> {
     }
 
     @Override
-    protected void setFormatter(Element e) {
+    public void setFormatter(Element e) {
         SliderOption attr = SliderOption.FORMATTER;
         JSlider.Fn formatter = value -> {
             Double val = new Double(Js.uncheckedCast(value));
@@ -102,7 +105,7 @@ public class Slider extends SliderBase<Double> {
     }
 
     @Override
-    protected String format(Double value) {
+    public String format(Double value) {
         return value.toString();
     }
 
@@ -115,25 +118,25 @@ public class Slider extends SliderBase<Double> {
     }
 
     @Override
-    protected void onSlide(Event event) {
+    protected void onSlide(SlideEvent<Double> event) {
         Double value = new Double(Js.uncheckedCast(Js.asPropertyMap(event).get("value")));
         fireSlideEvent(value);
     }
 
     @Override
-    protected void onSlideStart(Event event) {
+    protected void onSlideStart(SlideStartEvent event) {
         Double value = new Double(Js.uncheckedCast(Js.asPropertyMap(event).get("value")));
         fireSlideStartEvent(value);
     }
 
     @Override
-    protected void onSlideStop(Event event) {
+    protected void onSlideStop(SlideStopEvent event) {
         Double value = new Double(Js.uncheckedCast(Js.asPropertyMap(event).get("value")));
         fireSlideStopEvent(value);
     }
 
     @Override
-    protected void onSlideChange(Event event) {
+    protected void onSlideChange(SlideEvent event) {
         Double value = new Double(Js.uncheckedCast(Js.asPropertyMap(Js.asPropertyMap(event).get("value")).get("newValue")));
         fireChangeEvent(value);
     }

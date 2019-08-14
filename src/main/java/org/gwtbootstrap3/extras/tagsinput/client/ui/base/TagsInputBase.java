@@ -26,8 +26,10 @@ import java.util.Collection;
 import java.util.List;
 
 import elemental2.core.JsArray;
+import elemental2.dom.DomGlobal;
 import jsinterop.annotations.JsFunction;
 import jsinterop.annotations.JsOverlay;
+import jsinterop.annotations.JsPackage;
 import jsinterop.annotations.JsType;
 import jsinterop.base.Js;
 import org.gwtbootstrap3.client.shared.js.JQuery;
@@ -80,14 +82,14 @@ class TagsInputBase<T> extends Widget implements HasAllTagsInputEvents<T>,
     private Scheduler.ScheduledCommand attachTypeahead = new Scheduler.ScheduledCommand() {
         @Override
         public void execute() {
-            typeahead = new Typeahead<T>(input(), datasets);
+            typeahead = new Typeahead<>(input(), datasets);
             typeahead.reconfigure();
             typeahead.addTypeaheadSelectedHandler(event -> add(event.getSuggestion().getData()));
         }
     };
 
     protected static List<String> toMultiValue(JavaScriptObject js_multi_value) {
-        List<String> retValue = new ArrayList<String>();
+        List<String> retValue = new ArrayList<>();
 
         if (js_multi_value != null) {
             JsArrayString js_string_array = js_multi_value.cast();
@@ -254,16 +256,9 @@ class TagsInputBase<T> extends Widget implements HasAllTagsInputEvents<T>,
      * @param options tags input options
      */
     private void initialize(Element e, JavaScriptObject options) {
-
-        JTagsinput.jQuery(e).on(HasAllTagsInputEvents.ITEM_ADDED_ON_INIT_EVENT, new Fn() {
-            @Override
-            public void onInvoke(Object event) {
-                ItemAddedOnInitEvent.fire(Js.uncheckedCast(this), Js.asPropertyMap(event).get("item"));
-            }
-        });
+        JTagsinput.jQuery(e).tagsinput(options);
 
         JTagsinput.jQuery(e).on(HasAllTagsInputEvents.ITEM_ADDED_ON_INIT_EVENT, (Fn) (event) -> ItemAddedOnInitEvent.fire(Js.uncheckedCast(this), Js.asPropertyMap(event).get("item")));
-        JTagsinput.jQuery(e).tagsinput(options);
         JTagsinput.jQuery(e).on(HasAllTagsInputEvents.BEFORE_ITEM_ADD_EVENT, (Fn) (event) -> BeforeItemAddEvent.fire(Js.uncheckedCast(this), Js.asPropertyMap(event).get("item")));
         JTagsinput.jQuery(e).on(HasAllTagsInputEvents.ITEM_ADDED_EVENT, (Fn) (event) -> ItemAddedEvent.fire(Js.uncheckedCast(this), Js.asPropertyMap(event).get("item")));
         JTagsinput.jQuery(e).on(HasAllTagsInputEvents.BEFORE_ITEM_REMOVE_EVENT, (Fn) (event) -> BeforeItemRemoveEvent.fire(Js.uncheckedCast(this), Js.asPropertyMap(event).get("item")));
@@ -278,12 +273,20 @@ class TagsInputBase<T> extends Widget implements HasAllTagsInputEvents<T>,
         // Even if firing of ValueChangeEvent is removed, there should remain empty function and 'change' event will be properly cached by GWT.
         ////////////////////
         JTagsinput.jQuery(e).on(HasAllTagsInputEvents.ITEM_CHANGED_EVENT, (Fn) (event) -> {
-            JavaScriptObject currentValue = JTagsinput.jQuery(e).val();
-
-            if (((JTagsinput) Js.asPropertyMap(Js.global()).get("JQuery")).isArray(currentValue)) {
-                ValueChangeEvent.fire(Js.uncheckedCast(this), TagsInputBase.toMultiValue(currentValue));
+            Object currentValue = JTagsinput.jQuery(e).val();
+            if (currentValue != null) {
+                String[] values = currentValue.toString().split(",");
+                if (currentValue.toString().split(",").length == 1) {
+                    ValueChangeEvent.fire(Js.uncheckedCast(this), currentValue.toString());
+                } else {
+                    List<String> arr = new ArrayList<>();
+                    for (int i = 0; i < values.length; i++) {
+                        arr.add(values[i]);
+                    }
+                    ValueChangeEvent.fire(Js.uncheckedCast(this), arr);
+                }
             } else {
-                ValueChangeEvent.fire(Js.uncheckedCast(this), currentValue);
+                ValueChangeEvent.fire(Js.uncheckedCast(this), null);
             }
         });
     }
@@ -443,17 +446,15 @@ class TagsInputBase<T> extends Widget implements HasAllTagsInputEvents<T>,
 
     @JsType(
             isNative = true,
-            namespace = "<global>",
+            namespace = JsPackage.GLOBAL,
             name = "jQuery"
     )
     private static class JTagsinput extends JQuery {
 
         @JsOverlay
         public static JTagsinput jQuery(Element e) {
-            return (JTagsinput) JQuery.jQuery(e);
+            return (JTagsinput) JQuery.$(e);
         }
-
-        public native Object slider();
 
         public native JTagsinput on(String var1, Object arg);
 
@@ -462,7 +463,14 @@ class TagsInputBase<T> extends Widget implements HasAllTagsInputEvents<T>,
         public native <T> T tagsinput(String getValue, Object value);
 
         public native <T> T val();
+    }
 
-        public native boolean isArray(JavaScriptObject maybe);
+    @JsType(
+            isNative = true,
+            namespace = JsPackage.GLOBAL
+    )
+    public static class Array {
+
+        public static native boolean isArray(Object var0);
     }
 }

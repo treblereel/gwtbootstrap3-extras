@@ -41,6 +41,7 @@ import org.gwtbootstrap3.extras.select.client.ui.constants.MenuSize;
 import org.gwtbootstrap3.extras.select.client.ui.constants.SelectStyles;
 import org.gwtbootstrap3.extras.select.client.ui.constants.SelectWidth;
 import org.gwtbootstrap3.extras.select.client.ui.event.HasAllSelectHandlers;
+import org.gwtbootstrap3.extras.select.client.ui.event.HasLoadedHandlers;
 import org.gwtbootstrap3.extras.select.client.ui.event.HiddenEvent;
 import org.gwtbootstrap3.extras.select.client.ui.event.HiddenHandler;
 import org.gwtbootstrap3.extras.select.client.ui.event.HideEvent;
@@ -69,7 +70,6 @@ import org.gwtproject.editor.client.LeafValueEditor;
 import org.gwtproject.editor.client.adapters.TakesValueEditor;
 import org.gwtproject.event.logical.shared.ValueChangeEvent;
 import org.gwtproject.event.logical.shared.ValueChangeHandler;
-import org.gwtproject.event.shared.Event;
 import org.gwtproject.event.shared.HandlerRegistration;
 import org.gwtproject.user.client.ui.Focusable;
 import org.gwtproject.user.client.ui.HasEnabled;
@@ -95,7 +95,6 @@ import static org.gwtbootstrap3.extras.select.client.ui.SelectOptions.SIZE;
 import static org.gwtbootstrap3.extras.select.client.ui.SelectOptions.STYLE;
 import static org.gwtbootstrap3.extras.select.client.ui.SelectOptions.WIDTH;
 import static org.gwtbootstrap3.extras.select.client.ui.SelectOptions.WINDOW_PADDING;
-import static org.gwtbootstrap3.extras.select.client.ui.SelectPicker.Fn;
 import static org.gwtbootstrap3.extras.select.client.ui.SelectPicker.jQuery;
 
 /**
@@ -104,7 +103,8 @@ import static org.gwtbootstrap3.extras.select.client.ui.SelectPicker.jQuery;
  * @author Xiaodong Sun
  * @see http://silviomoreto.github.io/bootstrap-select/
  */
-public abstract class SelectBase<T> extends ComplexWidget implements HasValue<T>,
+public abstract class SelectBase<T> extends ComplexWidget implements HasLoadedHandlers,
+                                                                     HasValue<T>,
                                                                      HasEnabled,
                                                                      Focusable,
                                                                      HasType<ButtonType>,
@@ -912,16 +912,27 @@ public abstract class SelectBase<T> extends ComplexWidget implements HasValue<T>
      * Binds the select events.
      * @param e
      */
+
+
+
     private void bindSelectEvents(Element e) {
+        new ShowEvent();
+        new ShownEvent();
+        new HideEvent();
+        new HiddenEvent();
+        new RenderedEvent();
+        new RefreshedEvent();
+
         jQuery(e).selectpicker(options);
-        jQuery(e).on(HasAllSelectHandlers.LOADED_EVENT, (SelectPicker.Fn)(event) -> LoadedEvent.fire(Js.uncheckedCast(this)));
+        jQuery(e).on(HasAllSelectHandlers.LOADED_EVENT, (SelectPicker.Fn)(event) -> LoadedEvent.fire(this));
+        jQuery(e).on(HasAllSelectHandlers.SHOW_EVENT, (SelectPicker.Fn)(event) -> ShowEvent.fire(this));
+
         jQuery(e).on(HasAllSelectHandlers.CHANGED_EVENT, (event, clickedIndex, newValue, oldValue) -> onValueChange());
-        jQuery(e).on(HasAllSelectHandlers.SHOW_EVENT, (SelectPicker.Fn)(event) -> ShowEvent.fire(Js.uncheckedCast(this)));
-        jQuery(e).on(HasAllSelectHandlers.SHOWN_EVENT, (SelectPicker.Fn)(event) -> ShownEvent.fire(Js.uncheckedCast(this)));
-        jQuery(e).on(HasAllSelectHandlers.HIDE_EVENT, (SelectPicker.Fn)(event) -> HideEvent.fire(Js.uncheckedCast(this)));
-        jQuery(e).on(HasAllSelectHandlers.HIDDEN_EVENT, (SelectPicker.Fn)(event) -> HiddenEvent.fire(Js.uncheckedCast(this)));
-        jQuery(e).on(HasAllSelectHandlers.RENDERED_EVENT, (SelectPicker.Fn)(event) -> RenderedEvent.fire(Js.uncheckedCast(this)));
-        jQuery(e).on(HasAllSelectHandlers.REFRESHED_EVENT, (SelectPicker.Fn)(event) -> RefreshedEvent.fire(Js.uncheckedCast(this)));
+        jQuery(e).on(HasAllSelectHandlers.SHOWN_EVENT, (SelectPicker.Fn)(event) -> ShownEvent.fire(this));
+        jQuery(e).on(HasAllSelectHandlers.HIDE_EVENT, (SelectPicker.Fn)(event) -> HideEvent.fire(this));
+        jQuery(e).on(HasAllSelectHandlers.HIDDEN_EVENT, (SelectPicker.Fn)(event) -> HiddenEvent.fire(this));
+        jQuery(e).on(HasAllSelectHandlers.RENDERED_EVENT, (SelectPicker.Fn)(event) -> RenderedEvent.fire(this));
+        jQuery(e).on(HasAllSelectHandlers.REFRESHED_EVENT, (SelectPicker.Fn)(event) -> RefreshedEvent.fire(this));
     }
 
     /**
@@ -929,7 +940,6 @@ public abstract class SelectBase<T> extends ComplexWidget implements HasValue<T>
      * @param e
      */
     private void unbindSelectEvents(Element e) {
-        jQuery(e).off(HasAllSelectHandlers.LOADED_EVENT);
         jQuery(e).off(HasAllSelectHandlers.CHANGED_EVENT);
         jQuery(e).off(HasAllSelectHandlers.SHOW_EVENT);
         jQuery(e).off(HasAllSelectHandlers.SHOWN_EVENT);

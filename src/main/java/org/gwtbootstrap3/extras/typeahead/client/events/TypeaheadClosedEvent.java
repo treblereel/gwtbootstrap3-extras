@@ -20,6 +20,7 @@ package org.gwtbootstrap3.extras.typeahead.client.events;
  * #L%
  */
 
+import jsinterop.annotations.JsType;
 import org.gwtbootstrap3.extras.typeahead.client.ui.Typeahead;
 import org.gwtproject.event.legacy.shared.GwtEvent;
 import org.gwtproject.user.client.Event;
@@ -32,7 +33,7 @@ import org.gwtproject.user.client.Event;
 public class TypeaheadClosedEvent<T> extends GwtEvent<TypeaheadClosedHandler<T>> {
 
     public static <T> void fire(final Typeahead<T> source, final Event nativeEvent) {
-        TypeaheadClosedEvent<T> event = new TypeaheadClosedEvent<T>(source, nativeEvent);
+        TypeaheadClosedEvent<T> event = new TypeaheadClosedEvent<>(source, nativeEvent);
         source.fireEvent(event);
     }
 

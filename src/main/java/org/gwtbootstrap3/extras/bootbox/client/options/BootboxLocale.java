@@ -20,11 +20,14 @@ package org.gwtbootstrap3.extras.bootbox.client.options;
  * #L%
  */
 
+import jsinterop.annotations.JsType;
+
 /**
  * Bootbox locale.
  *
  * @author Xiaodong Sun
  */
+@JsType
 public enum BootboxLocale {
 
     BG_BG("bg_BG"),

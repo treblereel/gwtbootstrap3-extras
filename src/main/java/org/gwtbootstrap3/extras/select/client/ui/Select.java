@@ -35,6 +35,7 @@ import static org.gwtbootstrap3.extras.select.client.ui.SelectOptions.SHOW_TICK;
 public class Select extends SelectBase<String> {
 
     public Select() {
+
     }
 
     @Override
