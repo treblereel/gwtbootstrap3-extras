@@ -28,7 +28,7 @@ import org.gwtproject.dom.client.NativeEvent;
  *
  * @author Jeff Isenhart
  */
-interface DragAndResizeCallback {
+public interface DragAndResizeCallback {
     void eventDragStart(JavaScriptObject calendarEvent, NativeEvent nativeEvent);
 
     void eventDragStop(JavaScriptObject calendarEvent, NativeEvent nativeEvent);

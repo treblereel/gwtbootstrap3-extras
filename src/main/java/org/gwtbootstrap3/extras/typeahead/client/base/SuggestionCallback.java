@@ -24,7 +24,6 @@ import java.util.Collection;
 
 import elemental2.core.JsArray;
 import jsinterop.annotations.JsFunction;
-import org.gwtproject.core.client.JsArrayString;
 
 /**
  * @author Florian Kremser <florian.kremser@sage.com>
@@ -38,7 +37,7 @@ public class SuggestionCallback<T> {
     }
 
     public void execute(final Collection<Suggestion<T>> suggestions) {
-        JsArray<Suggestion<T>> jsArray = JsArrayString.createArray().cast();
+        JsArray<Suggestion<T>> jsArray = new JsArray<>();
         if (suggestions != null) {
             for (Suggestion<T> s : suggestions) {
                 jsArray.push(s);

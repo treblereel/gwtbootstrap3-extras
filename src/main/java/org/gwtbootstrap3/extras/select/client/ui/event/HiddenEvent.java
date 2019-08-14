@@ -68,6 +68,6 @@ public class HiddenEvent extends GwtEvent<HiddenHandler> {
     /**
      * Creates a hidden event.
      */
-    protected HiddenEvent() {}
+    public HiddenEvent() {}
 
 }

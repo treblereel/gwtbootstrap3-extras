@@ -20,10 +20,14 @@ package org.gwtbootstrap3.extras.slider.client.ui;
  * #L%
  */
 
+import elemental2.core.JsArray;
 import jsinterop.base.Js;
 import org.gwtbootstrap3.extras.slider.client.ui.base.SliderBase;
 import org.gwtbootstrap3.extras.slider.client.ui.base.SliderCommand;
 import org.gwtbootstrap3.extras.slider.client.ui.base.SliderOption;
+import org.gwtbootstrap3.extras.slider.client.ui.base.event.SlideEvent;
+import org.gwtbootstrap3.extras.slider.client.ui.base.event.SlideStartEvent;
+import org.gwtbootstrap3.extras.slider.client.ui.base.event.SlideStopEvent;
 import org.gwtproject.core.client.JavaScriptObject;
 import org.gwtproject.core.client.JsArrayNumber;
 import org.gwtproject.dom.client.Element;
@@ -70,7 +74,7 @@ public class RangeSlider extends SliderBase<Range> {
     }
 
     @Override
-    protected void setValue(Element e, Range value) {
+    public void setValue(Element e, Range value) {
         JsArrayNumber range = value.toJsArray();
         if (isSliderNamespaceAvailable()) {
             Slider.JSlider.jQuery(e).slider(SliderCommand.SET_VALUE, range);
@@ -80,7 +84,7 @@ public class RangeSlider extends SliderBase<Range> {
     }
 
     @Override
-    protected Range getValue(Element e) {
+    public Range getValue(Element e) {
         Object value;
         if (isSliderNamespaceAvailable()) {
             value = Slider.JSlider.jQuery(e).slider(SliderCommand.GET_VALUE);
@@ -91,7 +95,7 @@ public class RangeSlider extends SliderBase<Range> {
     }
 
     @Override
-    protected void setFormatterOption(JavaScriptObject options) {
+    public void setFormatterOption(JavaScriptObject options) {
         Slider.JSlider.Fn formatter = value -> {
             Range range = new Range(Js.uncheckedCast(value));
             return formatTooltip(range);
@@ -100,7 +104,7 @@ public class RangeSlider extends SliderBase<Range> {
     }
 
     @Override
-    protected void setFormatter(Element e) {
+    public void setFormatter(Element e) {
         SliderOption attr = SliderOption.FORMATTER;
         Slider.JSlider.Fn formatter = value -> {
             Range range = new Range(Js.uncheckedCast(value));
@@ -114,7 +118,7 @@ public class RangeSlider extends SliderBase<Range> {
     }
 
     @Override
-    protected String format(Range value) {
+    public String format(Range value) {
         return value.getMinValue() + " : " + value.getMaxValue();
     }
 
@@ -124,26 +128,26 @@ public class RangeSlider extends SliderBase<Range> {
     }
 
     @Override
-    protected void onSlide(Event event) {
+    protected void onSlide(SlideEvent<Double> event) {
         Range range = new Range(Js.uncheckedCast(Js.asPropertyMap(event).get("value")));
         fireSlideEvent(range);
     }
 
     @Override
-    protected void onSlideStart(Event event) {
+    protected void onSlideStart(SlideStartEvent event) {
         Range range = new Range(Js.uncheckedCast(Js.asPropertyMap(event).get("value")));
         fireSlideStartEvent(range);
     }
 
     @Override
-    protected void onSlideStop(Event event) {
+    protected void onSlideStop(SlideStopEvent event) {
         Range range = new Range(Js.uncheckedCast(Js.asPropertyMap(event).get("value")));
         fireSlideStopEvent(range);
     }
 
     @Override
-    protected void onSlideChange(Event event) {
-        JsArrayNumber value = Js.uncheckedCast(Js.asPropertyMap(Js.asPropertyMap(event).get("value")).get("newValue"));
+    protected void onSlideChange(SlideEvent event) {
+        JsArray<Double> value = Js.uncheckedCast(Js.asPropertyMap(Js.asPropertyMap(event).get("value")).get("newValue"));
         Range range = new Range(value);
         fireChangeEvent(range);
     }

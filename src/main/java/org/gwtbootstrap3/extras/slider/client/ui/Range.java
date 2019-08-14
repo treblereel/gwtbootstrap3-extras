@@ -20,6 +20,9 @@ package org.gwtbootstrap3.extras.slider.client.ui;
  * #L%
  */
 
+import elemental2.core.JsArray;
+import elemental2.dom.DomGlobal;
+import jsinterop.base.Js;
 import org.gwtproject.core.client.JavaScriptObject;
 import org.gwtproject.core.client.JsArrayNumber;
 import org.gwtproject.core.client.JsonUtils;
@@ -53,8 +56,8 @@ public class Range {
      *
      * @param array
      */
-    public Range(final JsArrayNumber array) {
-        this(array.get(0), array.get(1));
+    public Range(final JsArray<Double> array) {
+        this(array.getAt(0), array.getAt(1));
     }
 
     /**
@@ -98,7 +101,7 @@ public class Range {
     public static Range fromString(String value) {
         if (value == null || value.isEmpty())
             return null;
-        JsArrayNumber array = JsonUtils.safeEval(value);
+        JsArray<Double> array = Js.uncheckedCast(JsonUtils.safeEval(value));
         return new Range(array);
     }
 

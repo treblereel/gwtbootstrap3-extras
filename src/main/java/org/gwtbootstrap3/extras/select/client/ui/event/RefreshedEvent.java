@@ -67,6 +67,6 @@ public class RefreshedEvent extends GwtEvent<RefreshedHandler> {
     /**
      * Creates a refreshed event.
      */
-    protected RefreshedEvent() {}
+    public RefreshedEvent() {}
 
 }

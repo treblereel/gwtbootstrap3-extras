@@ -37,7 +37,7 @@ import org.gwtproject.dom.client.Element;
 import org.gwtproject.dom.client.StyleInjector;
 import org.gwtproject.user.client.ui.UIObject;
 
-import static org.gwtbootstrap3.client.shared.js.JQuery.jQuery;
+import static org.gwtbootstrap3.client.shared.js.JQuery.$;
 
 /**
  * Utility class to dynamically animate objects using CSS animations.
@@ -329,7 +329,7 @@ public class Animate {
      */
     private static final void removeAnimationOnEnd(Element element, String animation) {
 
-        JQueryExt elem = (JQueryExt) jQuery(element);
+        JQueryExt elem = (JQueryExt) $(element);
         JsArray arrayString = new JsArray<String>();
         arrayString.push("webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend");
         JsPropertyMap params = JsPropertyMap.of();
@@ -357,7 +357,7 @@ public class Animate {
      * @param animation Animation CSS class to remove.
      */
     private static final void stopAnimation(Element element, String animation) {
-        JQueryExt elem = (JQueryExt) jQuery(element);
+        JQueryExt elem = (JQueryExt) $(element);
         ((HasRemoveClass) Js.uncheckedCast(elem)).removeClass(animation);
     }
 

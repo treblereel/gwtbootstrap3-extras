@@ -51,6 +51,7 @@ public class Header {
     }
 
     private void newInstance() {
+        header = JsPropertyMap.of();
         header.set("left", "title");
         header.set("center", "");
         header.set("right", "today prev,next");

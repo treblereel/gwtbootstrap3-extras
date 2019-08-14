@@ -349,13 +349,13 @@ public class Gallery extends ComplexWidget {
     }
 
     private void destroy(Element e) {
-        JQuery.jQuery(e).off("open");
-        JQuery.jQuery(e).off("opened");
-        JQuery.jQuery(e).off("close");
-        JQuery.jQuery(e).off("closed");
-        JQuery.jQuery(e).off("slide");
-        JQuery.jQuery(e).off("slideend");
-        JQuery.jQuery(e).off("slidecomplete");
+        JQuery.$(e).off("open");
+        JQuery.$(e).off("opened");
+        JQuery.$(e).off("close");
+        JQuery.$(e).off("closed");
+        JQuery.$(e).off("slide");
+        JQuery.$(e).off("slideend");
+        JQuery.$(e).off("slidecomplete");
     }
 
     @FunctionalInterface
@@ -381,7 +381,7 @@ public class Gallery extends ComplexWidget {
 
         @JsOverlay
         public static JGallery jQuery(Element e) {
-            return (JGallery) JQuery.jQuery(e);
+            return (JGallery) JQuery.$(e);
         }
 
         public native JGallery on(String var1, Object arg);

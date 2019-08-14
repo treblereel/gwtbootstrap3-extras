@@ -34,19 +34,6 @@ public class PromptOptions extends DialogOptions<PromptOptions> {
 
     PromptCallback callback;
 
-    /**
-     * Creates a new {@link ConfirmOptions}.
-     * @param message
-     * @return
-     */
-    @JsOverlay
-    public static final PromptOptions newOptions(final String message) {
-        PromptOptions options = new PromptOptions();
-        options.setMessage(message);
-        options.setCallback(PromptCallback.DEFAULT_PROMPT_CALLBACK);
-        return options;
-    }
-
     @JsOverlay
     public final void setCallback(PromptCallback callback) {
         this.callback = callback;

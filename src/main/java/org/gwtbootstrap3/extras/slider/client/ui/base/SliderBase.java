@@ -26,7 +26,10 @@ import java.util.List;
 
 import elemental2.dom.DomGlobal;
 import jsinterop.annotations.JsFunction;
+import jsinterop.annotations.JsMethod;
 import jsinterop.annotations.JsOverlay;
+import jsinterop.annotations.JsPackage;
+import jsinterop.annotations.JsProperty;
 import jsinterop.annotations.JsType;
 import jsinterop.base.Js;
 import org.gwtbootstrap3.client.shared.js.JQuery;
@@ -35,6 +38,7 @@ import org.gwtbootstrap3.client.ui.base.HasResponsiveness;
 import org.gwtbootstrap3.client.ui.base.helper.StyleHelper;
 import org.gwtbootstrap3.client.ui.base.mixin.AttributeMixin;
 import org.gwtbootstrap3.client.ui.constants.DeviceSize;
+import org.gwtbootstrap3.extras.JsUtils;
 import org.gwtbootstrap3.extras.slider.client.ui.base.constants.HandleType;
 import org.gwtbootstrap3.extras.slider.client.ui.base.constants.OrientationType;
 import org.gwtbootstrap3.extras.slider.client.ui.base.constants.ScaleType;
@@ -63,13 +67,12 @@ import org.gwtproject.editor.client.LeafValueEditor;
 import org.gwtproject.editor.client.adapters.TakesValueEditor;
 import org.gwtproject.event.logical.shared.ValueChangeEvent;
 import org.gwtproject.event.logical.shared.ValueChangeHandler;
-import org.gwtproject.event.shared.Event;
 import org.gwtproject.event.shared.HandlerRegistration;
 import org.gwtproject.user.client.ui.HasEnabled;
 import org.gwtproject.user.client.ui.HasValue;
 import org.gwtproject.user.client.ui.Widget;
 
-import static org.gwtbootstrap3.extras.slider.client.ui.base.SliderBase.JSlider.*;
+import static org.gwtbootstrap3.extras.slider.client.ui.base.SliderBase.JSlider.jQuery;
 
 /**
  * @param <T> slider value type
@@ -742,7 +745,7 @@ public abstract class SliderBase<T> extends Widget implements
         }
 
         // Put array to list
-        List<String> list = new ArrayList<String>(array.length());
+        List<String> list = new ArrayList<>(array.length());
         for (int i = 0; i < array.length(); i++) {
             list.add(array.get(i));
         }
@@ -755,7 +758,7 @@ public abstract class SliderBase<T> extends Widget implements
 
     private boolean isSliderNamespaceBound() {
         DomGlobal.console.log("check SliderNamespaceBound <- REMOVE IT");
-        boolean check = Js.asPropertyMap(Js.asPropertyMap(Js.global().get("jQuery")).get("fn")).has("slider");
+        boolean check = Js.asPropertyMap(Js.asPropertyMap(JsUtils.global().get("jQuery")).get("fn")).has("slider");
         DomGlobal.console.log("result " + check);
         return check;
     }
@@ -772,7 +775,7 @@ public abstract class SliderBase<T> extends Widget implements
      * Called when a {@link SlideEvent} is fired.
      * @param event the native event
      */
-    protected abstract void onSlide(final Event event);
+    protected abstract void onSlide(final SlideEvent<Double> event);
 
     /**
      * Fires a {@link SlideEvent} event.
@@ -786,7 +789,7 @@ public abstract class SliderBase<T> extends Widget implements
      * Called when a {@link SlideStartEvent} is fired.
      * @param event the native event
      */
-    protected abstract void onSlideStart(final Event event);
+    protected abstract void onSlideStart(final SlideStartEvent event);
 
     /**
      * Fires a {@link SlideStartEvent} event.
@@ -800,7 +803,7 @@ public abstract class SliderBase<T> extends Widget implements
      * Called when a {@link SlideStopEvent} is fired.
      * @param event the native event
      */
-    protected abstract void onSlideStop(final Event event);
+    protected abstract void onSlideStop(final SlideStopEvent event);
 
     /**
      * Fires a {@link SlideStopEvent} event.
@@ -814,7 +817,7 @@ public abstract class SliderBase<T> extends Widget implements
      * Called when a {@link ValueChangeEvent} is fired.
      * @param event the native event
      */
-    protected abstract void onSlideChange(final Event event);
+    protected abstract void onSlideChange(final SlideEvent event);
 
     /**
      * Fires a {@link ValueChangeEvent} event.
@@ -942,14 +945,14 @@ public abstract class SliderBase<T> extends Widget implements
 
     @JsType(
             isNative = true,
-            namespace = "<global>",
+            namespace = JsPackage.GLOBAL,
             name = "jQuery"
     )
     protected static class JSlider extends JQuery {
 
         @JsOverlay
         public static JSlider jQuery(Element e) {
-            return (JSlider) JQuery.jQuery(e);
+            return (JSlider) JQuery.$(e);
         }
 
         public native Object slider();
@@ -971,7 +974,8 @@ public abstract class SliderBase<T> extends Widget implements
         @FunctionalInterface
         @JsFunction
         public interface Fn {
-            Object onInvoke(Object value);
+
+            Object onInvoke(SlideEvent value);
         }
     }
 }

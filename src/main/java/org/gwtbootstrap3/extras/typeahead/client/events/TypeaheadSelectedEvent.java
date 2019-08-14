@@ -33,7 +33,7 @@ import org.gwtproject.user.client.Event;
 public class TypeaheadSelectedEvent<T> extends GwtEvent<TypeaheadSelectedHandler<T>> {
 
     public static <T> void fire(final Typeahead<T> source, final Suggestion<T> suggestion, final Event nativeEvent) {
-        TypeaheadSelectedEvent<T> event = new TypeaheadSelectedEvent<T>(source, suggestion, nativeEvent);
+        TypeaheadSelectedEvent<T> event = new TypeaheadSelectedEvent<>(source, suggestion, nativeEvent);
         source.fireEvent(event);
     }
 

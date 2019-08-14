@@ -720,7 +720,7 @@ public class DateTimePickerBase extends Widget implements HasEnabled,
     @Override
     public Date getValue() {
         try {
-            return dateTimeFormat != null && textBox.getValue() != null ? dateTimeFormat.parse(textBox.getValue()) : null;
+            return dateTimeFormat != null && textBox.getValue() != null && !textBox.getValue().isEmpty() ? dateTimeFormat.parse(textBox.getValue()) : null;
         } catch (final Exception e) {
             return null;
         }
@@ -800,35 +800,35 @@ public class DateTimePickerBase extends Widget implements HasEnabled,
     }
 
     private void execute(Element e, String cmd) {
-        ((JQueryExt) JQuery.jQuery(e)).datetimepicker(cmd);
+        ((JQueryExt) JQuery.$(e)).datetimepicker(cmd);
     }
 
     private void remove(Element e) {
-        ((JQueryExt) JQuery.jQuery(e)).datetimepicker("remove");
+        ((JQueryExt) JQuery.$(e)).datetimepicker("remove");
     }
 
     private void show(Element e) {
-        ((JQueryExt) JQuery.jQuery(e)).datetimepicker("show");
+        ((JQueryExt) JQuery.$(e)).datetimepicker("show");
     }
 
     private void hide(Element e) {
-        ((JQueryExt) JQuery.jQuery(e)).datetimepicker("hide");
+        ((JQueryExt) JQuery.$(e)).datetimepicker("hide");
     }
 
     private void update(Element e) {
-        ((JQueryExt) JQuery.jQuery(e)).datetimepicker("update");
+        ((JQueryExt) JQuery.$(e)).datetimepicker("update");
     }
 
     private void setStartDate(Element e, String startDate) {
-        ((JQueryExt) JQuery.jQuery(e)).datetimepicker("setStartDate", startDate);
+        ((JQueryExt) JQuery.$(e)).datetimepicker("setStartDate", startDate);
     }
 
     private void setEndDate(Element e, String endDate) {
-        ((JQueryExt) JQuery.jQuery(e)).datetimepicker("setEndDate", endDate);
+        ((JQueryExt) JQuery.$(e)).datetimepicker("setEndDate", endDate);
     }
 
     private void setDaysOfWeekDisabled(Element e, String daysOfWeekDisabled) {
-        ((JQueryExt) JQuery.jQuery(e)).datetimepicker("setDaysOfWeekDisabled", daysOfWeekDisabled);
+        ((JQueryExt) JQuery.$(e)).datetimepicker("setDaysOfWeekDisabled", daysOfWeekDisabled);
     }
 
     protected void configure(Element e, String format, String formatViewType, int weekStart,
@@ -854,7 +854,7 @@ public class DateTimePickerBase extends Widget implements HasEnabled,
         config.set("showMeridian", showMeridian);
         config.set("pickerPosition", position);
 
-        ((JQueryExt) JQuery.jQuery(e)).datetimepicker(config)
+        ((JQueryExt) JQuery.$(e)).datetimepicker(config)
                 .on("show", event -> onShow(event))
                 .on("hide", event -> onHide(event))
                 .on("changeDate", event -> onChangeDate(event))

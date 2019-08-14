@@ -69,7 +69,7 @@ public class Typeahead<T> extends TextBox {
 
     public Typeahead() {
         List<T> empty = Collections.emptyList();
-        setDatasets(new CollectionDataset<T>(empty));
+        setDatasets(new CollectionDataset<>(empty));
     }
 
     /**
@@ -230,25 +230,33 @@ public class Typeahead<T> extends TextBox {
         Template emptyTemplate = dataset.getEmptyTemplate();
         Template headerTemplate = dataset.getHeaderTemplate();
         Template footerTemplate = dataset.getFooterTemplate();
-        SuggestionTemplate suggestionTemplate = dataset.getSuggestionTemplate();
+        SuggestionTemplate suggestionTemplate = dataset.getSuggestionTemplate() != null ? dataset.getSuggestionTemplate() : suggestion -> suggestion.getValue();
 
         TypeaHead.Fn findMatches = () -> (TypeaHead.Fn2ObjectArgs) (query, fn) -> {
             SuggestionCallback scb = new SuggestionCallback(fn);
             return dataset.findMatches(query, scb);
         };
 
-        JsPropertyMap result = JsPropertyMap.of();
+        JsPropertyMap result = JavaScriptObject.createObject().cast();
         JsPropertyMap templates = JsPropertyMap.of();
 
+        elemental2.core.JsArray source = Js.uncheckedCast(findMatches.onInvoke());
         result.set("name", dataset.getName());
-        result.set("source", findMatches.onInvoke());
+        result.set("source", source);
         result.set("templates", templates);
 
-        templates.set("empty", emptyTemplate != null ? (TypeaHead.Fn1Arg) arg -> emptyTemplate.render() : null);
-        templates.set("header", headerTemplate != null ? (TypeaHead.Fn1Arg) arg -> headerTemplate.render() : null);
-        templates.set("suggestion", suggestionTemplate != null ? (TypeaHead.Fn1Arg) arg -> suggestionTemplate.render(Js.uncheckedCast(arg)) : null);
-        templates.set("header", footerTemplate != null ? (TypeaHead.Fn1Arg) arg -> footerTemplate.render() : null);
-
+        if(emptyTemplate != null) {
+            Js.asPropertyMap(result.get("templates")).set("empty", (TypeaHead.Fn1Arg) arg -> emptyTemplate.render());
+        }
+        if(headerTemplate != null) {
+            Js.asPropertyMap(result.get("templates")).set("header", (TypeaHead.Fn1Arg) arg -> headerTemplate.render());
+        }
+        if(footerTemplate != null) {
+            Js.asPropertyMap(result.get("templates")).set("footer", (TypeaHead.Fn1Arg) arg -> footerTemplate.render());
+        }
+        if(suggestionTemplate != null) {
+            Js.asPropertyMap(result.get("templates")).set("suggestion", (TypeaHead.Fn1Arg) arg -> suggestionTemplate.render(Js.uncheckedCast(arg)));
+        }
         return Js.uncheckedCast(result);
     }
 
@@ -259,7 +267,8 @@ public class Typeahead<T> extends TextBox {
         templates.set("hint", hint);
         templates.set("minLength", minLength);
 
-        TypeaHead.jQuery(e).typeahead(templates, datasets).on("typeahead:opened", (TypeaHead.FnEvent) event -> onOpened(event))
+        TypeaHead.jQuery(e).typeahead(templates, datasets)
+                .on("typeahead:opened", (TypeaHead.FnEvent) event -> onOpened(event))
                 .on("typeahead:closed", (TypeaHead.FnEvent) event -> onClosed(event))
                 .on("typeahead:cursorchanged", (TypeaHead.FnEventAndSuggestion) (event, value, datasetName) -> onCursorChanged(event, value))
                 .on("typeahead:autocompleted", (TypeaHead.FnEventAndSuggestion) (event, value, datasetName) -> onAutoCompleted(event, value))
@@ -283,7 +292,7 @@ public class Typeahead<T> extends TextBox {
 
         @JsOverlay
         public static TypeaHead jQuery(Element e) {
-            return (TypeaHead) JQuery.jQuery(e);
+            return (TypeaHead) JQuery.$(e);
         }
 
         public native TypeaHead typeahead(String val);
@@ -295,30 +304,35 @@ public class Typeahead<T> extends TextBox {
         @FunctionalInterface
         @JsFunction
         interface Fn {
+
             Object onInvoke();
         }
 
         @FunctionalInterface
         @JsFunction
         interface FnEvent {
+
             void onInvoke(Event event);
         }
 
         @FunctionalInterface
         @JsFunction
         interface FnEventAndSuggestion {
+
             void onInvoke(Event event, Suggestion suggestion, Object datasetName);
         }
 
         @FunctionalInterface
         @JsFunction
         interface Fn1Arg {
+
             Object onInvoke(Object arg);
         }
 
         @FunctionalInterface
         @JsFunction
         interface Fn2ObjectArgs {
+
             Object onInvoke(String query, SuggestionCallback.Fn fn);
         }
     }

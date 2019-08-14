@@ -85,7 +85,7 @@ class SelectOptions extends JavaScriptObject {
      * @return a new instance of {@link SelectOptions}.
      */
     static SelectOptions newOptions() {
-        SelectOptions options = JavaScriptObject.createObject().cast();
+        SelectOptions options = new SelectOptions();
         options.init(Styles.FONT_AWESOME_BASE, IconType.CHECK.getCssName());
         return options;
     }

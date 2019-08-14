@@ -22,6 +22,7 @@ package org.gwtbootstrap3.extras.toggleswitch.client.ui.base;
 
 import jsinterop.annotations.JsFunction;
 import jsinterop.annotations.JsOverlay;
+import jsinterop.annotations.JsPackage;
 import jsinterop.annotations.JsType;
 import jsinterop.base.Js;
 import org.gwtbootstrap3.client.shared.js.JQuery;
@@ -60,6 +61,7 @@ import org.gwtproject.user.client.ui.Widget;
  * Original source from http://www.bootstrap-switch.org/
  * @author Grant Slender
  * @author Steven Jardine
+ * @author Dmitrii Tikhomirov
  */
 public class ToggleSwitchBase extends Widget implements HasSize<SizeType>,
                                                         HasValue<Boolean>,
@@ -73,8 +75,8 @@ public class ToggleSwitchBase extends Widget implements HasSize<SizeType>,
                                                         IsEditor<LeafValueEditor<Boolean>> {
 
     private final InputElement element;
-    private final IdMixin<ToggleSwitchBase> idMixin = new IdMixin<ToggleSwitchBase>(this);
-    private final AttributeMixin<ToggleSwitchBase> attributeMixin = new AttributeMixin<ToggleSwitchBase>(this);
+    private final IdMixin<ToggleSwitchBase> idMixin = new IdMixin<>(this);
+    private final AttributeMixin<ToggleSwitchBase> attributeMixin = new AttributeMixin<>(this);
     private SizeType size = SizeType.REGULAR;
     private ColorType onColor = ColorType.DEFAULT;
     private ColorType offColor = ColorType.PRIMARY;
@@ -408,21 +410,21 @@ public class ToggleSwitchBase extends Widget implements HasSize<SizeType>,
 
     @JsType(
             isNative = true,
-            namespace = "<global>",
+            namespace = JsPackage.GLOBAL,
             name = "jQuery"
     )
     private static class BootstrapSwitch extends JQuery {
 
         @JsOverlay
         public static BootstrapSwitch jQuery(Element e) {
-            return (BootstrapSwitch) JQuery.jQuery(e);
+            return (BootstrapSwitch) JQuery.$(e);
         }
 
         public native Object bootstrapSwitch();
 
         public native Object bootstrapSwitch(String val);
 
-        public native void bootstrapSwitch(String val, boolean value, boolean skip);
+        public native Object bootstrapSwitch(String val, boolean value, boolean skip);
 
         public native Object bootstrapSwitch(Object val, Object value);
 

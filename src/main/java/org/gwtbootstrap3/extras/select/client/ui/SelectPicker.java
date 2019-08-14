@@ -40,18 +40,24 @@ class SelectPicker extends JQuery {
 
     @JsOverlay
     public static SelectPicker jQuery(Element e) {
-        return (SelectPicker) JQuery.jQuery(e);
+        return (SelectPicker) JQuery.$(e);
     }
 
-    native Object selectpicker(String val);
+    native <T> T selectpicker(String val);
 
-    native Object selectpicker(String val, Object value);
+    native <T> T selectpicker(String val, Object value);
 
-    native Object selectpicker(Object value);
+    native <T> T selectpicker(Object value);
 
     public native JQuery on(String var1, Fn var2);
 
     public native JQuery on(String var1, Fn4Args var2);
+
+    @FunctionalInterface
+    @JsFunction
+    interface FnNoArgs {
+        void onInvoke();
+    }
 
     @FunctionalInterface
     @JsFunction

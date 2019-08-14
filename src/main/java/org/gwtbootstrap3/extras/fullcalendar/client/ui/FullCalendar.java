@@ -213,7 +213,7 @@ public class FullCalendar extends FlowPanel implements HasLoadHandlers {
 
         if (options != null) {
             for (int i = 0; i < options.length(); i++) {
-                ((JQuery) Js.uncheckedCast(Js.global().get("jQuery"))).extend(fullCalendarParams, options.get(i));
+                JQuery.$().extend(fullCalendarParams, options.get(i));
             }
         }
 
@@ -467,17 +467,17 @@ public class FullCalendar extends FlowPanel implements HasLoadHandlers {
 
         @JsOverlay
         public static JFullCalendar jQuery(Element e) {
-            return (JFullCalendar) JQuery.jQuery(e);
+            return (JFullCalendar) JQuery.$(e);
         }
 
         @JsOverlay
         public static JFullCalendar jQuery(String e) {
-            return (JFullCalendar) JQuery.jQuery(e);
+            return (JFullCalendar) JQuery.$(e);
         }
 
         native <T> T fullCalendar(Object id);
 
-        native void fullCalendar(String id, Object start, Object end);
+        native <T> T fullCalendar(String id, Object start, Object end);
 
         native <T> T fullCalendar(String removeEventSource, Object eventSource);
     }

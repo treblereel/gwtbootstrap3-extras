@@ -32,7 +32,7 @@ import org.gwtproject.user.client.Event;
 public class TypeaheadOpenedEvent<T> extends GwtEvent<TypeaheadOpenedHandler<T>> {
 
     public static <T> void fire(final Typeahead<T> source, final Event nativeEvent) {
-        TypeaheadOpenedEvent<T> event = new TypeaheadOpenedEvent<T>(source, nativeEvent);
+        TypeaheadOpenedEvent<T> event = new TypeaheadOpenedEvent<>(source, nativeEvent);
         source.fireEvent(event);
     }
 
